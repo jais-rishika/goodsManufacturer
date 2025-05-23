@@ -1,0 +1,18 @@
+/* Styles for Header */
+.Header {
+  background-color: #f3e5be;
+  box-shadow: 4px 0 4px 0 #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0.75rem 1rem;
+}
+.HeaderLeft {
+  display: flex;
+  gap: 1rem;
+
+  h1{
+    color: #1d4b40;
+  }
+}

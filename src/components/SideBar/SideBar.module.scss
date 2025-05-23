@@ -1,0 +1,52 @@
+/* Styles for SideBar */
+.Sidebar {
+  width: 20rem;
+  min-height: 100%;
+  display: grid;
+  align-items: start;
+  place-content: start;
+  padding: 0.75rem 1rem;
+
+  background-color: #1d4b40;
+
+  >div{
+    margin-top: 2rem;
+  }
+
+  h1{
+    color: #fff;
+  }
+}
+.Bar{
+  background-color: transparent;
+  color: white;
+  justify-self: end;
+
+  margin-right: -2rem;
+}
+.List {
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+  padding: 1.25rem 0;
+
+  a{
+    color: #fff;
+    text-decoration: none;
+    width: 100%;
+    border-radius: 8px;
+  }
+  li {
+    padding: 0.5rem;
+    border-radius: 8px;
+
+    &:hover {
+      background-color: #45a992;
+    }
+
+  }
+}
+.Active{
+  background-color: cadetblue;
+  text-decoration: underline;
+}

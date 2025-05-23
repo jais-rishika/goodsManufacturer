@@ -1,0 +1,11 @@
+.SelectedFilter {
+  display: inline-block;
+  background-color: rgb(101, 189, 227);
+  small {
+    color: #000;
+  }
+  .Cross{
+    font-size: 0.6rem;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,30 @@
+@mixin Button($color, $backgroundColor) {
+  padding: 0.5rem 0.75rem;
+  color: $color;
+  background-color: $backgroundColor;
+  border-radius: 4px;
+  border: thin solid $color;
+
+  &:hover {
+    color: $backgroundColor;
+    background-color: $color;
+    border-color: $backgroundColor;
+  }
+
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+}
+.DefaultBtn {
+  @include Button(white, black);
+}
+.PrimaryBtn {
+  @include Button(white, #1d4b40);
+}
+.SecondaryBtn {
+  @include Button(black, #689f9b);
+}
+.DangerBtn{
+  @include Button(#fff, crimson);
+}

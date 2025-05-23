@@ -1,0 +1,29 @@
+/* Styles for Layout */
+.Layout {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr;
+}
+.MainContainer {
+  display: grid;
+  min-height: 100%;
+  overflow-y: auto;
+
+  background-color: #c7b98b;
+}
+.SideBar {
+    transform: translateX(-100%);
+    transition: all 0.4s;
+    
+    overflow-y: auto;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 4;
+}
+.active{
+    transform: translateX(0%);
+    transition: all 0.4s;
+}

@@ -1,0 +1,23 @@
+/* Styles for Login */
+.LoginPage {
+  display: grid;
+  min-height: 100dvh;
+
+  grid-template-columns: 5fr 3fr;
+}
+.LoginRightSide {
+  display: grid;
+  place-content: center;
+  background-color: cadetblue;
+}
+.LoginForm {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  
+  padding: 1rem 1.75rem;
+  border: thin solid #faf7ee;
+}
+.LoginLeftSide {
+  background-color: azure;
+}

@@ -1,0 +1,14 @@
+/* Styles for ActionButtons */ 
+.editBtn{
+  padding: 0.2rem 1rem;
+  color: inherit;
+  font-size: 1.25rem;
+  --btn-bg: #94B4C1;
+  --btn-text: #213448;
+}
+.deleteBtn{
+  padding: 0.2rem 1rem;
+  font-size: 1.1rem;
+  --btn-bg: #94B4C1;
+  --btn-text: crimson;
+}
