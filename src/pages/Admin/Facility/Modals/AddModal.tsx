@@ -4,7 +4,7 @@ import Button from "../../../../components/Button/Button.tsx";
 import Input from "../../../../components/Input/Input.tsx";
 import {
   addFacility,
-} from "../../../../services/Admin/Facility.service.ts";
+} from "../../../../services/Facility.service.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Modal from "../../../../components/Modal/Modal.tsx";
 import {
@@ -61,7 +61,7 @@ const AddModal = ({
           <small>{formState.errors.address?.message}</small>
         )}
 
-        <SearchableComponents availFields={availFields!} setAvailFields={setAvailFields!} register={register("facilityManagerEmail")}/>
+        <SearchableComponents availFields={availFields!} setAvailFields={setAvailFields!} toSearch={"Email"}/>
          {!!formState.errors.facilityManagerEmail && (
           <small>{formState.errors.facilityManagerEmail?.message}</small>
         )}

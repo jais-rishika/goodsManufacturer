@@ -33,11 +33,21 @@ export type FacilityAction = {
     type: "GET_DATA_SUCCESS"
     data: FacilityTableData[]
 } | {
-    type: "GET_AVAILABLE_FACILITY_MANAGER"
-    data: string[]
-} |{
     type: "SET_AVAIL_FIELDS",
     data: string[]
+
+} | {
+    type: "SET_FILTERS",
+    data: string[]
+} | {
+    type: "SET_COUNT",
+    count: number
+} | {
+    type: "SET_URL_FILTER",
+    data: string
+} | {
+    type: "SET_SEARCH",
+    data: string
 }
 
 
@@ -49,7 +59,12 @@ export interface FacilityState {
     deleteModal: boolean,
     selected: FacilityData | null,
     facilityTableData: FacilityTableData[],
-    availFields: string[]
+    availFields: string[],
+
+    selectedFilters: string[],
+    searchValue: string
+    count: number,
+    urlFilter: string,
 }
 
 export interface FacilityMethods {
@@ -57,7 +72,12 @@ export interface FacilityMethods {
     handleEditModal: () => void
     handleDeleteModal: () => void
     handleSelect: (data: FacilityData) => void
-    getData: () => void,
-    // getAvailablelFacilityManagers: ()=> void
-    setAvailFields: (val: string)=> void
+    setAvailFields: (val: string) => void
+    
+    getData: (val: string) => void,
+    
+    handleFilterChange: (val: string[], url: string) => void
+    handleUrlChange: (size: number, page: number) => void
+    updateSearch: (val: string) => void
+    setCount: (count: number) => void
 }

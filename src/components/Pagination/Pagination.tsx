@@ -11,34 +11,28 @@ const Pagination = ({
   getData,
   scrollRef,
 }: PaginationProps) => {
-  
-  const [{ currPage, limit, prevStatus,nextStatus }, dispatch] = useReducer(
+  const [{ currPage, size}, dispatch] = useReducer(
     PaginationReducer,
     initialPaginationState
   );
 
   useEffect(() => {
     if (scrollRef) scrollRef.scrollTo(0, 0);
-    dispatch({ type: "PREV", status: !!!(currPage === 1) });
-    dispatch({ type: "NEXT", status: currPage < Math.ceil(count / limit) });
+    setUrl(size, currPage);
+  }, [currPage, size, count]);
 
-    //set limit and page
-    const param = new URLSearchParams(url);
-    param.set("limit", `${limit}`);
-    param.set("page", `${currPage}`);
-    setUrl(`${param}`);
-
-    getData();
-  }, [currPage, limit, count]);
-
+  useEffect(()=>{
+    getData(url);
+  },[url])
   const handlePrev = () => dispatch({ type: "CurrPage", page: currPage - 1 });
 
   const handleNext = () => dispatch({ type: "CurrPage", page: currPage + 1 });
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    dispatch({ type: "LIMIT", limit: +e.target.value });
-    dispatch({ type: "CurrPage", page: 1 });
+    dispatch({ type: "SIZE", size: +e.target.value });
+    dispatch({ type: "CurrPage", page: 0 });
   };
+
   return (
     <div className={styles.pagination}>
       <select onChange={handleChange}>
@@ -50,21 +44,21 @@ const Pagination = ({
           );
         })}
       </select>
-      <Button
-        className={styles.btn}
-        disabled={!prevStatus}
-        onClick={handlePrev}
-      >
-        <FaArrowLeft />
-      </Button>
-      <p>{currPage}</p>
-      <Button
-        className={styles.btn}
-        disabled={!nextStatus}
-        onClick={handleNext}
-      >
-        <FaArrowRight />
-      </Button>
+        <Button
+          className={styles.btn}
+          disabled={!(currPage >0)}
+          onClick={handlePrev}
+        >
+          <FaArrowLeft />
+        </Button>
+      <p>{currPage + 1}</p>
+        <Button
+          className={styles.btn}
+          disabled={!(currPage < Math.ceil(count / size) - 1)}
+          onClick={handleNext}
+        >
+          <FaArrowRight />
+        </Button>
     </div>
   );
 };

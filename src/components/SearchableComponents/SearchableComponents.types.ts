@@ -1,9 +1,8 @@
-import type { RegisterOptions, UseFormRegisterReturn } from "react-hook-form"
-
 export interface SearchableComponentsProps{
     availFields: string[]
     setAvailFields: (val: string)=> void
-    register: any
+    toSearch: string
+    // register: any
  }
 
 export interface SearchableState {

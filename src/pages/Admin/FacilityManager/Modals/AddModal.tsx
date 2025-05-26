@@ -9,10 +9,14 @@ import {
   type ModalProps,
   type FacilityManagerForm,
 } from "./Modal.types.ts";
-import { addFacilityManager } from "../../../../services/Admin/FacilityManager.service.ts";
+import { addFacilityManager } from "../../../../services/FacilityManager.service.ts";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { FacilityManagerContext } from "../FacilityManagerPage/FacilityManager.state.tsx";
 
-const AddModal = ({ handleModal,updateData }: ModalProps) => {
+const AddModal = ({}: ModalProps) => {
+  const {handleAddModal, getData}= useContext(FacilityManagerContext)!;
+
   const { register, handleSubmit, formState } = useForm<FacilityManagerForm>({
     resolver: zodResolver(FacilityManagerFormSchema),
   });
@@ -20,8 +24,8 @@ const AddModal = ({ handleModal,updateData }: ModalProps) => {
   const handleAddFacilityManager = async (data: FacilityManagerForm) => {
     try {
       const res = await addFacilityManager(data);
-      handleModal();
-      updateData();
+      handleAddModal();
+      getData();
       toast.success("Facility Manager Added ")
     } catch (error) {
       toast.error("Sorry!! Facility Manager Could not be Added")
@@ -29,7 +33,7 @@ const AddModal = ({ handleModal,updateData }: ModalProps) => {
   };
 
   return (
-    <Modal setShowModal={handleModal}>
+    <Modal setShowModal={handleAddModal}>
       <form
         onSubmit={handleSubmit(handleAddFacilityManager)}
         className={styles.Form}
@@ -39,10 +43,12 @@ const AddModal = ({ handleModal,updateData }: ModalProps) => {
         {!!formState.errors.name && (
           <small>{formState.errors.name.message}</small>
         )}
+
         <Input type="email" placeholder="Enter email" {...register("email")} />
         {!!formState.errors.email && (
           <small>{formState.errors.email?.message}</small>
         )}
+        
         <Button type="submit">Add</Button>
       </form>
     </Modal>

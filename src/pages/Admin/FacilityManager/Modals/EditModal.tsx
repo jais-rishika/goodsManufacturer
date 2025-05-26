@@ -10,55 +10,56 @@ import {
   type FacilityManagerForm,
 } from "./Modal.types.ts";
 import { toast } from "react-toastify";
-import { editFacilityManager } from "../../../../services/Admin/FacilityManager.service.ts";
+import { editFacilityManager } from "../../../../services/FacilityManager.service.ts";
+import { useContext } from "react";
+import { FacilityManagerContext } from "../FacilityManagerPage/FacilityManager.state.tsx";
 
-const EditModal = ({
-  handleModal,
-  updateData,
-  name,
-  email,
-  id,
-}: ModalProps) => {
+const EditModal = ({}: ModalProps) => {
+  const { handleEditModal, getData, selected } = useContext(
+    FacilityManagerContext
+  )!;
+
   const { register, handleSubmit, formState } = useForm<FacilityManagerForm>({
     defaultValues: {
-      name: `${name}`,
-      email: `${email}`,
+      name: `${selected!.name}`,
+      email: `${selected!.email}`,
     },
     resolver: zodResolver(FacilityManagerFormSchema),
   });
 
   const EditFacility = async (data: FacilityManagerForm) => {
     try {
-      const res = await editFacilityManager(data, id!);
-      updateData();
+      const res = await editFacilityManager(data, selected!.id);
+      getData();
       toast.success("Facility Manager Edited ");
     } catch (error) {
       toast.error("Sorry!! Facility Manager Could not be Edited");
     } finally {
-      handleModal();
+      handleEditModal();
     }
   };
 
   return (
-    <Modal setShowModal={handleModal}>
+    <Modal setShowModal={handleEditModal}>
       <form onSubmit={handleSubmit(EditFacility)} className={styles.Form}>
         <h2>Edit Facility Manager</h2>
-        <Input
-          placeholder="Enter Facility Name"
-          {...register("name")}
-          defaultValue={name}
-        />
-        {!!formState.errors.name && (
-          <small>{formState.errors.name.message}</small>
-        )}
-        <Input
-          placeholder="Enter Facility Email"
-          {...register("email")}
-          defaultValue={email}
-        />
-        {!!formState.errors.email && (
-          <small>{formState.errors.email?.message}</small>
-        )}
+
+        <div>
+          <label>Facility Name</label>
+          <Input placeholder="Enter Facility Name" {...register("name")} />
+          {!!formState.errors.name && (
+            <small>{formState.errors.name.message}</small>
+          )}
+        </div>
+
+        <div>
+          <label>Facility Email</label>
+          <Input placeholder="Enter Facility Email" {...register("email")} />
+          {!!formState.errors.email && (
+            <small>{formState.errors.email?.message}</small>
+          )}
+        </div>
+
         <Button type="submit">Edit</Button>
       </form>
     </Modal>

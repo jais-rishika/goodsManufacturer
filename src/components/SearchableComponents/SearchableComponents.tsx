@@ -11,7 +11,8 @@ import {
 const SearchableComponents =({
   availFields,
   setAvailFields,
-  register
+  toSearch
+  // register
 }: SearchableComponentsProps) => {
   const {
     handleShowFields,
@@ -28,7 +29,7 @@ const SearchableComponents =({
   return (
     <div className={styles.DropDownBox}>
       <div className={styles.SelectedValue}>
-        <input placeholder="Select" value={currentlySelected} {...register}/>
+        <input placeholder="Select" value={currentlySelected}/>
 
         <Button
           onClick={handleShowFields}
@@ -44,7 +45,7 @@ const SearchableComponents =({
           <div>
             <input
               type="text"
-              placeholder="Search Email..."
+              placeholder={`Search ${toSearch}...`}
               defaultValue={currentSearchValue}
               onChange={handleChange}
             />

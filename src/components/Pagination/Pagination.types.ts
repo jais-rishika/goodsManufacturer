@@ -1,30 +1,20 @@
-import type { Dispatch ,SetStateAction } from "react";
-
-export interface PaginationProps{
-    count: number ;
-    setUrl: Dispatch<SetStateAction<string>>;
+export interface PaginationProps {
+    count: number;
+    setUrl: (size: number, page: number) => void;
     url: string;
-    getData: ()=>void
+    getData: (val: string) => void
     scrollRef?: null | HTMLDivElement
 }
 
-export type PaginationAction={
-    type: "PREV",
-    status: boolean
-}|{
-    type: "NEXT"
-    status: boolean
-}|{
+export type PaginationAction = {
     type: "CurrPage"
     page: number
-}|{
-    type: "LIMIT",
-    limit: number
+} | {
+    type: "SIZE",
+    size: number
 }
 
-export interface PaginationState{
-    prevStatus: boolean;
-    nextStatus: boolean;
+export interface PaginationState {
     currPage: number;
-    limit: number
+    size: number
 }

@@ -11,6 +11,11 @@ export const facilityManagerInitialState: FacilityManagerState = {
   deleteModal: false,
   selected: null,
   facilityManagerTableData: [],
+
+  selectedFilters:[],
+  searchValue: "",
+  count: 0,
+  urlFilter:"page=0&size=5",
 };
 export const FacilityManagerReducer = (
   prevState: FacilityManagerState,
@@ -32,6 +37,16 @@ export const FacilityManagerReducer = (
       return { ...prevState, isLoading: false, facilityManagerTableData: action.data };
     case "SELECT":
       return {...prevState, selected: action.selected}
+
+    case "SET_COUNT":
+      return {...prevState, count: action.count}
+    case "SET_FILTERS":
+      return {...prevState, selectedFilters: action.data} 
+    case "SET_SEARCH": 
+      return {...prevState, searchValue: action.data}
+    case "SET_URL_FILTER":
+      return {...prevState, urlFilter: action.data}
+      
     default:
       return {...prevState}
   }

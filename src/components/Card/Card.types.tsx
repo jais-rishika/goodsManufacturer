@@ -1,14 +1,8 @@
-import type { PropsWithChildren, ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 
 export interface CardProps extends PropsWithChildren{
-    id: string;
-    src: string;
-    name: string;
-    point: number;
-
-    price?: number | null;
-    qty? : number
-    actions?: ReactNode;
-
-    children?: ReactNode;
+    id: string,
+    photo: string
+    handleDeleteModal: (id: string)=> void;
+    handleEditModal: (id: string)=> void;
 }

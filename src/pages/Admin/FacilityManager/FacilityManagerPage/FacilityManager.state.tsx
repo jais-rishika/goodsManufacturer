@@ -11,7 +11,7 @@ import {
   FacilityManagerReducer,
   facilityManagerInitialState,
 } from "./FacilityManagerPage.reducer";
-import { getFacilityManager } from "../../../../services/Admin/FacilityManager.service";
+import { getFacilityManager } from "../../../../services/FacilityManager.service";
 import Button from "../../../../components/Button/Button";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
@@ -47,6 +47,46 @@ export const withFacilityManagerContext = <T extends {}>(
       dispatch({ type: "SELECT", selected: data });
     };
 
+    //filter
+    const handleFilterChange = (filter: string[], url: string) => {
+      dispatch({ type: "SET_FILTERS", data: filter });
+
+      //pagination
+      const currentUrl = new URLSearchParams(url);
+      const [size, page] = [currentUrl.get("size"), currentUrl.get("page")];
+      const newUrl = new URLSearchParams();
+      newUrl.set("page", `${page}`);
+      newUrl.set("size", `${size}`);
+      if (state.searchValue) newUrl.set("search", state.searchValue || "");
+      const fields = filter.reduce((a, b) => {
+        return `${a}&fields=${b}`;
+      }, "");
+      updateUrl(newUrl.toString() + fields);
+    };
+
+    const handleUrlChange = (size: number, page: number) => {
+      const currentUrl = new URLSearchParams(state.urlFilter);
+      currentUrl.set("size", `${size}`);
+      currentUrl.set("page", `${page}`);
+      handleFilterChange(state.selectedFilters, currentUrl.toString());
+    };
+
+    const updateSearch = (val: string) => {
+      dispatch({ type: "SET_SEARCH", data: val });
+      const currentUrl = new URLSearchParams(state.urlFilter);
+      currentUrl.set("search", val);
+      handleFilterChange(state.selectedFilters, currentUrl.toString());
+    };
+
+    const updateUrl = (newUrl: string) => {
+      dispatch({ type: "SET_URL_FILTER", data: newUrl });
+    };
+
+    const setCount = (count: number) => {
+      dispatch({ type: "SET_COUNT", count: count });
+    };
+
+    //actionButtonTemplate
     const actionButtons = (data: FacilityManagerData) => {
       return (
         <>
@@ -73,12 +113,11 @@ export const withFacilityManagerContext = <T extends {}>(
       );
     };
 
-    const getData = async () => {
+    const getData = async (url: string) => {
       try {
         dispatch({ type: "GET_DATA" });
-        const facilityManagers = await getFacilityManager();
-        console.log(facilityManagers);
-
+        const facilityManagers = await getFacilityManager(url);
+        
         const tableData: FacilityManagerTableData[] =
           facilityManagers.content.map((data: FacilityManagerData) => {
             return {
@@ -104,6 +143,11 @@ export const withFacilityManagerContext = <T extends {}>(
       handleDeleteModal,
       handleSelect,
       getData,
+
+      handleFilterChange,
+      handleUrlChange,
+      updateSearch,
+      setCount
     };
 
     return (

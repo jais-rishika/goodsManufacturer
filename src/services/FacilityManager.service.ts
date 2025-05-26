@@ -1,15 +1,19 @@
-import type { FacilityManagerForm } from "../../pages/Admin/FacilityManager/Modals/Modal.types";
-import axiosInstance from "../axios.instance"
+import type { FacilityManagerForm } from "../pages/Admin/FacilityManager/Modals/Modal.types";
+import axiosInstance from "./axios.instance"
 
-export const getFacilityManager = async () => {
+//get
+export const getFacilityManager = async (filter: string) => {
     try {
-        const res = await axiosInstance.get(`/owner/facility-manager`);        
+        const res = await axiosInstance.get(`/owner/facility-manager?${filter}`); 
+        console.log(res);
+               
         return res.data;
     } catch (error) {
         throw error;
     }
 }
 
+//add
 export const addFacilityManager = async (payload: FacilityManagerForm) => {
     try {
         const res = await axiosInstance.post('/owner/facility-manager', payload);
@@ -19,6 +23,7 @@ export const addFacilityManager = async (payload: FacilityManagerForm) => {
     }
 }
 
+//edit
 export const editFacilityManager = async (payload: FacilityManagerForm, id: string) => {
     try {
         const res = await axiosInstance.patch(`/owner/facility-manager/${id}`, payload);
@@ -28,6 +33,7 @@ export const editFacilityManager = async (payload: FacilityManagerForm, id: stri
     }
 }
 
+//delete
 export const deleteFacilityManager = async (id: string) => {
     try {
         const res = await axiosInstance.delete(`owner/facility-manager/${id}`);

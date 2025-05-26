@@ -1,9 +1,17 @@
 import { createContext, type ComponentType, useReducer } from "react";
 
 import Button from "../../../../components/Button/Button";
-import { getAvailFacilityManagers, getFacility } from "../../../../services/Admin/Facility.service";
+import {
+  getAvailFacilityManagers,
+  getFacility,
+} from "../../../../services/Facility.service";
 import { facilityInitialState, FacilityReducer } from "./FacilityPage.reducer";
-import type { FacilityState, FacilityData, FacilityTableData, FacilityMethods } from "./FacilityPage.types";
+import type {
+  FacilityState,
+  FacilityData,
+  FacilityTableData,
+  FacilityMethods,
+} from "./FacilityPage.types";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 //create Context
@@ -16,10 +24,7 @@ export const withFacilityContext = <T extends {}>(
   Component: ComponentType<T>
 ) => {
   return (props: T) => {
-    const [state, dispatch] = useReducer(
-      FacilityReducer,
-      facilityInitialState
-    );
+    const [state, dispatch] = useReducer(FacilityReducer, facilityInitialState);
 
     //handlers
     const handleAddModal = () => {
@@ -38,12 +43,54 @@ export const withFacilityContext = <T extends {}>(
       dispatch({ type: "SELECT", selected: data });
     };
 
-    const setAvailFields=async (val: string)=>{
-      const facilityManagers=await getAvailFacilityManagers(val);  
+    const setAvailFields = async (val: string) => {
+      const facilityManagers = await getAvailFacilityManagers(val);
       console.log(facilityManagers);
-          
-      dispatch({type: "SET_AVAIL_FIELDS", data: facilityManagers.data})
-    }
+
+      dispatch({ type: "SET_AVAIL_FIELDS", data: facilityManagers.data });
+    };
+
+    //filter
+    const handleFilterChange = (filter: string[], url: string) => {
+      dispatch({ type: "SET_FILTERS", data: filter });
+
+      //pagination
+      const currentUrl = new URLSearchParams(url);
+      const [size, page] = [currentUrl.get("size"), currentUrl.get("page")];
+      const newUrl = new URLSearchParams();
+      newUrl.set("page", `${page}`);
+      newUrl.set("size", `${size}`);
+      if (state.searchValue) newUrl.set("search", state.searchValue || "");
+      const fields = filter.reduce((a, b) => {
+        return `${a}&fields=${b}`;
+      }, "");
+      updateUrl(newUrl.toString() + fields);
+    };
+
+    const handleUrlChange = (size: number, page: number) => {
+      const currentUrl = new URLSearchParams(state.urlFilter);
+      currentUrl.set("size", `${size}`);
+      currentUrl.set("page", `${page}`);
+      handleFilterChange(state.selectedFilters, currentUrl.toString());
+    };
+
+    const updateSearch = (val: string) => {
+      dispatch({ type: "SET_SEARCH", data: val });
+
+      const currentUrl = new URLSearchParams(state.urlFilter);
+
+      currentUrl.set("search", val);
+
+      handleFilterChange(state.selectedFilters, currentUrl.toString());
+    };
+
+    const updateUrl = (newUrl: string) => {
+      dispatch({ type: "SET_URL_FILTER", data: newUrl });
+    };
+
+    const setCount = (count: number) => {
+      dispatch({ type: "SET_COUNT", count: count });
+    };
 
     const actionButtons = (data: FacilityData) => {
       return (
@@ -71,21 +118,21 @@ export const withFacilityContext = <T extends {}>(
       );
     };
 
-    const getData = async () => {
+    const getData = async (filter: string) => {
       try {
         dispatch({ type: "GET_DATA" });
-        const facilitys = await getFacility();
-        console.log(facilitys);
-
-        const tableData: FacilityTableData[] =
-          facilitys.content.map((data: FacilityData) => {
+        const facilitys = await getFacility(filter);
+        setCount(facilitys.page.totalElements)
+        const tableData: FacilityTableData[] = facilitys.content.map(
+          (data: FacilityData) => {
             return {
               name: data.name,
               address: data.address,
               facilityManagerEmail: data.facilityManagerEmail,
               action: actionButtons(data),
             };
-          });
+          }
+        );
         dispatch({ type: "GET_DATA_SUCCESS", data: tableData });
       } catch (error) {
         dispatch({
@@ -101,7 +148,12 @@ export const withFacilityContext = <T extends {}>(
       handleDeleteModal,
       handleSelect,
       getData,
-      setAvailFields
+      setAvailFields,
+      
+      handleFilterChange,
+      handleUrlChange,
+      updateSearch,
+      setCount
     };
 
     return (

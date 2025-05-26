@@ -1,5 +1,5 @@
 import styles from "./FacilityManagerPage.module.scss";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import type {
   FacilityManagerProps,
   FacilityManagerTableData,
@@ -16,19 +16,31 @@ import {
   FacilityManagerContext,
   withFacilityManagerContext,
 } from "./FacilityManager.state.tsx";
+import Pagination from "../../../../components/Pagination/Pagination.tsx";
+import MultipleSelect from "../../../../components/MultipleSelect/MultipleSelect.tsx";
 
 const FacilityManagerPage = ({}: FacilityManagerProps) => {
+    //ref
+    const searchRef=useRef<HTMLInputElement>(null)
+
   //useContext
   const {
-    handleAddModal,
-    handleEditModal,
-    handleDeleteModal,
     getData,
+    handleAddModal,
     addModal,
     deleteModal,
     editModal,
     facilityManagerTableData,
-    selected
+    selected,
+
+    //filters,
+    searchValue,
+    selectedFilters,
+    count,
+    urlFilter,
+    handleUrlChange,
+    handleFilterChange,
+    updateSearch,
   } = useContext(FacilityManagerContext)!;
 
   //columnData
@@ -40,10 +52,13 @@ const FacilityManagerPage = ({}: FacilityManagerProps) => {
     { id: "action", label: "Actions" },
   ];
 
+  const handleFilter = () => {
+    getData(urlFilter);
+  };
+
   //useEffect
   useEffect(() => {
-    console.log("getting Data");
-    getData();
+    getData(urlFilter);
   }, []);
 
   return (
@@ -52,14 +67,23 @@ const FacilityManagerPage = ({}: FacilityManagerProps) => {
         <div>
           <div className={styles.Filter}>
             <label>
-              <select>
-                <option value="name">Facility Name</option>
-                <option value="email">Facility Manager Email</option>
-              </select>
+              <MultipleSelect
+                selectedFilters={selectedFilters}
+                handleFilter={handleFilterChange}
+                availFilters={["name", "email"]}
+                getData={getData}
+                url={urlFilter}
+              />
             </label>
 
-            <Input type="text" placeholder="search" />
-            <Button primary>Filter</Button>
+            <Input
+              type="text"
+              placeholder="search"
+              ref={searchRef}
+              defaultValue={searchValue}
+              onChange={(e) => updateSearch(e.target.value)}
+            />
+            <Button primary onClick={handleFilter}>Filter</Button>
           </div>
         </div>
 
@@ -69,12 +93,20 @@ const FacilityManagerPage = ({}: FacilityManagerProps) => {
       </div>
 
       <div className={styles.Table}>
-        <Table<FacilityManagerTableData> tableData={facilityManagerTableData} columnData={columns} />
+        <Table<FacilityManagerTableData>
+          tableData={facilityManagerTableData}
+          columnData={columns}
+        />
       </div>
-
-      {addModal && <AddModal handleModal={handleAddModal} updateData={getData} />}
-      {selected && editModal && <EditModal handleModal={handleEditModal} updateData={getData} id={selected?.id} name={selected?.name} email={selected?.email}/>}
-      {deleteModal && <DeleteModal handleModal={handleDeleteModal} updateData={getData} id={selected?.id}/>}
+      <Pagination
+        count={count}
+        setUrl={handleUrlChange}
+        url={urlFilter}
+        getData={getData}
+      />
+      {addModal && <AddModal />}
+      {selected && editModal && <EditModal />}
+      {deleteModal && <DeleteModal />}
     </div>
   );
 };

@@ -10,7 +10,7 @@ import {
   type FacilityForm,
 } from "./Modal.types.ts";
 import { toast } from "react-toastify";
-import { editFacility } from "../../../../services/Admin/Facility.service.ts";
+import { editFacility } from "../../../../services/Facility.service.ts";
 import { FacilityContext } from "../FacilityPage/FacilityPage.state.tsx";
 import { useContext, useEffect } from "react";
 import SearchableComponents from "../../../../components/SearchableComponents/SearchableComponents.tsx";
@@ -68,7 +68,7 @@ const EditModal = ({
           <small>{formState.errors.address?.message}</small>
         )}
 
-        <SearchableComponents availFields={availFields} setAvailFields={setAvailFields} register={()=>register("facilityManagerEmail")}/>
+        <SearchableComponents availFields={availFields} setAvailFields={setAvailFields} toSearch={"Email"}/>
          {!!formState.errors.facilityManagerEmail && (
           <small>{formState.errors.facilityManagerEmail?.message}</small>
         )}
