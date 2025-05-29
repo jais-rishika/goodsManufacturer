@@ -1,24 +1,22 @@
-export interface WorkersProps { }
+export interface ToolCribManagerProps { }
+export interface ToolCribManagerProps { }
 import type { ReactNode } from "react";
 
-export interface WorkersProps { }
-
-export interface WorkersTableData {
+export interface ToolCribManagerTableData {
     name: string,
     email: string,
-    workStation: string,
     createdAt: string,
     RequestHistory: string
     action: () => ReactNode
 }
 
-export interface WorkersData extends WorkersTableData {
+export interface ToolCribManagerData extends ToolCribManagerTableData {
     id: string
 }
 
-export type WorkersAction = {
+export type ToolCribManagerAction = {
     type: "UPDATE_DATA",
-    data: WorkersTableData[]
+    data: ToolCribManagerTableData[]
 } | {
     type: 'ADD_MODAL'
     status: boolean
@@ -33,7 +31,7 @@ export type WorkersAction = {
     status: boolean
 } | {
     type: 'SELECT'
-    selected: WorkersData
+    selected: ToolCribManagerData
 } | {
     type: "GET_DATA",
 } | {
@@ -41,7 +39,7 @@ export type WorkersAction = {
     error: string
 } | {
     type: "GET_DATA_SUCCESS"
-    data: WorkersData[]
+    data: ToolCribManagerData[]
 } | {
     type: "SET_FILTERS",
     data: string[]
@@ -56,7 +54,7 @@ export type WorkersAction = {
     data: string
 }
 
-export interface WorkersState {
+export interface ToolCribManagerState {
     isLoading: boolean,
     error: string,
 
@@ -65,9 +63,9 @@ export interface WorkersState {
     deleteModal: boolean,
     reqHistoryModal: boolean,
 
-    selected: WorkersData | null,
-    workersData: WorkersData[],
-    workersTableData: WorkersTableData[],
+    selected: ToolCribManagerData | null,
+    ToolCribManagerData: ToolCribManagerData[],
+    ToolCribManagerTableData: ToolCribManagerTableData[],
 
     selectedFilters: string[],
     searchValue: string
@@ -75,11 +73,11 @@ export interface WorkersState {
     urlFilter: string,
 }
 
-export interface WorkersMethods {
+export interface ToolCribManagerMethods {
     handleAddModal: () => void
-    handleEditModal: () => void
-    handleDeleteModal: () => void
-    handleSelect: (data: WorkersData) => void
+    hideEditModal: () => void
+    hideDeleteModal: () => void
+    handleSelect: (data: ToolCribManagerData) => void
 
     getData: (val: string) => void
 

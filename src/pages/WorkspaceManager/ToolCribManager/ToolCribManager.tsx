@@ -1,3 +1,16 @@
+import styles from "./ToolCribManager.module.scss";
+import { useContext, useEffect, useRef, type ChangeEvent } from "react";
+
+import type {
+  ToolCribManagerProps,
+  ToolCribManagerTableData,
+} from "./ToolCribManager.types.ts";
+
+import {
+  ToolCribManagerContext,
+  withToolCribManagerContext,
+} from "./ToolCribManager.state.tsx";
+
 import Button from "../../../components/Button/Button.tsx";
 import Input from "../../../components/Input/Input.tsx";
 import MultipleSelect from "../../../components/MultipleSelect/MultipleSelect.tsx";
@@ -7,13 +20,12 @@ import type { Column } from "../../../components/Table/Table.types.ts";
 import AddModal from "./Modals/AddModal.tsx";
 import DeleteModal from "./Modals/DeleteModal.tsx";
 import EditModal from "./Modals/EditModal.tsx";
-import styles from "./WorkStation.module.scss";
-import { useContext, useEffect, useRef, type ChangeEvent } from "react";
-import { withWorkStation, WorkStationContext } from "./WorkStation.state.tsx";
-import type { WorkStationProps, WorkStationTableData } from "./WorkStation.types.ts";
 
 
-const WorkStation = ({}: WorkStationProps) => {
+const ToolCribManager = ({}: ToolCribManagerProps) => {
+  //ref
+  const searchRef=useRef<HTMLInputElement>(null)
+
   //useContext
   const {
     getData,
@@ -21,7 +33,7 @@ const WorkStation = ({}: WorkStationProps) => {
     addModal,
     deleteModal,
     editModal,
-    WorkStationTableData,
+    ToolCribManagerTableData,
     selected,
 
     //filters,
@@ -31,23 +43,20 @@ const WorkStation = ({}: WorkStationProps) => {
     urlFilter,
     handleUrlChange,
     handleFilterChange,
-    updateSearch
-  } = useContext(WorkStationContext)!;
-
-  //ref
-  const searchRef=useRef<HTMLInputElement>(null)
+    updateSearch,
+  } = useContext(ToolCribManagerContext)!;
 
   //columnData
-  const columns: Column<WorkStationTableData>[] = [
-    { id: "name", label: "WorkStation Name" },
-    { id: "workstationManagerName", label: "WorkStation Manager Name" },
-    { id: "workstationManagerEmail", label: "WorkStation Manager Email" },
+  const columns: Column<ToolCribManagerTableData>[] = [
+    { id: "name", label: "ToolCrib Manager Name" },
+    { id: "email", label: "ToolCrib Manager Email" },
+    { id: "createdAt", label: "Joined ON" },
     { id: "action", label: "Actions" },
   ];
 
-  const handleFilter=()=>{
+  const handleFilter = () => {
     getData(urlFilter);
-  }
+  };
 
   //useEffect
   useEffect(() => {
@@ -55,7 +64,7 @@ const WorkStation = ({}: WorkStationProps) => {
   }, []);
 
   return (
-    <div>
+    <>
       <div className={styles.Top}>
         <div>
           <div className={styles.Filter}>
@@ -63,39 +72,45 @@ const WorkStation = ({}: WorkStationProps) => {
               <MultipleSelect
                 selectedFilters={selectedFilters}
                 handleFilter={handleFilterChange}
-                availFilters={["name", "address"]}
+                availFilters={["name", "email"]}
                 getData={getData}
                 url={urlFilter}
               />
             </label>
 
-            <Input type="text" placeholder="search" ref={searchRef} defaultValue={searchValue} onChange={(e)=>updateSearch(e.target.value)}/>
-            <Button primary onClick={handleFilter} >Filter</Button>
+            <Input
+              type="text"
+              placeholder="search"
+              ref={searchRef}
+              defaultValue={searchValue}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => updateSearch(e.target.value)}
+            />
+            <Button primary onClick={handleFilter}>Filter</Button>
           </div>
         </div>
 
         <Button primary onClick={handleAddModal}>
-          Add WorkStation
+          Add ToolCrib Manager
         </Button>
       </div>
 
       <div className={styles.Table}>
-        <Table<WorkStationTableData>
-          tableData={WorkStationTableData}
+        <Table<ToolCribManagerTableData>
+          tableData={ToolCribManagerTableData}
           columnData={columns}
         />
       </div>
       <Pagination
         count={count}
-        url={urlFilter}
         setUrl={handleUrlChange}
+        url={urlFilter}
         getData={getData}
       />
       {addModal && <AddModal />}
       {selected && editModal && <EditModal />}
       {deleteModal && <DeleteModal />}
-    </div>
+    </>
   );
 };
 
-export default withWorkStation(WorkStation);
+export default withToolCribManagerContext(ToolCribManager);
