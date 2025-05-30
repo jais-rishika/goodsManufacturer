@@ -16,9 +16,9 @@ const DeleteModal = ({ }: ModalProps) => {
     try {
       const res = await deleteWorkStation(selected!.id);
       getData();
-      toast.success("Facilty Manager Deleted Successfully");
+      toast.success("WorkStation Deleted Successfully");
     } catch (error) {
-      toast.error("Facilty Manager Deletion Failed");
+      toast.error("WorkStation Deletion Failed");
     } finally {
       handleDeleteModal();
     }
@@ -29,8 +29,8 @@ const DeleteModal = ({ }: ModalProps) => {
 
       <div className={styles.DeleteContainer}>
 
-        <h2>Delete WorkStation Manager</h2>
-        <h5>Are You sure you want to delete this WorkStationManager?</h5>
+        <h2>Delete WorkStation </h2>
+        <h5>Are You sure you want to delete this WorkStation?</h5>
         
         <Button danger onClick={handleDelete}>
           DELETE

@@ -14,7 +14,7 @@ const Table = <T extends {}>({ columnData, tableData }: TableProps<T>) => {
         </tr>
       </thead>
       <tbody>
-        {tableData.map((row, idx) => {
+        {tableData && tableData.map((row, idx) => {
           return (
             <tr key={idx}>
               {columnData.map((col, idx) => {

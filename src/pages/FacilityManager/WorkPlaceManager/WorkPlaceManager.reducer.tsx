@@ -8,6 +8,11 @@ export const workPlaceManagerInitialState: WorkPlaceManagerState = {
   deleteModal: false,
   selected: null,
   workPlaceManagerTableData: [],
+
+  selectedFilters:[],
+  searchValue: "",
+  count: 0,
+  urlFilter:"page=0&size=5",
 };
 export const WorkPlaceManagerReducer = (
   prevState: WorkPlaceManagerState,
@@ -21,6 +26,7 @@ export const WorkPlaceManagerReducer = (
       return { ...prevState, editModal: action.status };
     case "DELETE_MODAL":
       return { ...prevState, deleteModal: action.status };
+    
     case "GET_DATA":
       return { ...prevState, isLoading: true, error: "" };
     case "GET_DATA_FAILED":
@@ -29,6 +35,16 @@ export const WorkPlaceManagerReducer = (
       return { ...prevState, isLoading: false, workPlaceManagerTableData: action.data };
     case "SELECT":
       return {...prevState, selected: action.selected}
+
+    case "SET_COUNT":
+      return {...prevState, count: action.count}
+    case "SET_FILTERS":
+      return {...prevState, selectedFilters: action.data} 
+    case "SET_SEARCH": 
+      return {...prevState, searchValue: action.data}
+    case "SET_URL_FILTER":
+      return {...prevState, urlFilter: action.data}
+    
     default:
       return {...prevState}
   }

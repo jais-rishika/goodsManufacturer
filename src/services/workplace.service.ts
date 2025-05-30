@@ -1,40 +1,37 @@
-// import type { WorkPlaceForm } from "../pages/Admin/WorkPlace/Modals/Modal.types"
+// import type { any } from "../pages/Admin/WorkPlace/Modals/Modal.types"
+import type { WorkPlaceForm } from "../pages/FacilityManager/WorkPlace/Modals/Modal.types";
 import axiosInstance from "./axios.instance"
 
-export const getWorkPlace=async()=>{
+export const getWorkPlace=async(filter: string)=>{
     try {
-        const res= await axiosInstance.get(`/owner/WorkPlace?page=0&size=10`);
+        const res= await axiosInstance.get(`/facility-manager/workplace?${filter}`);
         return res.data;
     } catch (error) {
         throw error;
     }
 }
 
-export const getAvailWorkPlaceManagers=async(val: string)=>{
+export const fetchManagerWorkplaces=async(filter: string)=>{
     try {
-        const res= await axiosInstance.get(`/owner/WorkPlace-manager/available?search=${val}&fields=email`);        
+        const res= await axiosInstance.get('/facility-manager/workplace');
         return res.data;
     } catch (error) {
         throw error;
     }
-}
-
-export const getWorkPlaceInSpecificFacility=async()=>{
-    
 }
 
 export const addWorkPlace=async(payload: WorkPlaceForm)=>{
     try {
-        const res= await axiosInstance.post('/owner/WorkPlace',payload);
+        const res= await axiosInstance.post('/facility-manager/workplace',payload);
         return res.data;
     } catch (error) {
         throw error;
     }
 }
 
-export const editWorkPlace=async(payload: WorkPlaceForm, id: string)=>{
+export const editWorkPlace=async(payload: any, id: string)=>{
     try {
-        const res= await axiosInstance.patch(`/owner/WorkPlace/${id}`,payload);
+        const res= await axiosInstance.patch(`/facility-manager/workplace/${id}`,payload);
         return res.data;
     } catch (error) {
         throw error;
@@ -43,7 +40,7 @@ export const editWorkPlace=async(payload: WorkPlaceForm, id: string)=>{
 
 export const deleteWorkPlace=async(id: string)=>{
     try {
-        const res= await axiosInstance.delete(`/owner/WorkPlace/${id}`);
+        const res= await axiosInstance.delete(`/facility-manager/workplace/${id}`);
         return res.data;
     } catch (error) {
         throw error;

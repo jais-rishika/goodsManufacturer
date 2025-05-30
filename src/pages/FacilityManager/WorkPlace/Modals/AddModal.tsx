@@ -5,47 +5,72 @@ import Input from "../../../../components/Input/Input.tsx";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Modal from "../../../../components/Modal/Modal.tsx";
 import {
-  FacilityManagerFormSchema,
   type ModalProps,
-  type FacilityManagerForm,
+  type WorkPlaceForm,
+  WorkPlaceFormSchema,
 } from "./Modal.types.ts";
-import { addFacilityManager } from "../../../../services/FacilityManager.service.ts";
 import { toast } from "react-toastify";
 import { WorkPlaceContext } from "../WorkPlace.state.tsx";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import SearchableComponents from "../../../../components/SearchableComponents/SearchableComponents.tsx";
+import { addWorkPlace } from "../../../../services/workplace.service.ts";
 
-const AddModal = ({ }: ModalProps) => {
-  const { register, handleSubmit, formState } = useForm<FacilityManagerForm>({
-    resolver: zodResolver(FacilityManagerFormSchema),
+const AddModal = ({}: ModalProps) => {
+  const { register, handleSubmit, formState } = useForm<WorkPlaceForm>({
+    resolver: zodResolver(WorkPlaceFormSchema),
   });
 
-  const {handleModal,updateData}=useContext(WorkPlaceContext)!;
+  const {
+    availFields,
+    setAvailFields,
+    handleAddModal,
+    getData,
+    urlFilter,
+    selectedManager,
+    updateManager,
+  } = useContext(WorkPlaceContext)!;
 
-  const handleAddFacilityManager = async (data: FacilityManagerForm) => {
+  //useEffect
+    useEffect(() => {
+      setAvailFields("");
+    }, []);
+
+  const handleAddWorkPlace = async (data: WorkPlaceForm) => {
+    if(!selectedManager){
+      alert("ADD WorkPlace Manager")
+    }
+    data["workplaceManagerEmail"]=selectedManager!;
+    console.log(data);
+    
     try {
-      const res = await addFacilityManager(data);
-      handleModal();
-      updateData();
-      toast.success("Facility Manager Added ")
+      const res = await addWorkPlace(data);
+      handleAddModal();
+      getData(urlFilter);
+      toast.success("Facility Manager Added ");
     } catch (error) {
-      toast.error("Sorry!! Facility Manager Could not be Added")
+      toast.error("Sorry!! Facility Manager Could not be Added");
     }
   };
 
   return (
-    <Modal setShowModal={handleModal}>
+    <Modal setShowModal={handleAddModal}>
       <form
-        onSubmit={handleSubmit(handleAddFacilityManager)}
+        onSubmit={handleSubmit(handleAddWorkPlace)}
         className={styles.Form}
       >
-        <h2>Add Facility Manager</h2>
+        <h2>Add WorkPlace</h2>
         <Input type="text" placeholder="Enter name" {...register("name")} />
         {!!formState.errors.name && (
           <small>{formState.errors.name.message}</small>
         )}
-        <Input type="email" placeholder="Enter email" {...register("email")} />
-        {!!formState.errors.email && (
-          <small>{formState.errors.email?.message}</small>
+        <SearchableComponents
+          setFieldValue={updateManager}
+          availFields={availFields!}
+          setAvailFields={setAvailFields!}
+          toSearch={"Email"}
+        />
+        {!!formState.errors.workplaceManagerEmail && (
+          <small>{formState.errors.workplaceManagerEmail?.message}</small>
         )}
         <Button type="submit">Add</Button>
       </form>

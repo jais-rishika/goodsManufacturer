@@ -1,14 +1,8 @@
 import styles from "./Workers.module.scss";
 import { useContext, useEffect, useRef, type ChangeEvent } from "react";
-import type {
-  WorkersProps,
-  WorkersTableData,
-} from "./Workers.types.ts";
+import type { WorkersProps, WorkersTableData } from "./Workers.types.ts";
 
-import {
-  WorkersContext,
-  withWorkersContext,
-} from "./Workers.state.tsx";
+import { WorkersContext, withWorkersContext } from "./Workers.state.tsx";
 import Button from "../../../components/Button/Button.tsx";
 import Input from "../../../components/Input/Input.tsx";
 import MultipleSelect from "../../../components/MultipleSelect/MultipleSelect.tsx";
@@ -19,10 +13,9 @@ import AddModal from "./Modals/AddModal.tsx";
 import DeleteModal from "./Modals/DeleteModal.tsx";
 import EditModal from "./Modals/EditModal.tsx";
 
-
 const Workers = ({}: WorkersProps) => {
   //ref
-  const searchRef=useRef<HTMLInputElement>(null)
+  const searchRef = useRef<HTMLInputElement>(null);
 
   //useContext
   const {
@@ -48,8 +41,8 @@ const Workers = ({}: WorkersProps) => {
   const columns: Column<WorkersTableData>[] = [
     { id: "name", label: "WorkPlace Manager Name" },
     { id: "email", label: "WorkPlace Manager Email" },
-    { id: "createdAt", label: "Joined ON" },
-    { id: "workStation", label: "WorkStation" },
+    { id: "workplaceName", label: "workplace Name" },
+    { id: "workstationCode", label: "WorkStation" },
     { id: "action", label: "Actions" },
   ];
 
@@ -82,9 +75,13 @@ const Workers = ({}: WorkersProps) => {
               placeholder="search"
               ref={searchRef}
               defaultValue={searchValue}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => updateSearch(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                updateSearch(e.target.value)
+              }
             />
-            <Button primary onClick={handleFilter}>Filter</Button>
+            <Button primary onClick={handleFilter}>
+              Filter
+            </Button>
           </div>
         </div>
 

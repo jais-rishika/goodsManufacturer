@@ -4,8 +4,8 @@ export interface WorkPlaceProps { }
 
 export interface WorkPlaceTableData {
     name: string,
-    workPlaceManagerName: string,
-    workPlaceManagerEmail: string,
+    workplaceManagerName: string,
+    workplaceManagerEmail: string,
     action: () => ReactNode
 
 }
@@ -37,7 +37,23 @@ export type WorkplaceAction = {
 } | {
     type: "SET_AVAIL_FIELDS",
     data: string[]
-}
+} | {
+    type: "SET_MANAGER",
+    data: string
+
+} | {
+        type: "SET_FILTERS",
+        data: string[]
+    } | {
+        type: "SET_COUNT",
+        count: number
+    } | {
+        type: "SET_URL_FILTER",
+        data: string
+    } | {
+        type: "SET_SEARCH",
+        data: string
+    }
 
 export interface WorkPlaceState {
     isLoading: boolean,
@@ -47,7 +63,14 @@ export interface WorkPlaceState {
     editModal: boolean,
     selected: WorkPlaceData | null,
     workplaceTableData: WorkPlaceTableData[],
-    availFields: string[]
+    availFields: string[],
+    selectedManager: string | null,
+
+
+    selectedFilters: string[],
+    searchValue: string
+    count: number,
+    urlFilter: string,
 }
 
 export interface WorkPlaceMethods {
@@ -55,6 +78,13 @@ export interface WorkPlaceMethods {
     handleEditModal: () => void,
     handleDeleteModal: () => void,
     handleSelect: (data: WorkPlaceData) => void
-    getData: () => void,
     setAvailFields: (val: string) => void
+    updateManager: (val: string) => void
+
+    getData: (val: string) => void,
+
+    handleFilterChange: (val: string[], url: string) => void
+    handleUrlChange: (size: number, page: number) => void
+    updateSearch: (val: string) => void
+    setCount: (count: number) => void
 }

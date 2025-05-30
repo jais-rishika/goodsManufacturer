@@ -50,6 +50,10 @@ export const withFacilityContext = <T extends {}>(
       dispatch({ type: "SET_AVAIL_FIELDS", data: facilityManagers.data });
     };
 
+    const updateManager = async (val: string) => {
+      dispatch({ type: "SET_MANAGER", data: val });
+    };
+
     //filter
     const handleFilterChange = (filter: string[], url: string) => {
       dispatch({ type: "SET_FILTERS", data: filter });
@@ -122,7 +126,7 @@ export const withFacilityContext = <T extends {}>(
       try {
         dispatch({ type: "GET_DATA" });
         const facilitys = await getFacility(filter);
-        setCount(facilitys.page.totalElements)
+        setCount(facilitys.page.totalElements);
         const tableData: FacilityTableData[] = facilitys.content.map(
           (data: FacilityData) => {
             return {
@@ -148,12 +152,14 @@ export const withFacilityContext = <T extends {}>(
       handleDeleteModal,
       handleSelect,
       getData,
-      setAvailFields,
       
+      setAvailFields,
+      updateManager,
+
       handleFilterChange,
       handleUrlChange,
       updateSearch,
-      setCount
+      setCount,
     };
 
     return (

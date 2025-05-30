@@ -15,7 +15,7 @@ import { useContext } from "react";
 import { FacilityManagerContext } from "../FacilityManagerPage/FacilityManager.state.tsx";
 
 const AddModal = ({}: ModalProps) => {
-  const {handleAddModal, getData}= useContext(FacilityManagerContext)!;
+  const {handleAddModal, getData, urlFilter}= useContext(FacilityManagerContext)!;
 
   const { register, handleSubmit, formState } = useForm<FacilityManagerForm>({
     resolver: zodResolver(FacilityManagerFormSchema),
@@ -25,7 +25,7 @@ const AddModal = ({}: ModalProps) => {
     try {
       const res = await addFacilityManager(data);
       handleAddModal();
-      getData();
+      getData(urlFilter);
       toast.success("Facility Manager Added ")
     } catch (error) {
       toast.error("Sorry!! Facility Manager Could not be Added")

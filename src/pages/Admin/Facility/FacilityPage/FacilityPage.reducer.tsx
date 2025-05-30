@@ -10,6 +10,7 @@ export const facilityInitialState: FacilityState = {
   facilityTableData: [],
   availFields: [],
 
+  selectedManager: null,
   selectedFilters:[],
   searchValue: "",
   count: 0,
@@ -41,6 +42,8 @@ export const FacilityReducer = (
       return {...prevState, selected: action.selected}
     case "SET_AVAIL_FIELDS":
       return {...prevState, availFields: action.data}
+    case "SET_MANAGER":
+      return {...prevState, selectedManager: action.data}
 
     case "SET_COUNT":
       return {...prevState, count: action.count}

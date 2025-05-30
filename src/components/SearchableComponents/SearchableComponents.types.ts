@@ -1,9 +1,10 @@
-export interface SearchableComponentsProps{
+export interface SearchableComponentsProps {
     availFields: string[]
-    setAvailFields: (val: string)=> void
+    setAvailFields: (val: string) => void
     toSearch: string
-    // register: any
- }
+    setFieldValue: (val: string) => void
+    selectedField?: string
+}
 
 export interface SearchableState {
     showFields: boolean,
@@ -12,17 +13,17 @@ export interface SearchableState {
     availFields: { email: string }[],
 }
 
-export type SearchableAction={
+export type SearchableAction = {
     type: "SHOW_FIELDS"
-}|{
+} | {
     type: "CURRENTLY_SELECTED"
     value: string
-}|{
+} | {
     type: "SEACRH"
     value: string
 }
 
 export interface SearchableMethods {
     handleShowFields: () => void
-    selectValue: (value: string)=> void
+    selectValue: (value: string) => void
 }

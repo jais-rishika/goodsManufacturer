@@ -1,113 +1,123 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef, type ChangeEvent } from "react";
 import Button from "../../../components/Button/Button.tsx";
 import Card from "../../../components/Card/Card.tsx";
 import Input from "../../../components/Input/Input.tsx";
 import type { ToolsDetail } from "../../Admin/Tools/Tools.types.ts";
 import styles from "./ToolsInventory.module.scss";
-import type { ToolsInventoryProps } from "./ToolsInventory.types.ts";
-import SendToolsModal from "./Modal/SendToolsModal.tsx";
-import { ToolInventoryContext } from "./ToolsInventory.state.tsx";
+import type { ToolInventoryDetail, ToolsInventoryProps } from "./ToolsInventory.types.ts";
+import SendToolsModal from "../../Worker/ToolsInventory/Modal/ReqToolModal.tsx";
+import {
+  ToolInventoryContext,
+  withToolInventory,
+} from "./ToolsInventory.state.tsx";
 import image from "../../../../public/vite.svg";
+import Pagination from "../../../components/Pagination/Pagination.tsx";
+import MultipleSelect from "../../../components/MultipleSelect/MultipleSelect.tsx";
+import { hideLoader, showLoader } from "../../../components/Loader/Loader.tsx";
 
 const ToolsInventory = ({}: ToolsInventoryProps) => {
-  const context = useContext(ToolInventoryContext)!;
-  const getData = () => {};
+  //ref
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  const {
+    ToolInventoryData,
+    sendToolModal,
+    showSendToolModal,
+    getData,
+    setSelected,
+    //filters,
+    searchValue,
+    selectedFilters,
+    count,
+    urlFilter,
+    handleUrlChange,
+    handleFilterChange,
+    updateSearch,
+    updateMaxPrice,
+    updateMinPrice,
+  } = useContext(ToolInventoryContext)!;
+
+  const handleFilter = () => {
+    getData(urlFilter);
+  };
+
+  const handleMinPrice = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = +e.target.value;
+    console.log(val);
+    if (val < 1) {
+      alert("Min value can't be less than 1");
+      e.target.value = "";
+    } else {
+      updateMinPrice(val);
+    }
+  };
+  const handleMaxPrice = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = +e.target.value;
+    if (val < 1) {
+      alert("Max value can't be less than 1");
+      e.target.value = "";
+    } else {
+      updateMaxPrice(val);
+    }
+  };
+  const handleSendToolModal=(data: ToolInventoryDetail)=>{
+    setSelected(data)
+    showSendToolModal()
+  }
+
   useEffect(() => {
-    getData();
+    showLoader();
+    getData(urlFilter);
+    hideLoader();
   }, []);
 
-  const handleSendToolModal = () => {};
-  const sendModal = false;
-  const newdata: ToolsDetail[] = [
-    {
-      id: "10",
-      name: "Adnis",
-      price: 12,
-      photo:
-        "https://www.google.com/search?q=image+&sca_esv=ef0fcb99cdf186c7&udm=2&biw=1600&bih=699&ei=Wz8xaI-UPKCAvr0Pjt2f2Q4&ved=0ahUKEwjPraWol7uNAxUggK8BHY7uJ-sQ4dUDCBE&uact=5&oq=image+&gs_lp=EgNpbWciBmltYWdlIDINEAAYgAQYsQMYQxiKBTIIEAAYgAQYsQMyCBAAGIAEGLEDMgUQABiABDIIEAAYgAQYsQMyCBAAGIAEGLEDMgsQABiABBixAxiDATIIEAAYgAQYsQMyBRAAGIAEMggQABiABBixA0jjE1CYEViYEXACeACQAQCYAW-gAW-qAQMwLjG4AQPIAQD4AQGYAgOgAooBwgIGEAAYBxgewgIKEAAYgAQYQxiKBZgDAIgGAZIHAzIuMaAHlAWyBwMwLjG4B3w&sclient=img#vhid=-mNI5DBCB_iEPM&vssid=mosaic",
-      fineAmount: 23,
-      category: "NORMAL",
-      isPerishable: "false",
-      returnPeriod: 4,
-    },
-    {
-      id: "10",
-      name: "Adnis",
-      price: 12,
-      photo:
-        "https://www.google.com/search?q=image+&sca_esv=ef0fcb99cdf186c7&udm=2&biw=1600&bih=699&ei=Wz8xaI-UPKCAvr0Pjt2f2Q4&ved=0ahUKEwjPraWol7uNAxUggK8BHY7uJ-sQ4dUDCBE&uact=5&oq=image+&gs_lp=EgNpbWciBmltYWdlIDINEAAYgAQYsQMYQxiKBTIIEAAYgAQYsQMyCBAAGIAEGLEDMgUQABiABDIIEAAYgAQYsQMyCBAAGIAEGLEDMgsQABiABBixAxiDATIIEAAYgAQYsQMyBRAAGIAEMggQABiABBixA0jjE1CYEViYEXACeACQAQCYAW-gAW-qAQMwLjG4AQPIAQD4AQGYAgOgAooBwgIGEAAYBxgewgIKEAAYgAQYQxiKBZgDAIgGAZIHAzIuMaAHlAWyBwMwLjG4B3w&sclient=img#vhid=-mNI5DBCB_iEPM&vssid=mosaic",
-      fineAmount: 23,
-      category: "NORMAL",
-      isPerishable: "false",
-      returnPeriod: 4,
-    },
-    {
-      id: "10",
-      name: "Adnis",
-      price: 12,
-      photo:
-        "https://www.google.com/search?q=image+&sca_esv=ef0fcb99cdf186c7&udm=2&biw=1600&bih=699&ei=Wz8xaI-UPKCAvr0Pjt2f2Q4&ved=0ahUKEwjPraWol7uNAxUggK8BHY7uJ-sQ4dUDCBE&uact=5&oq=image+&gs_lp=EgNpbWciBmltYWdlIDINEAAYgAQYsQMYQxiKBTIIEAAYgAQYsQMyCBAAGIAEGLEDMgUQABiABDIIEAAYgAQYsQMyCBAAGIAEGLEDMgsQABiABBixAxiDATIIEAAYgAQYsQMyBRAAGIAEMggQABiABBixA0jjE1CYEViYEXACeACQAQCYAW-gAW-qAQMwLjG4AQPIAQD4AQGYAgOgAooBwgIGEAAYBxgewgIKEAAYgAQYQxiKBZgDAIgGAZIHAzIuMaAHlAWyBwMwLjG4B3w&sclient=img#vhid=-mNI5DBCB_iEPM&vssid=mosaic",
-      fineAmount: 23,
-      category: "NORMAL",
-      isPerishable: "false",
-      returnPeriod: 4,
-    },
-    {
-      id: "10",
-      name: "Adnis",
-      price: 12,
-      photo:
-        "https://www.google.com/search?q=image+&sca_esv=ef0fcb99cdf186c7&udm=2&biw=1600&bih=699&ei=Wz8xaI-UPKCAvr0Pjt2f2Q4&ved=0ahUKEwjPraWol7uNAxUggK8BHY7uJ-sQ4dUDCBE&uact=5&oq=image+&gs_lp=EgNpbWciBmltYWdlIDINEAAYgAQYsQMYQxiKBTIIEAAYgAQYsQMyCBAAGIAEGLEDMgUQABiABDIIEAAYgAQYsQMyCBAAGIAEGLEDMgsQABiABBixAxiDATIIEAAYgAQYsQMyBRAAGIAEMggQABiABBixA0jjE1CYEViYEXACeACQAQCYAW-gAW-qAQMwLjG4AQPIAQD4AQGYAgOgAooBwgIGEAAYBxgewgIKEAAYgAQYQxiKBZgDAIgGAZIHAzIuMaAHlAWyBwMwLjG4B3w&sclient=img#vhid=-mNI5DBCB_iEPM&vssid=mosaic",
-      fineAmount: 23,
-      category: "NORMAL",
-      isPerishable: "false",
-      returnPeriod: 4,
-    },
-    {
-      id: "10",
-      name: "Adnis",
-      price: 12,
-      fineAmount: 23,
-      category: "NORMAL",
-      isPerishable: "false",
-      returnPeriod: 4,
-    },
-  ];
   return (
     <>
       <div className={styles.Top}>
         <div>
           <div className={styles.Filter}>
             <label>
-              <select>
-                <option value="name">Tool Name</option>
-                <option value="special">Special</option>
-                <option value="normal">Normal</option>
-                <option value="isPerishable">IsPerishable</option>
-              </select>
+              <MultipleSelect
+                selectedFilters={selectedFilters}
+                handleFilter={handleFilterChange}
+                availFilters={["name", "special", "normal", "isPerishable"]}
+                getData={getData}
+                url={urlFilter}
+              />
             </label>
 
-            <Input type="text" placeholder="search" />
+            <Input
+              type="text"
+              placeholder="search"
+              ref={searchRef}
+              defaultValue={searchValue}
+              onChange={(e) => updateSearch(e.target.value)}
+            />
             <div className={styles.PriceFilter}>
               <Input
                 placeholder="MinPrice"
                 type="number"
                 min={1}
+                onChange={handleMinPrice}
                 className={styles.Price}
               />
               <Input
                 placeholder="MaxPrice"
                 type="number"
+                min={1}
+                onChange={handleMaxPrice}
                 className={styles.Price}
               />
             </div>
-            <Button primary>Filter</Button>
+            <Button primary onClick={handleFilter}>
+              Filter
+            </Button>
           </div>
         </div>
       </div>
       <div className={styles.ToolsCard}>
-        {newdata.length > 0 &&
-          newdata.map((data: ToolsDetail) => (
+        {ToolInventoryData.length > 0 &&
+          ToolInventoryData.map((data: ToolsDetail,idx) => (
             <Card id={data.id} photo={image}>
               <p>
                 <span>Name:</span>
@@ -156,15 +166,21 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
                   <span>{data.isPerishable ? "YES" : "NO"}</span>
                 </p>
               </div>
-              <Button primary onClick={handleSendToolModal}>
-                SendTool
+              <Button primary onClick={()=>handleSendToolModal(ToolInventoryData[idx])}>
+                Send Tool
               </Button>
             </Card>
           ))}
       </div>
-      {sendModal && <SendToolsModal />}
+      <Pagination
+        count={count}
+        setUrl={handleUrlChange}
+        url={urlFilter}
+        getData={getData}
+      />
+      {sendToolModal && <SendToolsModal />}
     </>
   );
 };
 
-export default ToolsInventory;
+export default withToolInventory(ToolsInventory);

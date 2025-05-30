@@ -4,7 +4,7 @@ import { workStationInitialState, workStationReducer } from "./WorkStation.reduc
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Button from "../../../components/Button/Button";
 import { getWorkPlaceWorkers } from "../../../services/worker.service";
-import { getWorkStation } from "../../../services/workstation.service";
+import { fetchWorkplaceWorkStations, getWorkStation } from "../../../services/workstation.service";
 
 
 export const WorkStationContext = createContext<
@@ -117,7 +117,7 @@ export const withWorkStation = <T extends {}>(Component: ComponentType<T>) => {
     const getData = async (url: string) => {
       try {
         dispatch({ type: "GET_DATA" });
-        const workStation = await getWorkStation(url);
+        const workStation = await fetchWorkplaceWorkStations(url);
         setCount(workStation.page.totalElements);
 
         const tableData: WorkStationTableData[] = workStation.content.map(
@@ -130,6 +130,7 @@ export const withWorkStation = <T extends {}>(Component: ComponentType<T>) => {
             };
           }
         );
+        
         dispatch({ type: "GET_DATA_SUCCESS", data: tableData });
       } catch (error) {
         dispatch({

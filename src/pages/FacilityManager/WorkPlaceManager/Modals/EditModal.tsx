@@ -10,43 +10,42 @@ import {
   type FacilityManagerForm,
 } from "./Modal.types.ts";
 import { toast } from "react-toastify";
-import { editFacilityManager } from "../../../../services/FacilityManager.service.ts";
+import { WorkPlaceManagerContext } from "../WorkPlaceManager.state.tsx";
+import { useContext } from "react";
+import { editWorkPlaceManager } from "../../../../services/workplaceManager.service.ts";
 
-const EditModal = ({
-  handleModal,
-  updateData,
-  name,
-  email,
-  id,
-}: ModalProps) => {
+const EditModal = ({}: ModalProps) => {
+  const { handleEditModal, getData,handleSelect, selected, urlFilter } = useContext(
+    WorkPlaceManagerContext
+  )!;
+
   const { register, handleSubmit, formState } = useForm<FacilityManagerForm>({
     defaultValues: {
-      name: `${name}`,
-      email: `${email}`,
+      name: `${selected?.name}`,
+      email: `${selected?.email}`,
     },
     resolver: zodResolver(FacilityManagerFormSchema),
   });
 
   const EditFacility = async (data: FacilityManagerForm) => {
     try {
-      const res = await editFacilityManager(data, id!);
-      updateData();
+      const res = await editWorkPlaceManager(data, selected?.id!);
+      getData(urlFilter);
       toast.success("Facility Manager Edited ");
     } catch (error) {
       toast.error("Sorry!! Facility Manager Could not be Edited");
     } finally {
-      handleModal();
+      handleEditModal();
     }
   };
 
   return (
-    <Modal setShowModal={handleModal}>
+    <Modal setShowModal={handleEditModal}>
       <form onSubmit={handleSubmit(EditFacility)} className={styles.Form}>
-        <h2>Edit Facility Manager</h2>
+        <h2>Edit WorkPlace Manager</h2>
         <Input
           placeholder="Enter Facility Name"
           {...register("name")}
-          defaultValue={name}
         />
         {!!formState.errors.name && (
           <small>{formState.errors.name.message}</small>
@@ -54,7 +53,6 @@ const EditModal = ({
         <Input
           placeholder="Enter Facility Email"
           {...register("email")}
-          defaultValue={email}
         />
         {!!formState.errors.email && (
           <small>{formState.errors.email?.message}</small>

@@ -7,25 +7,24 @@ import styles from "./Modal.module.scss";
 import { useContext } from "react";
 import { FacilityManagerContext } from "../FacilityManagerPage/FacilityManager.state";
 const DeleteModal = ({}: ModalProps) => {
-  
-  const { handleDeleteModal, getData, selected } = useContext(
+  const { hideDeleteModal, getData, selected, urlFilter } = useContext(
     FacilityManagerContext
   )!;
 
   const handleDelete = async () => {
     try {
       const res = await deleteFacilityManager(selected!.id);
-      getData();
+      getData(urlFilter);
       toast.success("Facilty Manager Deleted Successfully");
     } catch (error) {
       toast.error("Facilty Manager Deletion Failed");
     } finally {
-      handleDeleteModal();
+      hideDeleteModal();
     }
   };
 
   return (
-    <Modal setShowModal={handleDeleteModal}>
+    <Modal setShowModal={hideDeleteModal}>
       <div className={styles.DeleteContainer}>
         <h2>Delete Facility Manager</h2>
         <h5>Are You sure you want to delete this FacilityManager?</h5>

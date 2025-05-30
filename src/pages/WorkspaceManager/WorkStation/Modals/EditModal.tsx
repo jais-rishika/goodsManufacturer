@@ -38,7 +38,7 @@ const EditModal = ({
     data["WorkStationManagerEmail"]=selectedManager!;
     
     try {
-      const res = await editWorkStation({...data}, selected!.id);
+      const res = await editWorkStation({data}, selected!.id);
       getData(urlFilter);
       toast.success("WorkStation  Edited ");
     } catch (error) {

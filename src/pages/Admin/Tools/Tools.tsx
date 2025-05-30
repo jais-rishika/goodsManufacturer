@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef, type ChangeEvent } from "react";
 import Card from "../../../components/Card/Card.tsx";
 import styles from "./Tools.module.scss";
 import type { ToolsProps, ToolsDetail } from "./Tools.types.ts";
@@ -9,102 +9,107 @@ import Input from "../../../components/Input/Input.tsx";
 import AddModal from "./Modals/AddModal.tsx";
 import EditModal from "./Modals/EditModal.tsx";
 import DeleteModal from "./Modals/DeleteModal.tsx";
-import image from "../../../../public/vite.svg"
+import MultipleSelect from "../../../components/MultipleSelect/MultipleSelect.tsx";
+import Pagination from "../../../components/Pagination/Pagination.tsx";
 
 const Tools = ({}: ToolsProps) => {
+  //ref
+  const searchRef = useRef<HTMLInputElement>(null);
+
   const {
-    toolsData,
     getData,
-    handleAddModal,
+    setSelected,
     handleDeleteModal,
     handleEditModal,
-    setSelected,
+    handleAddModal,
+    toolsData,
     addModal,
     editModal,
-    deleteModal
+    deleteModal,
+
+    //filters,
+    searchValue,
+    selectedFilters,
+    count,
+    urlFilter,
+    handleUrlChange,
+    handleFilterChange,
+    updateSearch,
+    updateMaxPrice,
+    updateMinPrice,
   } = useContext(ToolsContext)!;
 
+  const handleFilter = () => {
+    getData(urlFilter);
+  };
+
+  const handleMinPrice = (e: ChangeEvent<HTMLInputElement>) => {
+    
+    const val = +e.target.value;
+    console.log(val);
+    if (val < 1) {
+      alert("Min value can't be less than 1");
+      e.target.value=""
+    } else {
+      updateMinPrice(val);
+    }
+  };
+  const handleMaxPrice = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = +e.target.value;
+    if (val < 1) {
+      alert("Max value can't be less than 1");
+      e.target.value="";
+    } else {
+      updateMaxPrice(val);
+    }
+  };
+
   useEffect(() => {
-    getData();
+    getData(urlFilter);
   }, []);
 
-  const newdata: ToolsDetail[] = [
-    {
-      id: "10",
-      name: "Adnis",
-      price: 12,
-      photo:
-        "https://www.google.com/search?q=image+&sca_esv=ef0fcb99cdf186c7&udm=2&biw=1600&bih=699&ei=Wz8xaI-UPKCAvr0Pjt2f2Q4&ved=0ahUKEwjPraWol7uNAxUggK8BHY7uJ-sQ4dUDCBE&uact=5&oq=image+&gs_lp=EgNpbWciBmltYWdlIDINEAAYgAQYsQMYQxiKBTIIEAAYgAQYsQMyCBAAGIAEGLEDMgUQABiABDIIEAAYgAQYsQMyCBAAGIAEGLEDMgsQABiABBixAxiDATIIEAAYgAQYsQMyBRAAGIAEMggQABiABBixA0jjE1CYEViYEXACeACQAQCYAW-gAW-qAQMwLjG4AQPIAQD4AQGYAgOgAooBwgIGEAAYBxgewgIKEAAYgAQYQxiKBZgDAIgGAZIHAzIuMaAHlAWyBwMwLjG4B3w&sclient=img#vhid=-mNI5DBCB_iEPM&vssid=mosaic",
-      fineAmount: 23,
-      category: "NORMAL",
-      isPerishable: "false",
-      returnPeriod: 4,
-    },
-    {
-      id: "10",
-      name: "Adnis",
-      price: 12,
-      photo:
-        "https://www.google.com/search?q=image+&sca_esv=ef0fcb99cdf186c7&udm=2&biw=1600&bih=699&ei=Wz8xaI-UPKCAvr0Pjt2f2Q4&ved=0ahUKEwjPraWol7uNAxUggK8BHY7uJ-sQ4dUDCBE&uact=5&oq=image+&gs_lp=EgNpbWciBmltYWdlIDINEAAYgAQYsQMYQxiKBTIIEAAYgAQYsQMyCBAAGIAEGLEDMgUQABiABDIIEAAYgAQYsQMyCBAAGIAEGLEDMgsQABiABBixAxiDATIIEAAYgAQYsQMyBRAAGIAEMggQABiABBixA0jjE1CYEViYEXACeACQAQCYAW-gAW-qAQMwLjG4AQPIAQD4AQGYAgOgAooBwgIGEAAYBxgewgIKEAAYgAQYQxiKBZgDAIgGAZIHAzIuMaAHlAWyBwMwLjG4B3w&sclient=img#vhid=-mNI5DBCB_iEPM&vssid=mosaic",
-      fineAmount: 23,
-      category: "NORMAL",
-      isPerishable: "false",
-      returnPeriod: 4,
-    },
-    {
-      id: "10",
-      name: "Adnis",
-      price: 12,
-      photo:
-        "https://www.google.com/search?q=image+&sca_esv=ef0fcb99cdf186c7&udm=2&biw=1600&bih=699&ei=Wz8xaI-UPKCAvr0Pjt2f2Q4&ved=0ahUKEwjPraWol7uNAxUggK8BHY7uJ-sQ4dUDCBE&uact=5&oq=image+&gs_lp=EgNpbWciBmltYWdlIDINEAAYgAQYsQMYQxiKBTIIEAAYgAQYsQMyCBAAGIAEGLEDMgUQABiABDIIEAAYgAQYsQMyCBAAGIAEGLEDMgsQABiABBixAxiDATIIEAAYgAQYsQMyBRAAGIAEMggQABiABBixA0jjE1CYEViYEXACeACQAQCYAW-gAW-qAQMwLjG4AQPIAQD4AQGYAgOgAooBwgIGEAAYBxgewgIKEAAYgAQYQxiKBZgDAIgGAZIHAzIuMaAHlAWyBwMwLjG4B3w&sclient=img#vhid=-mNI5DBCB_iEPM&vssid=mosaic",
-      fineAmount: 23,
-      category: "NORMAL",
-      isPerishable: "false",
-      returnPeriod: 4,
-    },
-    {
-      id: "10",
-      name: "Adnis",
-      price: 12,
-      photo:
-        "https://www.google.com/search?q=image+&sca_esv=ef0fcb99cdf186c7&udm=2&biw=1600&bih=699&ei=Wz8xaI-UPKCAvr0Pjt2f2Q4&ved=0ahUKEwjPraWol7uNAxUggK8BHY7uJ-sQ4dUDCBE&uact=5&oq=image+&gs_lp=EgNpbWciBmltYWdlIDINEAAYgAQYsQMYQxiKBTIIEAAYgAQYsQMyCBAAGIAEGLEDMgUQABiABDIIEAAYgAQYsQMyCBAAGIAEGLEDMgsQABiABBixAxiDATIIEAAYgAQYsQMyBRAAGIAEMggQABiABBixA0jjE1CYEViYEXACeACQAQCYAW-gAW-qAQMwLjG4AQPIAQD4AQGYAgOgAooBwgIGEAAYBxgewgIKEAAYgAQYQxiKBZgDAIgGAZIHAzIuMaAHlAWyBwMwLjG4B3w&sclient=img#vhid=-mNI5DBCB_iEPM&vssid=mosaic",
-      fineAmount: 23,
-      category: "NORMAL",
-      isPerishable: "false",
-      returnPeriod: 4,
-    },
-    {
-      id: "10",
-      name: "Adnis",
-      price: 12,
-      photo:
-        "https://www.google.com/search?q=image+&sca_esv=ef0fcb99cdf186c7&udm=2&biw=1600&bih=699&ei=Wz8xaI-UPKCAvr0Pjt2f2Q4&ved=0ahUKEwjPraWol7uNAxUggK8BHY7uJ-sQ4dUDCBE&uact=5&oq=image+&gs_lp=EgNpbWciBmltYWdlIDINEAAYgAQYsQMYQxiKBTIIEAAYgAQYsQMyCBAAGIAEGLEDMgUQABiABDIIEAAYgAQYsQMyCBAAGIAEGLEDMgsQABiABBixAxiDATIIEAAYgAQYsQMyBRAAGIAEMggQABiABBixA0jjE1CYEViYEXACeACQAQCYAW-gAW-qAQMwLjG4AQPIAQD4AQGYAgOgAooBwgIGEAAYBxgewgIKEAAYgAQYQxiKBZgDAIgGAZIHAzIuMaAHlAWyBwMwLjG4B3w&sclient=img#vhid=-mNI5DBCB_iEPM&vssid=mosaic",
-      fineAmount: 23,
-      category: "NORMAL",
-      isPerishable: "false",
-      returnPeriod: 4,
-    },
-  ];
   return (
     <>
       <div className={styles.Top}>
         <div>
           <div className={styles.Filter}>
             <label>
-              <select>
-                <option value="name">Tool Name</option>
-                <option value="special">Special</option>
-                <option value="normal">Normal</option>
-                <option value="isPerishable">IsPerishable</option>
-              </select>
+              <MultipleSelect
+                selectedFilters={selectedFilters}
+                handleFilter={handleFilterChange}
+                availFilters={["name", "special", "normal", "isPerishable"]}
+                getData={getData}
+                url={urlFilter}
+              />
             </label>
 
-            <Input type="text" placeholder="search" />
+            <Input
+              type="text"
+              placeholder="search"
+              ref={searchRef}
+              defaultValue={searchValue}
+              onChange={(e) => updateSearch(e.target.value)}
+            />
+
             <div className={styles.PriceFilter}>
-              <Input placeholder="MinPrice" type="number" min={1} className={styles.Price} />
-              <Input placeholder="MaxPrice" type="number" className={styles.Price}/>
+              <Input
+                placeholder="MinPrice"
+                type="number"
+                min={1}
+                onChange={handleMinPrice}
+                className={styles.Price}
+              />
+              <Input
+                placeholder="MaxPrice"
+                type="number"
+                min={1}
+                onChange={handleMaxPrice}
+                className={styles.Price}
+              />
             </div>
-            <Button primary>Filter</Button>
+            <Button primary onClick={handleFilter}>
+              Filter
+            </Button>
           </div>
         </div>
 
@@ -113,63 +118,69 @@ const Tools = ({}: ToolsProps) => {
         </Button>
       </div>
       <div className={styles.ToolsCard}>
-        {toolsData.length>0 && toolsData.map((data: (ToolsDetail)) => (
-          <Card
-            id={data.id}
-            photo={image}
-            handleDeleteModal={handleDeleteModal}
-            handleEditModal={handleEditModal}
-          >
-            <p>
-              <span>Name:</span>
-              <span>{data.name}</span>
-            </p>
-            <p>
-              <span>Price:</span>
-              <span>{data.price}</span>
-            </p>
-            <p>
-              <span>Fine:</span>
-              <span>{data.fineAmount}</span>
-            </p>
-            {!data.isPerishable && <p>
-              <span>Return Period:</span>
-              <span>{data.returnPeriod}</span>
-            </p>}
-            <p>
-              <span>Category:</span>
-              <span>{data.category}</span>
-            </p>
-            <p>
-              <span>Perishable:</span>
-              <span>{data.isPerishable?"YES":"NO"}</span>
-            </p>
-            <div className={styles.ToolActions}>
-              <Button
-                primary
-                onClick={() => {
-                  setSelected(data);
-                  handleEditModal();
-                }}
-              >
-                <FaEdit />
-              </Button>
-              <Button
-                danger
-                onClick={() => {
-                  setSelected(data);
-                  handleDeleteModal();
-                }}
-              >
-                <FaTrash />
-              </Button>
-            </div>
-          </Card>
-        ))}
+        {toolsData.length > 0 &&
+          toolsData.map((data: ToolsDetail) => {
+            return (
+              <Card id={data.id} photo={data.toolImageUrl}>
+                <p>
+                  <span>Name:</span>
+                  <span>{data.name}</span>
+                </p>
+                <p>
+                  <span>Price:</span>
+                  <span>{data.price}</span>
+                </p>
+                <p>
+                  <span>Fine:</span>
+                  <span>{data.fineAmount}</span>
+                </p>
+                {!data.isPerishable && (
+                  <p>
+                    <span>Return Period:</span>
+                    <span>{data.returnPeriod}</span>
+                  </p>
+                )}
+                <p>
+                  <span>Category:</span>
+                  <span>{data.category}</span>
+                </p>
+                <p>
+                  <span>Perishable:</span>
+                  <span>{data.isPerishable ? "YES" : "NO"}</span>
+                </p>
+                <div className={styles.ToolActions}>
+                  <Button
+                    primary
+                    onClick={() => {
+                      setSelected(data);
+                      handleEditModal();
+                    }}
+                  >
+                    <FaEdit />
+                  </Button>
+                  <Button
+                    danger
+                    onClick={() => {
+                      setSelected(data);
+                      handleDeleteModal();
+                    }}
+                  >
+                    <FaTrash />
+                  </Button>
+                </div>
+              </Card>
+            );
+          })}
       </div>
-      {addModal && <AddModal/>}
-      {editModal && <EditModal/>}
-      {deleteModal && <DeleteModal/>}
+      <Pagination
+        count={count}
+        setUrl={handleUrlChange}
+        url={urlFilter}
+        getData={getData}
+      />
+      {addModal && <AddModal />}
+      {editModal && <EditModal />}
+      {deleteModal && <DeleteModal />}
     </>
   );
 };

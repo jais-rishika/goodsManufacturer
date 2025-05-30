@@ -5,59 +5,66 @@ import Button from "../../../../components/Button/Button.tsx";
 import Input from "../../../../components/Input/Input.tsx";
 import Modal from "../../../../components/Modal/Modal.tsx";
 import {
-  FacilityManagerFormSchema,
   type ModalProps,
-  type FacilityManagerForm,
+  type WorkPlaceForm,
+  WorkPlaceFormSchema,
 } from "./Modal.types.ts";
 import { toast } from "react-toastify";
-import { editFacilityManager } from "../../../../services/FacilityManager.service.ts";
+
+import SearchableComponents from "../../../../components/SearchableComponents/SearchableComponents.tsx";
+import { editWorkPlace } from "../../../../services/workplace.service.ts";
+import { useContext } from "react";
+import { WorkPlaceContext } from "../WorkPlace.state.tsx";
 
 const EditModal = ({
-  handleModal,
-  updateData,
-  name,
-  email,
-  id,
+  
 }: ModalProps) => {
-  const { register, handleSubmit, formState } = useForm<FacilityManagerForm>({
+  //useContext
+    const {availFields,setAvailFields,handleEditModal,getData,urlFilter,selectedManager,updateManager,selected}=useContext(WorkPlaceContext)!
+    
+  const { register, handleSubmit, formState } 
+  = useForm<WorkPlaceForm>({
     defaultValues: {
-      name: `${name}`,
-      email: `${email}`,
+      name: selected?.name,
+      workplaceManagerEmail: selected?.workplaceManagerEmail
     },
-    resolver: zodResolver(FacilityManagerFormSchema),
+    resolver: zodResolver(WorkPlaceFormSchema),
   });
 
-  const EditFacility = async (data: FacilityManagerForm) => {
+  const EditFacility = async (data: WorkPlaceForm) => {
+    if (!selectedManager) {
+      alert("ADD Facility Manager");
+    }
+    data["workplaceManagerEmail"] = selectedManager!;
     try {
-      const res = await editFacilityManager(data, id!);
-      updateData();
+      const res = await editWorkPlace(data, selected.id!);
+      getData(urlFilter);
       toast.success("Facility Manager Edited ");
     } catch (error) {
       toast.error("Sorry!! Facility Manager Could not be Edited");
     } finally {
-      handleModal();
+      handleEditModal();
     }
   };
 
   return (
-    <Modal setShowModal={handleModal}>
+    <Modal setShowModal={handleEditModal}>
       <form onSubmit={handleSubmit(EditFacility)} className={styles.Form}>
         <h2>Edit Facility Manager</h2>
-        <Input
-          placeholder="Enter Facility Name"
-          {...register("name")}
-          defaultValue={name}
-        />
+        <Input placeholder="Enter Facility Name" {...register("name")} />
         {!!formState.errors.name && (
           <small>{formState.errors.name.message}</small>
         )}
-        <Input
-          placeholder="Enter Facility Email"
-          {...register("email")}
-          defaultValue={email}
+
+        <SearchableComponents
+          setFieldValue={updateManager}
+          availFields={availFields!}
+          setAvailFields={setAvailFields!}
+          toSearch={"Email"}
+          selectedField={selectedManager}
         />
-        {!!formState.errors.email && (
-          <small>{formState.errors.email?.message}</small>
+        {!!formState.errors.workplaceManagerEmail && (
+          <small>{formState.errors.workplaceManagerEmail?.message}</small>
         )}
         <Button type="submit">Edit</Button>
       </form>

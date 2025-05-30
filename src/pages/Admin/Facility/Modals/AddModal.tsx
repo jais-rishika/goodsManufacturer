@@ -21,7 +21,7 @@ const AddModal = ({
 
 }: ModalProps) => {
   //useContext
-  const {availFields,setAvailFields,handleAddModal,getData,}=useContext(FacilityContext)!
+  const {availFields,setAvailFields,handleAddModal,getData,urlFilter,selectedManager,updateManager}=useContext(FacilityContext)!
 
   //useForm
   const { register, handleSubmit, formState } = useForm<FacilityForm>({
@@ -30,10 +30,14 @@ const AddModal = ({
 
   //formSubmit
   const handleAddFacility = async (data: FacilityForm) => {
+    if(!selectedManager){
+      alert("ADD Facility Manager")
+    }
+    data["facilityManagerEmail"]=selectedManager!;
     try {
       const res = await addFacility(data);
       handleAddModal();
-      getData();
+      getData(urlFilter);
       toast.success("Facility Added ");
     } catch (error) {
       toast.error("Sorry!! Facility Could not be Added");
@@ -49,19 +53,14 @@ const AddModal = ({
     <Modal setShowModal={handleAddModal}>
       <form onSubmit={handleSubmit(handleAddFacility)} className={styles.Form}>
 
-        <h2>Add Facility</h2>
+        <h2>Add WorkPlace</h2>
 
         <Input placeholder="Enter Facility Name" {...register("name")} />
         {!!formState.errors.name && (
           <small>{formState.errors.name.message}</small>
         )}
 
-        <Input placeholder="Enter Facility Location" {...register("address")} />
-        {!!formState.errors.name && (
-          <small>{formState.errors.address?.message}</small>
-        )}
-
-        <SearchableComponents availFields={availFields!} setAvailFields={setAvailFields!} toSearch={"Email"}/>
+        <SearchableComponents setFieldValue={updateManager} availFields={availFields!} setAvailFields={setAvailFields!} toSearch={"Email"}/>
          {!!formState.errors.facilityManagerEmail && (
           <small>{formState.errors.facilityManagerEmail?.message}</small>
         )}

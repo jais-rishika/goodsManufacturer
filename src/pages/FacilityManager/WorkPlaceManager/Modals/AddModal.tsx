@@ -13,10 +13,11 @@ import { addFacilityManager } from "../../../../services/FacilityManager.service
 import { toast } from "react-toastify";
 import { useContext } from "react";
 import { WorkPlaceManagerContext } from "../WorkPlaceManager.state.tsx";
+import { addWorkPlaceManager } from "../../../../services/workplaceManager.service.ts";
 
 const AddModal = ({}: ModalProps) => {
 
-  const {handleAddModal,getData}= useContext(WorkPlaceManagerContext)!;
+  const {handleAddModal,getData,urlFilter}= useContext(WorkPlaceManagerContext)!;
 
   const { register, handleSubmit, formState } = useForm<FacilityManagerForm>({
     resolver: zodResolver(FacilityManagerFormSchema),
@@ -24,9 +25,9 @@ const AddModal = ({}: ModalProps) => {
 
   const handleAddFacilityManager = async (data: FacilityManagerForm) => {
     try {
-      const res = await addFacilityManager(data);
+      const res = await addWorkPlaceManager(data);
       handleAddModal();
-      getData();
+      getData(urlFilter);
       toast.success("Facility Manager Added ")
     } catch (error) {
       toast.error("Sorry!! Facility Manager Could not be Added")
@@ -39,7 +40,7 @@ const AddModal = ({}: ModalProps) => {
         onSubmit={handleSubmit(handleAddFacilityManager)}
         className={styles.Form}
       >
-        <h2>Add Facility Manager</h2>
+        <h2>Add WorkPlace Manager</h2>
         <Input type="text" placeholder="Enter name" {...register("name")} />
         {!!formState.errors.name && (
           <small>{formState.errors.name.message}</small>

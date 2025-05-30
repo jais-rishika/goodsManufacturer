@@ -33,11 +33,11 @@ const MultipleSelectComponents = ({
     // getData(url)
   };
 
-  useEffect(() => {});
+  // useEffect(() => {},[]);
   return (
     <div className={styles.DropDownBox}>
       <div className={styles.SelectedValue}>
-        <input placeholder="Select Filter" />
+        <input placeholder="Select Filter   " />
 
         <Button
           onClick={handleShowFields}
@@ -53,7 +53,7 @@ const MultipleSelectComponents = ({
           {availFilters.length > 0 ? (
             availFilters.map((val: string) => {
               return (
-                <label>
+                <label className={styles.Fields}>
                   <input
                     type="checkbox"
                     name={val}

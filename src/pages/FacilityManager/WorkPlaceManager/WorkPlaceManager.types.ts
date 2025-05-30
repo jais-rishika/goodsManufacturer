@@ -7,7 +7,7 @@ export interface WorkPlaceManagerTableData {
     name: string,
     email: string,
     createdAt: string,
-    workPlaceName: string
+    workplaceName: string
     action: () => ReactNode
 }
 
@@ -35,6 +35,19 @@ export type WorkPlaceManagerAction = {
 } | {
     type: "GET_DATA_SUCCESS"
     data: WorkPlaceManagerTableData[]
+
+}| {
+    type: "SET_FILTERS",
+    data: string[]
+} | {
+    type: "SET_COUNT",
+    count: number
+} | {
+    type: "SET_URL_FILTER",
+    data: string
+} | {
+    type: "SET_SEARCH",
+    data: string
 }
 
 export interface WorkPlaceManagerState {
@@ -43,8 +56,13 @@ export interface WorkPlaceManagerState {
     addModal: boolean,
     editModal: boolean,
     deleteModal: boolean,
-    selected: WorkPlaceManagerData | null,
-    workPlaceManagerTableData: WorkPlaceManagerTableData[]
+    selected: WorkPlaceManagerData,
+    workPlaceManagerTableData: WorkPlaceManagerTableData[],
+
+    selectedFilters: string[],
+    searchValue: string
+    count: number,
+    urlFilter: string,
 }
 
 export interface WorkPlaceManagerMethods {
@@ -52,5 +70,11 @@ export interface WorkPlaceManagerMethods {
     handleEditModal: () => void
     handleDeleteModal: () => void
     handleSelect: (data: WorkPlaceManagerData) => void
-    getData: () => void
+    
+    getData: (val: string) => void
+
+    handleFilterChange: (val: string[], url: string) => void
+    handleUrlChange: (size: number, page: number) => void
+    updateSearch: (val: string) => void
+    setCount: (count: number) => void
 }

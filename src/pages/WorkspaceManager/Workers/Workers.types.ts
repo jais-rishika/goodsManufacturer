@@ -6,8 +6,8 @@ export interface WorkersProps { }
 export interface WorkersTableData {
     name: string,
     email: string,
-    workStation: string,
-    createdAt: string,
+    workstationCode: string,
+    workplaceName: string,
     RequestHistory: string
     action: () => ReactNode
 }

@@ -35,19 +35,18 @@ export const withFacilityManagerContext = <T extends {}>(
       dispatch({ type: "ADD_MODAL", status: !state.addModal });
     };
 
-    const handleEditModal = () => {
-      dispatch({ type: "EDIT_MODAL", status: !state.editModal });
-    };
+    const showEditModal = () => dispatch({ type: "EDIT_MODAL", status: true });
+    const hideEditModal = () => dispatch({ type: "EDIT_MODAL", status: false });
 
-    const handleDeleteModal = () => {
-      dispatch({ type: "DELETE_MODAL", status: !state.deleteModal });
-    };
+
+    const showDeleteModal = () => dispatch({ type: "DELETE_MODAL", status: true });
+    const hideDeleteModal = () => dispatch({ type: "DELETE_MODAL", status: false });
 
     const handleSelect = (data: FacilityManagerData) => {
       dispatch({ type: "SELECT", selected: data });
     };
 
-    //filter
+    //filter handlers
     const handleFilterChange = (filter: string[], url: string) => {
       dispatch({ type: "SET_FILTERS", data: filter });
 
@@ -94,7 +93,7 @@ export const withFacilityManagerContext = <T extends {}>(
             primary
             onClick={() => {
               handleSelect(data);
-              handleEditModal();
+              showEditModal()
             }}
           >
             <FaEdit />
@@ -104,7 +103,7 @@ export const withFacilityManagerContext = <T extends {}>(
             danger
             onClick={() => {
               handleSelect(data);
-              handleDeleteModal();
+              showDeleteModal();
             }}
           >
             <FaTrash />
@@ -117,7 +116,7 @@ export const withFacilityManagerContext = <T extends {}>(
       try {
         dispatch({ type: "GET_DATA" });
         const facilityManagers = await getFacilityManager(url);
-        
+        setCount(facilityManagers.page.totalElements)
         const tableData: FacilityManagerTableData[] =
           facilityManagers.content.map((data: FacilityManagerData) => {
             return {
@@ -139,15 +138,15 @@ export const withFacilityManagerContext = <T extends {}>(
 
     const handlers = {
       handleAddModal,
-      handleEditModal,
-      handleDeleteModal,
+      hideDeleteModal,
+      hideEditModal,
       handleSelect,
       getData,
 
       handleFilterChange,
       handleUrlChange,
       updateSearch,
-      setCount
+      setCount,
     };
 
     return (

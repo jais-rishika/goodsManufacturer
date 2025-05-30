@@ -67,8 +67,8 @@ export interface FacilityManagerState {
 
 export interface FacilityManagerMethods {
     handleAddModal: () => void
-    handleEditModal: () => void
-    handleDeleteModal: () => void
+    hideEditModal: () => void;
+    hideDeleteModal: ()=> void
     handleSelect: (data: FacilityManagerData) => void
     
     getData: (val: string) => void

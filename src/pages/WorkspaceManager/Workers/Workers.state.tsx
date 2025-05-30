@@ -127,8 +127,8 @@ export const withWorkersContext = <T extends {}>(
           return {
             name: data.name,
             email: data.email,
-            createdAt: data.createdAt.substring(0, 10),
-            workstation: data.workStation,
+            workplaceName: data.workplaceName,
+            workstation: data.workstationCode,
             action: actionButtons(data),
             reqHistory: <NavLink to="/"></NavLink>
           };

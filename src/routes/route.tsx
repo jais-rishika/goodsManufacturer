@@ -2,35 +2,35 @@ import { createBrowserRouter } from "react-router";
 import { lazy } from "react";
 import App from "../App";
 
+import { workerRoutes } from "../modules/Worker/Worker.routes";
+import { adminRoutes } from "../modules/Admin/admin.routes";
+import { facilityManagerRoutes } from "../modules/FacilityManager/FacilityManager.routes";
+import { workPlaceManagerRoutes } from "../modules/WorkplaceManager/WorkPlaceManager.routes";
+import { toolCribManagerRoutes } from "../modules/ToolCribManager/ToolCribManager.routes";
+
 // AUTH
 const Login = lazy(() => import("../pages/Auth/Login/Login"));
 
 // ADMIN
-  const Admin = lazy(() => import("../modules/Admin/Admin"));
-  const Reports = lazy(() => import("../pages/Admin/Reports/Reports"));
-  const FacilityManagerPage = lazy(
-  () => import("../pages/Admin/FacilityManager/FacilityManagerPage/FacilityManagerPage"));
-  const FacilityPage = lazy( () => import("../pages/Admin/Facility/FacilityPage/FacilityPage"));
-  const Tools = lazy(() => import("../pages/Admin/Tools/Tools"));
-  
-  // FacilityManager
-  const FacilityManager = lazy( () => import("../modules/FacilityManager/FacilityManager"));
-  const Workplace = lazy(() => import("../pages/Admin/Workplace/Workplace"));
-  const WorkplaceManager = lazy(() => import("../modules/WorkplaceManager/WorkplaceManager"));
-  const ToolsInventory = lazy(()=> import( "../pages/FacilityManager/ToolsInventory/ToolsInventory"));
-  
-  // WorkPlaceManager
-  const WorkPlaceManager = lazy(()=> import( "../pages/FacilityManager/WorkPlaceManager/WorkPlaceManager"));
-  const SpecialRequests = lazy(()=> import( "../pages/WorkspaceManager/SpecialRequests/SpecialRequests"));
-  const Workers = lazy(()=> import( "../pages/WorkspaceManager/Workers/Workers"));
-  const WorkStation = lazy(()=> import( "../pages/WorkspaceManager/WorkStation/WorkStation"));
-  const Inventory = lazy(()=> import( "../pages/WorkspaceManager/Inventory/Inventory"));
-  
-  //ToolCribManager
-  const ToolCribManager = lazy( () => import("../modules/ToolCribManager/ToolCribManager"));
-  
-  //Worker
-  const Worker = lazy(() => import("../modules/Worker/Worker"));
+const Admin = lazy(() => import("../modules/Admin/Admin"));
+
+// FacilityManager
+const FacilityManager = lazy(
+  () => import("../modules/FacilityManager/FacilityManager")
+);
+
+// WorkPlaceManager
+const WorkplaceManager = lazy(
+  () => import("../modules/WorkplaceManager/WorkplaceManager")
+);
+
+//ToolCribManager
+const ToolCribManager = lazy(
+  () => import("../modules/ToolCribManager/ToolCribManager")
+);
+
+//worker
+const Worker = lazy(() => import("../modules/Worker/Worker"));
 
 export default createBrowserRouter([
   {
@@ -41,45 +41,30 @@ export default createBrowserRouter([
       {
         path: "owner",
         Component: Admin,
-        children: [
-          { index: true, element: <Reports /> },
-          { path: "facilityManager", element: <FacilityManagerPage /> },
-          { path: "facility", element: <FacilityPage /> },
-          { path: "workplaceManager", element: <WorkplaceManager /> },
-          { path: "workplace", element: <Workplace /> },
-          { path: "toolcribManager", element: <ToolCribManager /> },
-          { path: "workers", element: <Workers /> },
-          { path: "tools", element: <Tools /> },
-        ],
+        // children should be in Admin folder
+        children: adminRoutes,
       },
       {
         path: "facilityManager",
         Component: FacilityManager,
-        children: [
-          { index: true, element: <Workplace /> },
-          { path: "workplaceManager", element: <WorkPlaceManager /> },
-          { path: "inventory", element: <ToolsInventory /> },
-        ],
+        children: facilityManagerRoutes,
       },
       {
         path: "workplaceManager",
         Component: WorkplaceManager,
-        children: [
-          { index: true, element: <SpecialRequests /> },
-          { path: "workers", element: <Workers /> },
-          { path: "workers", element: <WorkStation /> },
-          { path: "tools", element: <Inventory /> }
-        ],
+        children: workPlaceManagerRoutes,
       },
       {
+        // routes should not be camel cased, they should be kebab-cased
+        // tool-crib-manager
         path: "toolCribManager",
         Component: ToolCribManager,
-        children: [{ index: true, element: <></> }],
+        children: toolCribManagerRoutes,  //is wrong currenty
       },
       {
         path: "worker",
         Component: Worker,
-        children: [{ index: true, element: <></> }],
+        children: workerRoutes,
       },
     ],
   },

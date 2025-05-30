@@ -1,11 +1,31 @@
-import type { ToolForm } from "../pages/Admin/Tools/Tools.types";
-import type { SendToolForm } from "../pages/FacilityManager/ToolsInventory/Modal/Modal.types";
+import type { SendToolForm } from "../pages/WorkspaceManager/Inventory/Modal/Modal.types";
 import axiosInstance from "./axios.instance"
 
 //get
-export const getTools = async () => {
+export const getTools = async (filter: string) => {
     try {
-        const res = await axiosInstance.get(`/owner/Tool?page=0&size=5`);
+        const res = await axiosInstance.get(`/owner/tool?${filter}`);
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}
+export const getToolsFacilityManager = async (filter: string) => {
+    try {
+        const res = await axiosInstance.get(`facility-manager/tool?${filter}`);
+        console.log(res);
+
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const getToolCribInventory = async (filter: string) => {
+    try {
+        const res = await axiosInstance.get(`/workplace-manager/inventory?${filter}`);
+        console.log(res);
+
         return res.data;
     } catch (error) {
         throw error;
@@ -13,27 +33,37 @@ export const getTools = async () => {
 }
 
 //add / post
-export const addTools = async (payload: ToolForm) => {
+export const addTools = async (payload: FormData) => {
     try {
-        const res = await axiosInstance.post('/owner/Tool', payload);
+        const res = await axiosInstance.post('/owner/tool', payload);
         return res.data;
     } catch (error) {
         throw error;
     }
 }
 
-export const sendTool = async (data: SendToolForm) => {
-
+export const sendTool = async (payload: SendToolForm) => {
+    try {
+        const res = await axiosInstance.post('facility-manager/tools', payload);
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
 }
 
 export const uploadToolImage = async (id: string, img: File) => {
-
+    try {
+        const res = await axiosInstance.post(`/facility-manager/tools${id}`, img);
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
 }
 
 //edit
-export const editTools = async (payload: ToolForm, id: string) => {
+export const editTools = async (payload: FormData, id: string) => {
     try {
-        const res = await axiosInstance.patch(`/owner/Tool/${id}`, payload);
+        const res = await axiosInstance.patch(`/owner/tool/${id}`, payload);
         return res.data;
     } catch (error) {
         throw error;
@@ -43,7 +73,7 @@ export const editTools = async (payload: ToolForm, id: string) => {
 //delete
 export const deleteTools = async (id: string) => {
     try {
-        const res = await axiosInstance.delete(`/owner/Tool/${id}`);
+        const res = await axiosInstance.delete(`/owner/tool/${id}`);
         return res.data;
     } catch (error) {
         throw error;

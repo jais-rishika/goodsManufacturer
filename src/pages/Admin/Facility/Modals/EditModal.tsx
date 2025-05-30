@@ -18,24 +18,28 @@ import SearchableComponents from "../../../../components/SearchableComponents/Se
 const EditModal = ({
 }: ModalProps) => {
   //context
-  const {handleEditModal,getData, selected, availFields, setAvailFields}=useContext(FacilityContext)!;
+  const {handleEditModal,getData, selected, availFields, setAvailFields, urlFilter,selectedManager,updateManager}=useContext(FacilityContext)!;
   
   //useForm
   const { register, handleSubmit, formState } = useForm<FacilityForm>({
     defaultValues: {
       name: `${selected!.name}` ,
       address: `${selected!.address}`,
+      facilityManagerEmail: `${selected!.facilityManagerEmail}`
     },
     resolver: zodResolver(FacilityFormSchema),
   });
 
   //formSubmit
   const EditFacility = async (data: FacilityForm) => {
-    console.log("edit",data);
+    if(!selectedManager){
+      alert("ADD Facility Manager")
+    }
+    data["facilityManagerEmail"]=selectedManager!;
     
     try {
       const res = await editFacility({...data}, selected!.id);
-      getData();
+      getData(urlFilter);
       toast.success("Facility  Edited ");
     } catch (error) {
       toast.error("Sorry!! Facility  Could not be Edited");
@@ -68,7 +72,7 @@ const EditModal = ({
           <small>{formState.errors.address?.message}</small>
         )}
 
-        <SearchableComponents availFields={availFields} setAvailFields={setAvailFields} toSearch={"Email"}/>
+        <SearchableComponents setFieldValue={updateManager} availFields={availFields} setAvailFields={setAvailFields} toSearch={"Email"}/>
          {!!formState.errors.facilityManagerEmail && (
           <small>{formState.errors.facilityManagerEmail?.message}</small>
         )}

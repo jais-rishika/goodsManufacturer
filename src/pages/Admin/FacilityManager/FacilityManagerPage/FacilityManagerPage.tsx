@@ -20,8 +20,8 @@ import Pagination from "../../../../components/Pagination/Pagination.tsx";
 import MultipleSelect from "../../../../components/MultipleSelect/MultipleSelect.tsx";
 
 const FacilityManagerPage = ({}: FacilityManagerProps) => {
-    //ref
-    const searchRef=useRef<HTMLInputElement>(null)
+  //ref
+  const searchRef=useRef<HTMLInputElement>(null)
 
   //useContext
   const {
@@ -62,7 +62,7 @@ const FacilityManagerPage = ({}: FacilityManagerProps) => {
   }, []);
 
   return (
-    <div>
+    <>
       <div className={styles.Top}>
         <div>
           <div className={styles.Filter}>
@@ -107,7 +107,7 @@ const FacilityManagerPage = ({}: FacilityManagerProps) => {
       {addModal && <AddModal />}
       {selected && editModal && <EditModal />}
       {deleteModal && <DeleteModal />}
-    </div>
+    </>
   );
 };
 

@@ -48,6 +48,6 @@ export const FacilityManagerReducer = (
       return {...prevState, urlFilter: action.data}
       
     default:
-      return {...prevState}
+      return prevState
   }
 };

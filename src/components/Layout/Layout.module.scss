@@ -1,15 +1,13 @@
-/* Styles for Layout */
 .Layout {
   display: grid;
   min-height: 100vh;
   grid-template-rows: auto 1fr;
 }
 .MainContainer {
-  display: grid;
   min-height: 100%;
   overflow-y: auto;
 
-  background-color: #c7b98b;
+  background-color: #fdebb0;
 }
 .SideBar {
     transform: translateX(-100%);

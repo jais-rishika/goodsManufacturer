@@ -35,7 +35,10 @@ export type FacilityAction = {
 } | {
     type: "SET_AVAIL_FIELDS",
     data: string[]
-
+} | {
+    type: "SET_MANAGER",
+    data: string
+    
 } | {
     type: "SET_FILTERS",
     data: string[]
@@ -54,12 +57,15 @@ export type FacilityAction = {
 export interface FacilityState {
     isLoading: boolean,
     error: string,
+
     addModal: boolean,
     editModal: boolean,
     deleteModal: boolean,
+
     selected: FacilityData | null,
     facilityTableData: FacilityTableData[],
     availFields: string[],
+    selectedManager: string | null,
 
     selectedFilters: string[],
     searchValue: string
@@ -73,9 +79,10 @@ export interface FacilityMethods {
     handleDeleteModal: () => void
     handleSelect: (data: FacilityData) => void
     setAvailFields: (val: string) => void
-    
+    updateManager: (val: string) => void
+
     getData: (val: string) => void,
-    
+
     handleFilterChange: (val: string[], url: string) => void
     handleUrlChange: (size: number, page: number) => void
     updateSearch: (val: string) => void

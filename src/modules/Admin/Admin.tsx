@@ -5,12 +5,12 @@ import Layout from "../../components/Layout/Layout.tsx";
 const Admin = ({}: AdminProps) => {
   const sideBarList = [
     { title: "Home", link: "/owner" },
-    { title: "FacilityManager", link: "/owner/facilityManager" },
+    { title: "FacilityManager", link: "/owner/facility-manager" },
     { title: "Facility", link: "/owner/facility" },
-    { title: "WorkplaceManager", link: "/owner/workplaceManager" },
+    { title: "WorkplaceManager", link: "/owner/workplace-manager" },
     { title: "Workplace", link: "/owner/workplace" },
     { title: "Workstation", link: "/owner/workstation" },
-    { title: "ToolCribManager", link: "/owner/toolCribManager" },
+    { title: "ToolCribManager", link: "/owner/tool-crib-anager" },
     { title: "Workers", link: "/owner/workers" },
     { title: "Tools", link: "/owner/tools" }
   ];

@@ -1,7 +1,7 @@
 .Top {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
   padding: 0.75rem 1rem;
 }
 .Filter {
@@ -24,7 +24,7 @@
   input {
     width: 4rem;
     background-color: transparent;
-    border: 2px solid #1d4b40;
+    // border: 2px solid #1d4b40;
     color: #000;
     &::placeholder {
       color: #000;

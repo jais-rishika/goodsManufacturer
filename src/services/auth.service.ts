@@ -13,6 +13,7 @@ export const login = async (data: LoginForm) => {
 
 export const getRole = async () => {
     const token = localStorage.getItem("token");
+    if(!token) throw { message: 'SESSION EXPIRED, PLEASE LOGIN' }
     try {
         const res = await axiosInstance.get('/auth/role');
         console.log("resrolw", res);

@@ -10,10 +10,7 @@ import { getRole, login } from "../../../services/auth.service.ts";
 import { useEffect, useReducer } from "react";
 import { initialLoginState, LoginReducer } from "./Login.state.tsx";
 import { toast } from "react-toastify";
-import {
-  showLoader,
-  hideLoader,
-} from "../../../components/Loader/Loader.tsx";
+
 
 const Login = ({}: LoginProps) => {
   const navigate = useNavigate();
@@ -30,6 +27,8 @@ const Login = ({}: LoginProps) => {
   const checkLogin = async () => {
     try {
       const res = await getRole();
+      console.log(localStorage.getItem("token"),res.role);
+      
       navigate(`/${res.role}`);
     } catch (error) {}
   };
@@ -54,12 +53,6 @@ const Login = ({}: LoginProps) => {
   useEffect(() => {
     if (error) toast.error(error);
   }, [error]);
-
-  useEffect(() => {
-    // showLoader()
-    if (isLoading) return showLoader();
-    hideLoader();
-  }, [isLoading]);
 
   useEffect(() => {
     checkLogin();

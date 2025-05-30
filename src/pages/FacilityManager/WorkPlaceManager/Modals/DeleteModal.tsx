@@ -3,26 +3,33 @@ import Button from "../../../../components/Button/Button";
 import Modal from "../../../../components/Modal/Modal";
 import { deleteFacilityManager } from "../../../../services/FacilityManager.service";
 import type { ModalProps } from "./Modal.types";
-import styles from "./Modal.module.scss"
-const DeleteModal = ({ handleModal, updateData,id }: ModalProps) => {
+import styles from "./Modal.module.scss";
+import { WorkPlaceManagerContext } from "../WorkPlaceManager.state";
+import { useContext } from "react";
+import { deleteWorkPlaceManager } from "../../../../services/workplaceManager.service";
+
+const DeleteModal = ({}: ModalProps) => {
+  const { handleDeleteModal, getData, selected, urlFilter } = useContext(
+    WorkPlaceManagerContext
+  )!;
 
   const handleDelete = async () => {
     try {
-      const res = await deleteFacilityManager(id!);
-      updateData();
-      toast.success("Facilty Manager Deleted Successfully");
+      const res = await deleteWorkPlaceManager(selected?.id!);
+      getData(urlFilter);
+      toast.success("WorkPlace Manager Deleted Successfully");
     } catch (error) {
-        toast.error("Facilty Manager Deletion Failed");
-    }finally{
-        handleModal();
+      toast.error("WorkPlace Manager Deletion Failed");
+    } finally {
+      handleDeleteModal();
     }
   };
-  
+
   return (
-    <Modal setShowModal={handleModal}>
+    <Modal setShowModal={handleDeleteModal}>
       <div className={styles.DeleteContainer}>
-        <h2>Delete Facility Manager</h2>
-        <h5>Are You sure you want to delete this FacilityManager?</h5>
+        <h2>Delete WorkPlace Manager</h2>
+        <h5>Are You sure you want to delete this WorkPlace Manager?</h5>
         <Button danger onClick={handleDelete}>
           DELETE
         </Button>

@@ -10,6 +10,12 @@ export const workplaceInitialState: WorkPlaceState = {
 
   workplaceTableData: [],
   availFields: [],
+  selectedManager: null,
+
+  selectedFilters:[],
+  searchValue: "",
+  count: 0,
+  urlFilter:"page=0&size=5",
 };
 
 export const workplaceReducer = (
@@ -37,6 +43,17 @@ export const workplaceReducer = (
       return { ...prevState, selected: action.selected };
     case "SET_AVAIL_FIELDS":
       return { ...prevState, availFields: action.data };
+    case "SET_MANAGER":
+      return {...prevState, selectedManager: action.data}
+
+    case "SET_COUNT":
+      return {...prevState, count: action.count}
+    case "SET_FILTERS":
+      return {...prevState, selectedFilters: action.data} 
+    case "SET_SEARCH": 
+      return {...prevState, searchValue: action.data}
+    case "SET_URL_FILTER":
+      return {...prevState, urlFilter: action.data}
 
     default:
       return { ...prevState };

@@ -1,0 +1,69 @@
+/* Styles for Header */
+.Header {
+  background-color: #1d4b40;
+  color: #fff;
+  box-shadow: 4px 0 4px 0 #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0.75rem 1rem;
+
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+.HeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.Nav {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
+
+  a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+}
+.Active {
+  text-decoration: underline;
+}
+
+.Profile {
+  position: relative;
+  right: 2rem;
+}
+
+.ProfileDiv {
+  padding: 1.5rem;
+  border: 1.5px solid #fff;
+  border-radius: 50%;
+}
+
+.Show {
+  width: 8rem;
+  display: none;
+  justify-items: center;
+  background-color: #fff;
+  border: thin solid;
+
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  p {
+    color: #1d4b40;
+  }
+}
+
+.Profile:hover .Show {
+  display: grid;
+}

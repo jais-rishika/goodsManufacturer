@@ -5,10 +5,11 @@ import type { FacilityManagerProps } from "./FacilityManager.types.ts";
 const FacilityManager = ({}: FacilityManagerProps) => {    
   const sideBarList = [
     { title: "Workplace", link: "/facilityManager" },
-    { title: "WorkplaceManager", link: "/facilityManager/workplaceManager" },
-    { title: "Workstation", link: "/owner/workstation" },
-    { title: "Workers", link: "/owner/workers" },
-    { title: "Inventory", link: "/facilityManager/tools" },
+    { title: "WorkplaceManager", link: "/facilityManager/workplace-manager" },
+    { title: "Workstation", link: "/facilityManager/worker-station" },
+    { title: "ToolCribs", link: "/facilityManager/tool-cribs-" },
+    { title: "Workers", link: "/facilityManager/workers" },
+    { title: "Inventory", link: "/facilityManager/inventory" },
   ];
   return <Layout role={"Facility Manager"} sideBarList={sideBarList} />;
 };

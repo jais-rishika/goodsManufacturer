@@ -12,7 +12,7 @@ import {
   withSpecialReqContext,
 } from "./SpecialRequests.state.tsx";
 import type { Column } from "../../../components/Table/Table.types.ts";
-import ShowReqModal from "./Modal/ShowReqModal.tsx";
+import ShowReqModal from "../../Worker/ToolsInventory/Modal/ReqToolModal.tsx";
 import Pagination from "../../../components/Pagination/Pagination.tsx";
 import Table from "../../../components/Table/Table.tsx";
 

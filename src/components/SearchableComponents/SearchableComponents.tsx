@@ -11,25 +11,31 @@ import {
 const SearchableComponents =({
   availFields,
   setAvailFields,
-  toSearch
+  toSearch,
+  setFieldValue,
+  selectedField
   // register
 }: SearchableComponentsProps) => {
   const {
     handleShowFields,
-    selectValue,
-    currentlySelected,
     currentSearchValue,
+    currentlySelected,
     showFields,
+    selectValue
   } = useContext(SearchableContext)!;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setAvailFields(e.target.value);
   };
 
+  const setField=(manager: string)=>{
+    selectValue(manager);
+    setFieldValue(manager);
+  }
   return (
     <div className={styles.DropDownBox}>
       <div className={styles.SelectedValue}>
-        <input placeholder="Select" value={currentlySelected}/>
+        <input placeholder="Select" defaultValue={selectedField?selectedField:currentlySelected}/>
 
         <Button
           onClick={handleShowFields}
@@ -52,9 +58,9 @@ const SearchableComponents =({
           </div>
 
           <ul>
-            {availFields.length > 0 ? (
+            {availFields?(
               availFields.map((val) => (
-                <li onClick={() => selectValue(val)}>{val}</li>
+                <li onClick={() => setField(val)}>{val}</li>
               ))
             ) : (
               <li>NO FIELDS AVALIABLE</li>
