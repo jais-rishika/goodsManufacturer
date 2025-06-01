@@ -50,13 +50,13 @@ export const withReqContext = <T extends {}>(Component: ComponentType<T>) => {
       handleFilterChange(state.selectedFilters, currentUrl.toString());
     };
 
-    const updateMinDate = (val: Date) => {
+    const updateMinDate = (val: string) => {
       dispatch({ type: "SET_MINDATE", data: val });
       const currentUrl = new URLSearchParams(state.urlFilter);
       currentUrl.set("search", `${val}`);
       handleFilterChange(state.selectedFilters, currentUrl.toString());
     };
-    const updateMaxDate = (val: Date) => {
+    const updateMaxDate = (val: string) => {
       dispatch({ type: "SET_MAXDATE", data: val });
       const currentUrl = new URLSearchParams(state.urlFilter);
       currentUrl.set("search", `${val}`);
@@ -74,19 +74,24 @@ export const withReqContext = <T extends {}>(Component: ComponentType<T>) => {
     const getData = async (url: string) => {
       try {
         const res = await getRequests(url);
-        // dispatch({ type: "UPDATE_REQUESTS", data: res.content });
-        // setCount(res.page.totalElements);
+        
+        const data=res.content.map((row: RequestDetail)=>{
+          return {...row,returnDate: row.returnDate.substring(0,10), requestDate: row.requestDate.substring(0,10)}
+        });
+
+        dispatch({ type: "UPDATE_REQUESTS", data: data });
+        setCount(res.page.totalElements);
       } catch (error) {}
     };
 
-    // const setSelected = (data: RequestDetail) => {
-    //   dispatch({ type: "SELECT_REQUEST", data: data });
-    // };
+    const setSelected = (data: RequestDetail) => {
+      dispatch({ type: "SELECT_REQUEST", data: data });
+    };
 
     const handlers: RequestMethods = {
       handleReqDetailModal,
       getData,
-      // setSelected,
+      setSelected,
 
       handleFilterChange,
       handleUrlChange,

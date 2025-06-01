@@ -4,9 +4,7 @@ import axiosInstance from "./axios.instance"
 //get
 export const getWorkers = async (filter: string) => {
     try {
-        const res = await axiosInstance.get(`/workplace-manager/worker?${filter}`); 
-        console.log(res);
-               
+        const res = await axiosInstance.get(`/workplace-manager/worker?${filter}`);                
         return res.data;
     } catch (error) {
         throw error;

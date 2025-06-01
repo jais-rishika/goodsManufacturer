@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router";
 import Button from "../../../components/Button/Button.tsx";
 import Input from "../../../components/Input/Input.tsx";
 import styles from "./Login.module.scss";
@@ -6,53 +5,43 @@ import { LoginSchema, type LoginForm, type LoginProps } from "./Login.types.ts";
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getRole, login } from "../../../services/auth.service.ts";
-import { useEffect, useReducer } from "react";
-import { initialLoginState, LoginReducer } from "./Login.state.tsx";
-import { toast } from "react-toastify";
+
+import { useContext, useEffect } from "react";
+import { LoginContext, withLoginContext } from "./Login.state.tsx";
 
 
 const Login = ({}: LoginProps) => {
-  const navigate = useNavigate();
-
   const { register, handleSubmit, formState } = useForm<LoginForm>({
     resolver: zodResolver(LoginSchema),
   });
 
-  const [{ isLoading, error }, dispatch] = useReducer(
-    LoginReducer,
-    initialLoginState
-  );
+  const {checkLogin,handleLogin}=useContext(LoginContext)!;
 
-  const checkLogin = async () => {
-    try {
-      const res = await getRole();
-      console.log(localStorage.getItem("token"),res.role);
+  // const checkLogin = async () => {
+  //   try {
+  //     const res = await getRole();
+  //     console.log(localStorage.getItem("token"),res.role);
       
-      navigate(`/${res.role}`);
-    } catch (error) {}
-  };
+  //     navigate(`/${res.role}`);
+  //   } catch (error) {}
+  // };
 
-  const handleLogin = async (data: LoginForm) => {
-    try {
-      dispatch({ type: "ON_LOGIN" });
-      const res = await login(data);
-      localStorage.setItem("token", res.jwtToken);
-      dispatch({ type: "LOGIN_SUCCESSFUL" });
+  // const handleLogin = async (data: LoginForm) => {
+  //   try {
+  //     dispatch({ type: "ON_LOGIN" });
+  //     const res = await login(data);
+  //     localStorage.setItem("token", res.jwtToken);
+  //     dispatch({ type: "LOGIN_SUCCESSFUL" });
 
-      toast.success("Login Successful");
-      navigate(`/${res.role}`);
-    } catch (error: any) {
-      console.log(error);
+  //     toast.success("Login Successful");
+  //     navigate(`/${res.role}`);
+  //   } catch (error: any) {
+  //     console.log(error);
 
-      toast.error("Login Failed");
-      dispatch({ type: "LOGIN_FAILED", error: error.message });
-    }
-  };
-
-  useEffect(() => {
-    if (error) toast.error(error);
-  }, [error]);
+  //     toast.error("Login Failed");
+  //     dispatch({ type: "LOGIN_FAILED", error: error.message });
+  //   }
+  // };
 
   useEffect(() => {
     checkLogin();
@@ -89,4 +78,4 @@ const Login = ({}: LoginProps) => {
   );
 };
 
-export default Login;
+export default withLoginContext(Login);

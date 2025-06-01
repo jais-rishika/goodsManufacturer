@@ -25,9 +25,9 @@ const AddModal = ({}: ModalProps) => {
     try {
       const res = await addToolCribManagers(data);
       getData(urlFilter);
-      toast.success("Facility Manager Added ")
+      toast.success("Tool Crib Manager Added ")
     } catch (error) {
-      toast.error("Sorry!! Facility Manager Could not be Added")
+      toast.error("Sorry!! Tool Crib Manager Could not be Added")
     }finally{
       handleAddModal();
     }
@@ -39,7 +39,7 @@ const AddModal = ({}: ModalProps) => {
         onSubmit={handleSubmit(handleAddToolCribManager)}
         className={styles.Form}
       >
-        <h2>Add Facility Manager</h2>
+        <h2>Add Tool Crib Manager</h2>
         <Input type="text" placeholder="Enter name" {...register("name")} />
         {!!formState.errors.name && (
           <small>{formState.errors.name.message}</small>

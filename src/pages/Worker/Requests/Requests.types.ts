@@ -1,18 +1,22 @@
-import type { ToolsShowDetail } from "../../Admin/Tools/Tools.types"
-
 export interface RequestsProps { }
 
 export interface RequestsTableData {
-    workStation: string,
-    workerEmail: string,
-    reqStatus: "PENDING" | "APPROVED" | "REJECTED",
-    showDetails: "show"
+    requestDate: string,
+    toolName: string,
+    reqQuantity: number,
+    returnDate: string,
+    approvalStatus: "PENDING" | "APPROVED" | "REJECTED",
+    returnStatus: "PENDING" | "RETURNED"
+
 }
 
 export interface RequestDetail extends RequestsTableData {
-    id: string
-    ReqDate: Date;
-    toolDetails: ToolsShowDetail[]
+    toolId: string
+    requestItemId: string,
+    workerName: string,
+    fine: number,
+    isPerishable: string,
+    toolCategory: "NORMAL" | "SPECIAL"
 }
 
 export interface RequestsState {
@@ -30,7 +34,7 @@ export interface RequestsState {
 
 export interface RequestMethods {
     handleReqDetailModal: () => void,
-
+    setSelected: (data: RequestDetail)=> void
     getData: (val: string) => void
 
     handleFilterChange: (val: string[], url: string) => void
@@ -46,9 +50,10 @@ export type RequestAction = {
     data: RequestDetail[]
 } | {
     type: "SHOW_REQUEST_DETAILS"
-} |
-
-{
+} | {
+    type: "SELECT_REQUEST"
+    data: RequestDetail
+} | {
     type: "SET_FILTERS",
     data: string[]
 } | {

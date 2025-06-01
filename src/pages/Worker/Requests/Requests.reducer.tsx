@@ -29,6 +29,8 @@ export const requestsReducer = (
       return { ...prevState, ReqDetailModal: !prevState.ReqDetailModal };
     case "UPDATE_REQUESTS":
       return { ...prevState, RequestsData: action.data };
+    case "SELECT_REQUEST":
+      return { ...prevState, selectedRequest: action.data };
 
     case "SET_COUNT":
       return { ...prevState, count: action.count };

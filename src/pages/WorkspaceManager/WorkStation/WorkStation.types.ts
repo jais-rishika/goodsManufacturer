@@ -3,8 +3,8 @@ import type { ReactNode } from "react"
 
 export interface WorkStationTableData {
     name: string,
-    workstationManagerName: string,
-    workstationManagerEmail: string,
+    workerName: string,
+    workerEmail: string,
     action: () => ReactNode
 
 }

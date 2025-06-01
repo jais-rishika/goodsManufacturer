@@ -28,9 +28,9 @@ const SearchableComponents =({
     setAvailFields(e.target.value);
   };
 
-  const setField=(manager: string)=>{
-    selectValue(manager);
-    setFieldValue(manager);
+  const setField=(field: string)=>{
+    selectValue(field);
+    setFieldValue(field);
   }
   return (
     <div className={styles.DropDownBox}>

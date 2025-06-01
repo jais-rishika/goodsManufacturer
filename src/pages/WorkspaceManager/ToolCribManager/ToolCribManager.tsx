@@ -35,6 +35,7 @@ const ToolCribManager = ({}: ToolCribManagerProps) => {
     editModal,
     ToolCribManagerTableData,
     selected,
+    handlefilter,
 
     //filters,
     searchValue,
@@ -55,7 +56,8 @@ const ToolCribManager = ({}: ToolCribManagerProps) => {
   ];
 
   const handleFilter = () => {
-    getData(urlFilter);
+    // getData(urlFilter);
+    handlefilter(urlFilter)
   };
 
   //useEffect

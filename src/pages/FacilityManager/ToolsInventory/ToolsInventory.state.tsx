@@ -8,10 +8,10 @@ import {
   toolInventoryInitialState,
   ToolInventoryReducer,
 } from "./ToolsInventory.reducer";
-import {
-  getToolsFacilityManager,
-} from "../../../services/tools.service";
+import { getToolsFacilityManager } from "../../../services/inventory.service";
+import { fetchManagerWorkplaces } from "../../../services/workplace.service";
 import type { ToolsDetail } from "../../Admin/Tools/Tools.types";
+import type { WorkPlaceData } from "../WorkPlace/WorkPlace.types";
 
 export const ToolInventoryContext = createContext<
   (ToolsInventoryState & ToolsInventoryMethods) | null
@@ -29,6 +29,22 @@ export const withToolInventory = <T extends {}>(
     const showSendToolModal = () => {
       dispatch({ type: "SEND_MODAL" });
     };
+
+    // const handleSelect = (tool: ToolInventoryDetail) => {
+    //   dispatch({ type: "SELECT_TOOL", data: tool });
+    // };
+
+    const setAvailFields = async (val: string) => {
+      const workplaces = await fetchManagerWorkplaces(val);
+      console.log(workplaces);
+
+      dispatch({ type: "SET_AVAIL_FIELDS", data: workplaces.content.map((val: WorkPlaceData)=> val.name) });
+    };
+
+    const updateWorkplace = async (val: string) => {
+      dispatch({ type: "SET_WORKPLACE", data: val });
+    };
+
     //filter
     const handleFilterChange = (filter: string[], url: string) => {
       dispatch({ type: "SET_FILTERS", data: filter });
@@ -41,20 +57,20 @@ export const withToolInventory = <T extends {}>(
       newUrl.set("size", `${size}`);
       newUrl.set("name", state.searchValue);
 
-      if(filter.includes("isPerishable")){
+      if (filter.includes("isPerishable")) {
         newUrl.set("isPerishable", `${filter.includes("isPerishable")}`);
       }
-      let category='';
-      if(filter.includes("special")){
-        category+=`&category=SPECIAL`
+      let category = "";
+      if (filter.includes("special")) {
+        category += `&category=SPECIAL`;
       }
-      if(filter.includes("normal")){
-        category+='&category=NORMAL'
+      if (filter.includes("normal")) {
+        category += "&category=NORMAL";
       }
 
       newUrl.set("minPrice", `${state.minPrice}` || `${10}`);
       newUrl.set("maxPrice", `${state.maxPrice}` || `${10000}`);
-      updateUrl(newUrl.toString()+category);
+      updateUrl(newUrl.toString() + category);
     };
 
     const handleUrlChange = (size: number, page: number) => {
@@ -83,7 +99,7 @@ export const withToolInventory = <T extends {}>(
       currentUrl.set("search", `${val}`);
       handleFilterChange(state.selectedFilters, currentUrl.toString());
     };
-    
+
     const updateUrl = (newUrl: string) => {
       dispatch({ type: "SET_URL_FILTER", data: newUrl });
     };
@@ -110,6 +126,9 @@ export const withToolInventory = <T extends {}>(
       showSendToolModal,
       getData,
       setSelected,
+      setAvailFields,
+      updateWorkplace,
+
 
       handleFilterChange,
       handleUrlChange,

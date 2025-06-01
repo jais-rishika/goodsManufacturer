@@ -5,7 +5,9 @@ import type { ModalProps } from "./Modal.types.ts"
  
 const Modal = ({setShowModal,children}: ModalProps) => {
     const closeModal=()=>{
-        setShowModal(false)
+        console.log("hello");
+        
+        setShowModal()
     } 
     return <div className={styles.ModalOverlay}>
         <div className={styles.Modal}>

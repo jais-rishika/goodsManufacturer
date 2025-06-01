@@ -1,4 +1,4 @@
-import type { SendToolForm } from "../pages/WorkspaceManager/Inventory/Modal/Modal.types";
+import type { SendToolPayload } from "../pages/FacilityManager/ToolsInventory/Modal/Modal.types";
 import axiosInstance from "./axios.instance"
 
 //get
@@ -13,7 +13,6 @@ export const getTools = async (filter: string) => {
 export const getToolsFacilityManager = async (filter: string) => {
     try {
         const res = await axiosInstance.get(`facility-manager/tool?${filter}`);
-        console.log(res);
 
         return res.data;
     } catch (error) {
@@ -24,8 +23,25 @@ export const getToolsFacilityManager = async (filter: string) => {
 export const getToolCribInventory = async (filter: string) => {
     try {
         const res = await axiosInstance.get(`/workplace-manager/inventory?${filter}`);
-        console.log(res);
 
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const getToolCribManagerInventory = async (filter: string) => {
+    try {
+        const res = await axiosInstance.get(`/tool-crib-manager/inventory?${filter}`);
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const getToolCribInventoryWorker = async (filter: string) => {
+    try {
+        const res = await axiosInstance.get(`/worker/inventory?${filter}`);
         return res.data;
     } catch (error) {
         throw error;
@@ -42,7 +58,7 @@ export const addTools = async (payload: FormData) => {
     }
 }
 
-export const sendTool = async (payload: SendToolForm) => {
+export const sendTool = async (payload: SendToolPayload) => {
     try {
         const res = await axiosInstance.post('facility-manager/tools', payload);
         return res.data;

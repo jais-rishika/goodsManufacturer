@@ -118,19 +118,21 @@ export const withWorkStation = <T extends {}>(Component: ComponentType<T>) => {
       try {
         dispatch({ type: "GET_DATA" });
         const workStation = await fetchWorkplaceWorkStations(url);
+        
         setCount(workStation.page.totalElements);
-
+        
         const tableData: WorkStationTableData[] = workStation.content.map(
           (data: WorkStationData) => {
             return {
               name: data.name,
-              workstationManagerName: data.workstationManagerName,
-              workstationManagerEmail: data.workstationManagerEmail,
+              workerName: data.workerName,
+              workerEmail: data.workerEmail,
               action: actionButtons(data),
             };
           }
         );
         
+        // console.log(tableData);
         dispatch({ type: "GET_DATA_SUCCESS", data: tableData });
       } catch (error) {
         dispatch({

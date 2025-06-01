@@ -16,9 +16,9 @@ const DeleteModal = ({}: ModalProps) => {
     try {
       const res = await deleteToolCribManagers(selected!.id);
       getData(urlFilter);
-      toast.success("Facilty Manager Deleted Successfully");
+      toast.success("Tool Crib Manager Deleted Successfully");
     } catch (error) {
-      toast.error("Facilty Manager Deletion Failed");
+      toast.error("Tool Crib Manager Deletion Failed");
     } finally {
       hideDeleteModal();
     }
@@ -27,8 +27,8 @@ const DeleteModal = ({}: ModalProps) => {
   return (
     <Modal setShowModal={hideDeleteModal}>
       <div className={styles.DeleteContainer}>
-        <h2>Delete Facility Manager</h2>
-        <h5>Are You sure you want to delete this ToolCribManager?</h5>
+        <h2>Delete Tool Crib Manager</h2>
+        <h5>Are You sure you want to delete this Tool Crib Manager?</h5>
         <Button danger onClick={handleDelete}>
           DELETE
         </Button>

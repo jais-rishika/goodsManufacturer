@@ -7,7 +7,7 @@ import Button from "../../../../components/Button/Button";
 import Input from "../../../../components/Input/Input";
 import Modal from "../../../../components/Modal/Modal";
 import { SendToolFormSchema, type SendToolForm } from "./Modal.types";
-import { sendTool } from "../../../../services/tools.service";
+import { sendTool } from "../../../../services/inventory.service";
 import { ToolInventoryContext } from "../../../FacilityManager/ToolsInventory/ToolsInventory.state";
 
 const ShowReqModal = () => {

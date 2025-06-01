@@ -3,6 +3,7 @@ export interface ToolCribManagerProps { }
 import type { ReactNode } from "react";
 
 export interface ToolCribManagerTableData {
+    id: string,
     name: string,
     email: string,
     createdAt: string,
@@ -10,9 +11,8 @@ export interface ToolCribManagerTableData {
     action: () => ReactNode
 }
 
-export interface ToolCribManagerData extends ToolCribManagerTableData {
-    id: string
-}
+// export interface ToolCribManagerData extends ToolCribManagerTableData {
+// }
 
 export type ToolCribManagerAction = {
     type: "UPDATE_DATA",
@@ -31,7 +31,7 @@ export type ToolCribManagerAction = {
     status: boolean
 } | {
     type: 'SELECT'
-    selected: ToolCribManagerData
+    selected: ToolCribManagerTableData
 } | {
     type: "GET_DATA",
 } | {
@@ -39,7 +39,7 @@ export type ToolCribManagerAction = {
     error: string
 } | {
     type: "GET_DATA_SUCCESS"
-    data: ToolCribManagerData[]
+    data: ToolCribManagerTableData[]
 } | {
     type: "SET_FILTERS",
     data: string[]
@@ -63,8 +63,8 @@ export interface ToolCribManagerState {
     deleteModal: boolean,
     reqHistoryModal: boolean,
 
-    selected: ToolCribManagerData | null,
-    ToolCribManagerData: ToolCribManagerData[],
+    selected: ToolCribManagerTableData | null,
+    ToolCribManagerData: ToolCribManagerTableData[],
     ToolCribManagerTableData: ToolCribManagerTableData[],
 
     selectedFilters: string[],
@@ -77,11 +77,11 @@ export interface ToolCribManagerMethods {
     handleAddModal: () => void
     hideEditModal: () => void
     hideDeleteModal: () => void
-    handleSelect: (data: ToolCribManagerData) => void
-
+    handleSelect: (data: ToolCribManagerTableData) => void
+    handlefilter: (url: string)=> void
     getData: (val: string) => void
 
-    handleFilterChange: (val: string[], url: string) => void
+    handleFilterChange: (val: string[]) => void
     handleUrlChange: (size: number, page: number) => void
     updateSearch: (val: string) => void
     setCount: (count: number) => void

@@ -36,10 +36,12 @@ const Requests = ({}: RequestsProps) => {
 
   //columnData
   const columns: Column<RequestsTableData>[] = [
-    { id: "workStation", label: "WorkStation" },
-    { id: "workerEmail", label: "Worker Email" },
-    { id: "reqStatus", label: "Request Status" },
-    { id: "showDetails", label: "Show Request Details" },
+    { id: "requestDate", label: "Request Date" },
+    { id: "toolName", label: "Tool Name" },
+    { id: "reqQuantity", label: "Quantity" },
+    { id: "approvalStatus", label: "Approved Status Details" },
+    {id: "returnDate", label: "Return Date"},
+    { id: "returnStatus", label: "Return Status Details" },
   ];
 
   const handleFilter = () => {

@@ -31,7 +31,9 @@ const AddModal = ({
     if(!selectedManager){
       alert("ADD WorkStation Manager")
     }
-    data["WorkStationManagerEmail"]=selectedManager!;
+    console.log("hello");
+    
+    data["workerEmail"]=selectedManager!;
     try {
       const res = await addWorkStation(data);
       handleAddModal();
@@ -53,14 +55,14 @@ const AddModal = ({
 
         <h2>Add WorkPlace</h2>
 
-        <Input placeholder="Enter WorkStation Name" {...register("name")} />
+        {/* <Input placeholder="Enter WorkStation Name" {...register("name")} />
         {!!formState.errors.name && (
           <small>{formState.errors.name.message}</small>
-        )}
+        )} */}
 
         <SearchableComponents setFieldValue={updateManager} availFields={availFields!} setAvailFields={setAvailFields!} toSearch={"Email"}/>
-         {!!formState.errors.WorkStationManagerEmail && (
-          <small>{formState.errors.WorkStationManagerEmail?.message}</small>
+         {!!formState.errors.workerEmail && (
+          <small>{formState.errors.workerEmail?.message}</small>
         )}
 
         <Button type="submit">Add</Button>

@@ -4,7 +4,6 @@ import type {
   ToolCribManagerState,
   ToolCribManagerMethods,
   ToolCribManagerTableData,
-  ToolCribManagerData,
 } from "./ToolCribManager.types";
 
 import {
@@ -52,43 +51,44 @@ export const withToolCribManagerContext = <T extends {}>(
     //   dispatch({ type: "DELETE_MODAL", status: !state.deleteModal });
     // };
 
-    const handleSelect = (data: ToolCribManagerData) => {
+    const handleSelect = (data: ToolCribManagerTableData) => {
       dispatch({ type: "SELECT", selected: data });
     };
 
     //filter
-    const handleFilterChange = (filter: string[], url: string) => {
+    const handleFilterChange = (filter: string[]) => {
       dispatch({ type: "SET_FILTERS", data: filter });
-
-      //pagination
-      const currentUrl = new URLSearchParams(url);
-      const [size, page] = [currentUrl.get("size"), currentUrl.get("page")];
-      const newUrl = new URLSearchParams();
-      newUrl.set("page", `${page}`);
-      newUrl.set("size", `${size}`);
-      if (state.searchValue) newUrl.set("search", state.searchValue || "");
-      const fields = filter.reduce((a, b) => {
-        return `${a}&fields=${b}`;
-      }, "");
-      updateUrl(newUrl.toString() + fields);
     };
 
     const handleUrlChange = (size: number, page: number) => {
       const currentUrl = new URLSearchParams(state.urlFilter);
       currentUrl.set("size", `${size}`);
       currentUrl.set("page", `${page}`);
-      handleFilterChange(state.selectedFilters, currentUrl.toString());
+      handlefilter(currentUrl.toString())
+      // handleFilterChange(state.selectedFilters, currentUrl.toString());
     };
 
     const updateSearch = (val: string) => {
       dispatch({ type: "SET_SEARCH", data: val });
-      const currentUrl = new URLSearchParams(state.urlFilter);
-      currentUrl.set("search", val);
-      handleFilterChange(state.selectedFilters, currentUrl.toString());
     };
 
-    const updateUrl = (newUrl: string) => {
-      dispatch({ type: "SET_URL_FILTER", data: newUrl });
+    const handlefilter = (url: string) => {
+      //pagination
+      const currentUrl = new URLSearchParams(url);
+      const [size, page] = [currentUrl.get("size"), currentUrl.get("page")];
+      const newUrl = new URLSearchParams();
+      newUrl.set("page", `${page}`);
+      newUrl.set("size", `${size}`);
+
+      //filter
+      if (state.searchValue) newUrl.set("search", state.searchValue || "");
+      const fields = state.selectedFilters.reduce((a, b) => {
+        return `${a}&fields=${b}`;
+      }, "");
+      
+      const finalUrl=newUrl.toString()+fields;
+
+      dispatch({ type: "SET_URL_FILTER", data: finalUrl });
     };
 
     const setCount = (count: number) => {
@@ -96,7 +96,7 @@ export const withToolCribManagerContext = <T extends {}>(
     };
 
     //actionButtonTemplate
-    const actionButtons = (data: ToolCribManagerData) => {
+    const actionButtons = (data: ToolCribManagerTableData) => {
       return (
         <>
           <Button
@@ -125,29 +125,33 @@ export const withToolCribManagerContext = <T extends {}>(
     const getData = async (url: string) => {
       try {
         dispatch({ type: "GET_DATA" });
-        const ToolCribManager = await getToolCribManagers(url);
-        setCount(ToolCribManager.page.totalElements)
+        const toolCribManagers = await getToolCribManagers(url);
+        
+        setCount(toolCribManagers.page.totalElements)
 
-        const tableData: ToolCribManagerTableData[] =
-        ToolCribManager.content.map((data: ToolCribManagerData) => {
-          return {
-            name: data.name,
-            email: data.email,
-            createdAt: data.createdAt.substring(0, 10),
-            action: actionButtons(data),
-            reqHistory: <NavLink to="/"></NavLink>
-          };
-        });
+        const tableData: ToolCribManagerTableData[] = toolCribManagers.content.map(
+          (data: ToolCribManagerTableData) => {
+            return {
+              id: data.id,
+              name: data.name,
+              email: data.email,
+              createdAt: "12-12-2024",
+              action: actionButtons(data),
+              reqHistory: <NavLink to="/"></NavLink>,
+            };
+          }
+        );
+        console.log(toolCribManagers);
 
-        dispatch({ type: "UPDATE_DATA", data: tableData });
-        dispatch({type: "GET_DATA_SUCCESS" , data: ToolCribManager.content })
-
+        // dispatch({ type: "UPDATE_DATA", data: tableData });
+        dispatch({type: "GET_DATA_SUCCESS" , data: tableData })
+        toast.success("ToolCribManager Fetched SuccessFully")
       } catch (error) {
+        toast.error("Could not Fetch the ToolCribManager")
         dispatch({
           type: "GET_DATA_FAILED",
           error: "Could not Fetch the ToolCribManager",
         });
-        toast.error("Could not Fetch the ToolCribManager")
       }
     };
 
@@ -157,6 +161,7 @@ export const withToolCribManagerContext = <T extends {}>(
       hideDeleteModal,
       handleSelect,
       getData,
+      handlefilter,
 
       handleFilterChange,
       handleUrlChange,

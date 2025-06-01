@@ -28,6 +28,7 @@ const Workers = ({}: WorkersProps) => {
     selected,
 
     //filters,
+    setFilter,
     searchValue,
     selectedFilters,
     count,
@@ -47,6 +48,7 @@ const Workers = ({}: WorkersProps) => {
   ];
 
   const handleFilter = () => {
+    handleFilterChange()
     getData(urlFilter);
   };
 
@@ -63,7 +65,7 @@ const Workers = ({}: WorkersProps) => {
             <label>
               <MultipleSelect
                 selectedFilters={selectedFilters}
-                handleFilter={handleFilterChange}
+                handleFilter={setFilter}
                 availFilters={["name", "email"]}
                 getData={getData}
                 url={urlFilter}
@@ -86,7 +88,7 @@ const Workers = ({}: WorkersProps) => {
         </div>
 
         <Button primary onClick={handleAddModal}>
-          Add WorkPlace Manager
+          Add Worker
         </Button>
       </div>
 

@@ -17,9 +17,6 @@ export interface WorkersData extends WorkersTableData {
 }
 
 export type WorkersAction = {
-    type: "UPDATE_DATA",
-    data: WorkersTableData[]
-} | {
     type: 'ADD_MODAL'
     status: boolean
 } | {
@@ -41,7 +38,7 @@ export type WorkersAction = {
     error: string
 } | {
     type: "GET_DATA_SUCCESS"
-    data: WorkersData[]
+    data: WorkersTableData[]
 } | {
     type: "SET_FILTERS",
     data: string[]
@@ -80,10 +77,11 @@ export interface WorkersMethods {
     handleEditModal: () => void
     handleDeleteModal: () => void
     handleSelect: (data: WorkersData) => void
+    setFilter: (filter: string[])=> void
 
     getData: (val: string) => void
 
-    handleFilterChange: (val: string[], url: string) => void
+    handleFilterChange: (url?: string) => void
     handleUrlChange: (size: number, page: number) => void
     updateSearch: (val: string) => void
     setCount: (count: number) => void

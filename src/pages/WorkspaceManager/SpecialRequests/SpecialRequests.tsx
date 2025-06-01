@@ -54,12 +54,12 @@ const SpecialRequests = ({}: SpecialRequestsProps) => {
     const val = e.target.value;
     console.log(val);
     //error handling
-    updateMinDate(new Date(val));
+    updateMinDate(val);
   };
   const handleMaxDate = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     // errorHandling
-    updateMaxDate(new Date(val));
+    updateMaxDate(val);
   };
 
   //useEffect

@@ -8,7 +8,7 @@ import { ToolsSchema, type ModalProps, type ToolForm } from "./Modal.types.ts";
 import { toast } from "react-toastify";
 import { useContext } from "react";
 import { ToolsContext } from "../Tools.state.tsx";
-import { editTools } from "../../../../services/tools.service.ts";
+import { editTools } from "../../../../services/inventory.service.ts";
 
 const EditModal = ({}: ModalProps) => {
   //context

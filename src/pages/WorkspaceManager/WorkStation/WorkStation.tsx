@@ -21,7 +21,7 @@ const WorkStation = ({}: WorkStationProps) => {
     addModal,
     deleteModal,
     editModal,
-    WorkStationTableData,
+    workStationTableData,
     selected,
 
     //filters,
@@ -40,8 +40,8 @@ const WorkStation = ({}: WorkStationProps) => {
   //columnData
   const columns: Column<WorkStationTableData>[] = [
     { id: "name", label: "WorkStation Name" },
-    { id: "workstationManagerName", label: "WorkStation Manager Name" },
-    { id: "workstationManagerEmail", label: "WorkStation Manager Email" },
+    { id: "workerName", label: "WorkStation Manager Name" },
+    { id: "workerEmail", label: "WorkStation Manager Email" },
     { id: "action", label: "Actions" },
   ];
 
@@ -81,10 +81,11 @@ const WorkStation = ({}: WorkStationProps) => {
 
       <div className={styles.Table}>
         <Table<WorkStationTableData>
-          tableData={WorkStationTableData}
+          tableData={workStationTableData}
           columnData={columns}
         />
       </div>
+
       <Pagination
         count={count}
         url={urlFilter}

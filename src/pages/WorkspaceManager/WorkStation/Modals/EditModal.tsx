@@ -19,13 +19,13 @@ const EditModal = ({
 }: ModalProps) => {
   //context
   const {handleEditModal,getData, selected, availFields, setAvailFields, urlFilter,selectedManager,updateManager}=useContext(WorkStationContext)!;
+  console.log(selected);
   
   //useForm
   const { register, handleSubmit, formState } = useForm<WorkStationForm>({
     defaultValues: {
       name: `${selected!.name}` ,
-      address: `${selected!.address}`,
-      WorkStationManagerEmail: `${selected!.WorkStationManagerEmail}`
+      workerEmail: `${selected!.workerEmail}`
     },
     resolver: zodResolver(WorkStationFormSchema),
   });
@@ -35,7 +35,7 @@ const EditModal = ({
     if(!selectedManager){
       alert("ADD WorkStation Manager")
     }
-    data["WorkStationManagerEmail"]=selectedManager!;
+    data["workerEmail"]=selectedManager!;
     
     try {
       const res = await editWorkStation({data}, selected!.id);
@@ -51,6 +51,7 @@ const EditModal = ({
   // useEffect
   useEffect(()=>{
     setAvailFields("")
+    updateManager(selected!.workerEmail)
   },[])
   return (
     <Modal setShowModal={handleEditModal}>
@@ -64,17 +65,9 @@ const EditModal = ({
           <small>{formState.errors.name.message}</small>
         )}
 
-        <Input
-          placeholder="Enter WorkStation Location"
-          {...register("address")}
-        />
-        {!!formState.errors.name && (
-          <small>{formState.errors.address?.message}</small>
-        )}
-
-        <SearchableComponents setFieldValue={updateManager} availFields={availFields} setAvailFields={setAvailFields} toSearch={"Email"}/>
-         {!!formState.errors.WorkStationManagerEmail && (
-          <small>{formState.errors.WorkStationManagerEmail?.message}</small>
+        <SearchableComponents setFieldValue={updateManager} availFields={availFields} setAvailFields={setAvailFields} toSearch={"Email"} selectedField={selected!.workerEmail}/>
+         {!!formState.errors.workerEmail && (
+          <small>{formState.errors.workerEmail?.message}</small>
         )}
 
         <Button type="submit">Edit</Button>

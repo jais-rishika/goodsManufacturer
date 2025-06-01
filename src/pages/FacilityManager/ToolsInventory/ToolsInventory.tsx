@@ -5,7 +5,6 @@ import Input from "../../../components/Input/Input.tsx";
 import type { ToolsDetail } from "../../Admin/Tools/Tools.types.ts";
 import styles from "./ToolsInventory.module.scss";
 import type { ToolInventoryDetail, ToolsInventoryProps } from "./ToolsInventory.types.ts";
-import SendToolsModal from "../../Worker/ToolsInventory/Modal/ReqToolModal.tsx";
 import {
   ToolInventoryContext,
   withToolInventory,
@@ -14,6 +13,7 @@ import image from "../../../../public/vite.svg";
 import Pagination from "../../../components/Pagination/Pagination.tsx";
 import MultipleSelect from "../../../components/MultipleSelect/MultipleSelect.tsx";
 import { hideLoader, showLoader } from "../../../components/Loader/Loader.tsx";
+import SendToolModal from "./Modal/SendToolModal.tsx";
 
 const ToolsInventory = ({}: ToolsInventoryProps) => {
   //ref
@@ -66,9 +66,7 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
   }
 
   useEffect(() => {
-    showLoader();
     getData(urlFilter);
-    hideLoader();
   }, []);
 
   return (
@@ -178,7 +176,7 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
         url={urlFilter}
         getData={getData}
       />
-      {sendToolModal && <SendToolsModal />}
+      {sendToolModal && <SendToolModal />}
     </>
   );
 };

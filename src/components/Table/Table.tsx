@@ -3,7 +3,11 @@ import styles from "./Table.module.scss";
 import type { TableProps } from "./Table.types.ts";
 import TableCell from "../TableCell/TableCell.tsx";
 
-const Table = <T extends {}>({ columnData, tableData }: TableProps<T>) => {
+const Table = <T extends {}>({
+  columnData,
+  tableData,
+  children,
+}: TableProps<T>) => {
   return (
     <table className={styles.Table}>
       <thead>
@@ -14,17 +18,19 @@ const Table = <T extends {}>({ columnData, tableData }: TableProps<T>) => {
         </tr>
       </thead>
       <tbody>
-        {tableData && tableData.map((row, idx) => {
-          return (
-            <tr key={idx}>
-              {columnData.map((col, idx) => {
-                const value = row[col.id] as ReactNode;
-                return <TableCell key={idx}>{value}</TableCell>;
-              })}
-            </tr>
-          );
-        })}
+        {tableData &&
+          tableData.map((row, idx) => {
+            return (
+              <tr key={idx}>
+                {columnData.map((col, idx) => {
+                  const value = row[col.id] as ReactNode;
+                  return <TableCell key={idx}>{value}</TableCell>;
+                })}
+              </tr>
+            );
+          })}
       </tbody>
+      <tfoot>{children}</tfoot>
     </table>
   );
 };

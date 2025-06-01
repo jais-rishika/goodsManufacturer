@@ -51,34 +51,37 @@ export const withWorkersContext = <T extends {}>(
     };
 
     //filter
-    const handleFilterChange = (filter: string[], url: string) => {
-      dispatch({ type: "SET_FILTERS", data: filter });
+    const handleFilterChange = (url?: string) => {
 
       //pagination
-      const currentUrl = new URLSearchParams(url);
+      const currentUrl = new URLSearchParams(url?url:state.urlFilter);
       const [size, page] = [currentUrl.get("size"), currentUrl.get("page")];
       const newUrl = new URLSearchParams();
       newUrl.set("page", `${page}`);
       newUrl.set("size", `${size}`);
       if (state.searchValue) newUrl.set("search", state.searchValue || "");
-      const fields = filter.reduce((a, b) => {
+      const fields = state.selectedFilters.reduce((a, b) => {
         return `${a}&fields=${b}`;
       }, "");
       updateUrl(newUrl.toString() + fields);
     };
 
+    const setFilter=(filter: string[])=>{
+      dispatch({ type: "SET_FILTERS", data: filter });
+    }
+
     const handleUrlChange = (size: number, page: number) => {
       const currentUrl = new URLSearchParams(state.urlFilter);
       currentUrl.set("size", `${size}`);
       currentUrl.set("page", `${page}`);
-      handleFilterChange(state.selectedFilters, currentUrl.toString());
+      handleFilterChange(currentUrl.toString());
     };
 
     const updateSearch = (val: string) => {
       dispatch({ type: "SET_SEARCH", data: val });
       const currentUrl = new URLSearchParams(state.urlFilter);
       currentUrl.set("search", val);
-      handleFilterChange(state.selectedFilters, currentUrl.toString());
+      // handleFilterChange(state.selectedFilters, currentUrl.toString());
     };
 
     const updateUrl = (newUrl: string) => {
@@ -133,9 +136,9 @@ export const withWorkersContext = <T extends {}>(
             reqHistory: <NavLink to="/"></NavLink>
           };
         });
+        console.log(workers);
 
-        dispatch({ type: "UPDATE_DATA", data: tableData });
-        dispatch({type: "GET_DATA_SUCCESS" , data: workers.content })
+        dispatch({type: "GET_DATA_SUCCESS" , data: tableData })
 
       } catch (error) {
         dispatch({
@@ -153,6 +156,7 @@ export const withWorkersContext = <T extends {}>(
       handleSelect,
       getData,
 
+      setFilter,
       handleFilterChange,
       handleUrlChange,
       updateSearch,

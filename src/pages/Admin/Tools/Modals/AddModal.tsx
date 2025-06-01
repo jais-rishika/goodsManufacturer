@@ -10,7 +10,7 @@ import { useContext, useRef } from "react";
 import { ToolsContext } from "../Tools.state.tsx";
 import {
   addTools,
-} from "../../../../services/tools.service.ts";
+} from "../../../../services/inventory.service.ts";
 
 const AddModal = ({}: ModalProps) => {
   //useContext

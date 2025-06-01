@@ -1,7 +1,7 @@
 import { createContext, useReducer, type ComponentType } from "react";
 import type { ToolMethods, ToolsDetail, ToolsState } from "./Tools.types";
 import { initialToolState, toolsReducer } from "./Tools.reducer";
-import { getTools } from "../../../services/tools.service";
+import { getTools } from "../../../services/inventory.service";
 
 export const ToolsContext = createContext<(ToolsState & ToolMethods) | null>(
   null

@@ -27,7 +27,7 @@ const DeleteModal = ({}: ModalProps) => {
   return (
     <Modal setShowModal={handleDeleteModal}>
       <div className={styles.DeleteContainer}>
-        <h2>Delete Facility Manager</h2>
+        <h2>Delete Worker</h2>
         <h5>Are You sure you want to delete this Workers?</h5>
         <Button danger onClick={handleDelete}>
           DELETE

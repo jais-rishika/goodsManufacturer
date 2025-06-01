@@ -4,8 +4,8 @@ import type {
 } from "./ToolsInventory.types";
 
 export const toolInventoryInitialState: ToolsInventoryState = {
-  // isLoading: false,
-  // error: "",
+  isLoading: false,
+  error: "",
   reqToolModal: false,
 
   reqTableData: [],
@@ -29,8 +29,8 @@ export const ToolInventoryReducer = (
       return {...prevState, reqTableData: action.data}
     case "UPDATE_TOOLS":
       return { ...prevState, ToolInventoryData: action.data };
-    case "REQ_TOOL_MODAL":
-      return { ...prevState, reqToolModal: !prevState.reqToolModal };
+    case "REQ_TOOL_MODAL":      
+      return { ...prevState, reqToolModal: action.status };
     case "SELECT_TOOL":
       return { ...prevState, selectedTool: action.data };
 

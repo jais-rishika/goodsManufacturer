@@ -9,7 +9,9 @@ import {
   toolInventoryInitialState,
   ToolInventoryReducer,
 } from "./ToolsInventory.reducer";
-import { getToolsFacilityManager } from "../../../services/tools.service";
+import {
+  getToolCribInventoryWorker,
+} from "../../../services/inventory.service";
 
 export const ToolInventoryContext = createContext<
   (ToolsInventoryState & ToolsInventoryMethods) | null
@@ -24,9 +26,13 @@ export const withToolInventory = <T extends {}>(
       toolInventoryInitialState
     );
 
-    const handleReqToolModal = () => {
-      dispatch({ type: "REQ_TOOL_MODAL" });
+    const showReqToolModal = () => {
+      dispatch({ type: "REQ_TOOL_MODAL", status: true });
     };
+    const hideReqToolModal = () => {
+      dispatch({ type: "REQ_TOOL_MODAL", status: false });
+    };
+
     //filter
     const handleFilterChange = (filter: string[], url: string) => {
       dispatch({ type: "SET_FILTERS", data: filter });
@@ -92,7 +98,7 @@ export const withToolInventory = <T extends {}>(
 
     const getData = async (url: string) => {
       try {
-        const res = await getToolsFacilityManager(url);
+        const res = await getToolCribInventoryWorker(url);
         dispatch({ type: "UPDATE_TOOLS", data: res.content });
         setCount(res.page.totalElements);
       } catch (error) {
@@ -101,8 +107,9 @@ export const withToolInventory = <T extends {}>(
     };
 
     const updateReqTable = (data: ReqTable[]) => {
-      const res= state.reqTableData;
-      dispatch({type: "REQ_TABLE_DATA", data: res})
+      const res = data;
+      localStorage.setItem("reqTable",JSON.stringify(data))
+      dispatch({ type: "REQ_TABLE_DATA", data: res });
     };
 
     const setSelected = (data: ToolInventoryDetail) => {
@@ -110,7 +117,8 @@ export const withToolInventory = <T extends {}>(
     };
 
     const handlers = {
-      handleReqToolModal,
+      showReqToolModal,
+      hideReqToolModal,
       getData,
       setSelected,
       updateReqTable,

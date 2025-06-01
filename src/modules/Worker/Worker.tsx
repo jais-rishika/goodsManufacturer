@@ -11,7 +11,9 @@ const Worker = ({}: WorkerProps) => {
   ];
   return (
     <div className={styles.Layout}>
-      <WorkPlaceEmployeeHeader links={links} />
+      <div>
+        <WorkPlaceEmployeeHeader links={links} />
+      </div>
       <main className={styles.MainContainer}>
         <Outlet />
       </main>

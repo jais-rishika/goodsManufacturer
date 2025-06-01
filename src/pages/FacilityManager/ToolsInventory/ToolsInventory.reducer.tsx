@@ -10,6 +10,8 @@ export const toolInventoryInitialState: ToolsInventoryState = {
 
   ToolInventoryData: [],
   selectedTool: null,
+  availFields: [],
+  selectedWorkplace: null,
 
   selectedFilters: [],
   searchValue: "",
@@ -30,6 +32,11 @@ export const ToolInventoryReducer = (
       return { ...prevState, sendToolModal: !prevState.sendToolModal };
     case "SELECT_TOOL":
       return { ...prevState, selectedTool: action.data };
+
+    case "SET_AVAIL_FIELDS":
+      return { ...prevState, availFields: action.data };
+    case "SET_WORKPLACE":
+      return { ...prevState, selectedWorkplace: action.data };
 
     case "SET_COUNT":
       return { ...prevState, count: action.count };

@@ -3,9 +3,7 @@ import axiosInstance from "./axios.instance"
 //get
 export const getToolCribManagers = async (filter: string) => {
     try {
-        const res = await axiosInstance.get(`/owner/facility-manager?${filter}`); 
-        console.log(res);
-               
+        const res = await axiosInstance.get(`/workplace-manager/tool-crib-manager??${filter}`);                
         return res.data;
     } catch (error) {
         throw error;
@@ -14,7 +12,7 @@ export const getToolCribManagers = async (filter: string) => {
 
 export const getWorkPlaceToolCribManagers = async (filter: string) => {
     try {
-        const res = await axiosInstance.get(`/owner/facility-manager?${filter}`); 
+        const res = await axiosInstance.get(`workplace-manager/tool-crib-manager??${filter}`); 
         console.log(res);
                
         return res.data;

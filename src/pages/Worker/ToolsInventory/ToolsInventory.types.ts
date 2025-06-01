@@ -1,21 +1,29 @@
-import type { ReactNode } from "react";
 import type { ToolsDetail } from "../../Admin/Tools/Tools.types";
 
 export interface ToolsInventoryProps { }
 
 export interface ReqTable {
     id: string
-    idx: number;
     name: string;
     qty: number;
-    action: ReactNode;
 }
 
-export interface ToolInventoryDetail extends ToolsDetail {
+export type req={
+    toolId: string,
+    reqQuantity: number
+}
+
+export interface ToolInventoryDetail {
+    toolId: string;
+    toolName: string;
     totalQuantity: number;
-    alloted: number;
-    pending: number;
-    broken: number;
+    availableQuantity: number;
+    toolImageUrl: string;
+    fineAmount: number;
+    brokenQuantity: number;
+    returnPeriod: number;
+    toolCategory: "SPECIAL"|"NORMAL"
+    isPerishable: boolean;
 }
 
 export type ToolsInventoryAction ={
@@ -26,6 +34,7 @@ export type ToolsInventoryAction ={
     data: ToolInventoryDetail[]
 } | {
     type: "REQ_TOOL_MODAL"
+    status: boolean
 } | {
     type: "SELECT_TOOL",
     data: ToolInventoryDetail
@@ -50,8 +59,8 @@ export type ToolsInventoryAction ={
 }
 
 export interface ToolsInventoryState {
-    // isLoading: boolean;
-    // error: string;
+    isLoading: boolean;
+    error: string;
     reqTableData: ReqTable[]
     reqToolModal: boolean
 
@@ -68,7 +77,8 @@ export interface ToolsInventoryState {
 
 
 export interface ToolsInventoryMethods {
-    handleReqToolModal: () => void,
+    showReqToolModal: () => void,
+    hideReqToolModal: () => void,
     setSelected: (data: ToolInventoryDetail) => void,
     updateReqTable: (data: ReqTable[]) => void
 

@@ -31,9 +31,9 @@ const EditModal = ({}: ModalProps) => {
     try {
       const res = await editToolCribManagers(data, selected!.id);
       getData(urlFilter);
-      toast.success("Facility Manager Edited ");
+      toast.success("Tool Crib Manager Edited ");
     } catch (error) {
-      toast.error("Sorry!! Facility Manager Could not be Edited");
+      toast.error("Sorry!! Tool Crib Manager Could not be Edited");
     } finally {
       hideEditModal();
     }
@@ -42,19 +42,19 @@ const EditModal = ({}: ModalProps) => {
   return (
     <Modal setShowModal={hideEditModal}>
       <form onSubmit={handleSubmit(EditFacility)} className={styles.Form}>
-        <h2>Edit Facility Manager</h2>
+        <h2>Edit Tool Crib Manager</h2>
 
         <div>
-          <label>Facility Name</label>
-          <Input placeholder="Enter Facility Name" {...register("name")} />
+          <label>Tool Crib Manager Name</label>
+          <Input placeholder="Enter Tool Crib Manager Name" {...register("name")} />
           {!!formState.errors.name && (
             <small>{formState.errors.name.message}</small>
           )}
         </div>
 
         <div>
-          <label>Facility Email</label>
-          <Input placeholder="Enter Facility Email" {...register("email")} />
+          <label>Tool Crib Manager Email</label>
+          <Input placeholder="Enter Tool Crib Manager Email" {...register("email")} />
           {!!formState.errors.email && (
             <small>{formState.errors.email?.message}</small>
           )}

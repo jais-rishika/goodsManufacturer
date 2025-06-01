@@ -130,6 +130,8 @@ export const withWorkPlace = <T extends {}>(Component: ComponentType<T>) => {
             };
           }
         );
+        console.log(tableData);
+        
         dispatch({ type: "GET_DATA_SUCCESS", data: tableData });
       } catch (error) {
         dispatch({

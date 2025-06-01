@@ -40,8 +40,8 @@ export interface RequestMethods {
     handleFilterChange: (val: string[], url: string) => void
     handleUrlChange: (size: number, page: number) => void
     updateSearch: (val: string) => void
-    updateMinDate: (value: Date) => void
-    updateMaxDate: (value: Date) => void
+    updateMinDate: (value: string) => void
+    updateMaxDate: (value: string) => void
     setCount: (count: number) => void
 }
 

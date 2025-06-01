@@ -22,3 +22,14 @@ export const getRole = async () => {
         throw error;
     }
 }
+
+export const editworkerImage= async(payload: FormData)=>{
+    try {
+        const res = await axiosInstance.patch(`/auth/upload-profile`, payload);
+        console.log(res);
+        
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}

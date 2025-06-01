@@ -13,7 +13,7 @@ export const getWorkPlace=async(filter: string)=>{
 
 export const fetchManagerWorkplaces=async(filter: string)=>{
     try {
-        const res= await axiosInstance.get('/facility-manager/workplace');
+        const res= await axiosInstance.get(`/facility-manager/workplace?fields=${filter}`);
         return res.data;
     } catch (error) {
         throw error;

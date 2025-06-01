@@ -22,7 +22,6 @@
     :focus {
       outline: none;
     }
-
   }
 
   input {
@@ -41,15 +40,22 @@
   }
 }
 
-.MainContainer{
+.MainContainer {
   display: grid;
   grid-template-columns: 4fr 2fr;
+  min-height: 100%;
   
-  >div{
-    border: thin solid;
+  > div {
     padding: 0.25rem;
-    max-height: 77vh;
+    max-height: 87vh;
+    min-height: 87vh;
     overflow-y: auto;
+  }
+  >div:nth-child(1){
+    border-right: thin solid;
+  }
+  >div:nth-child(2){
+    border-left: thin solid;
   }
 }
 
@@ -62,4 +68,21 @@
 .ToolActions {
   display: flex;
   gap: 0.5rem;
+}
+
+.RemoveReq {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  input {
+    width: 8rem;
+  }
+  //   &:focus{
+  //     outline: none;
+  //     padding: 0.25rem;
+  //   }
+
+  // }
 }

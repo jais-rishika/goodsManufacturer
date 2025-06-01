@@ -39,7 +39,7 @@ const AddModal = ({}: ModalProps) => {
         onSubmit={handleSubmit(handleAddWorkers)}
         className={styles.Form}
       >
-        <h2>Add Facility Manager</h2>
+        <h2>Add Worker</h2>
         <Input type="text" placeholder="Enter name" {...register("name")} />
         {!!formState.errors.name && (
           <small>{formState.errors.name.message}</small>

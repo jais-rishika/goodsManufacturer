@@ -27,13 +27,13 @@ const EditModal = ({}: ModalProps) => {
     resolver: zodResolver(WorkersFormSchema),
   });
 
-  const EditFacility = async (data: WorkersForm) => {
+  const EditWorker = async (data: WorkersForm) => {
     try {
       const res = await editWorkers(data, selected!.id);
       getData(urlFilter);
-      toast.success("Facility Manager Edited ");
+      toast.success("Worker Edited ");
     } catch (error) {
-      toast.error("Sorry!! Facility Manager Could not be Edited");
+      toast.error("Sorry!! Worker Could not be Edited");
     } finally {
       handleEditModal();
     }
@@ -41,20 +41,20 @@ const EditModal = ({}: ModalProps) => {
 
   return (
     <Modal setShowModal={handleEditModal}>
-      <form onSubmit={handleSubmit(EditFacility)} className={styles.Form}>
-        <h2>Edit Facility Manager</h2>
+      <form onSubmit={handleSubmit(EditWorker)} className={styles.Form}>
+        <h2>Edit Wormker</h2>
 
         <div>
-          <label>Facility Name</label>
-          <Input placeholder="Enter Facility Name" {...register("name")} />
+          <label>Worker Name</label>
+          <Input placeholder="Enter Worker Name" {...register("name")} />
           {!!formState.errors.name && (
             <small>{formState.errors.name.message}</small>
           )}
         </div>
 
         <div>
-          <label>Facility Email</label>
-          <Input placeholder="Enter Facility Email" {...register("email")} />
+          <label>Worker Email</label>
+          <Input placeholder="Enter Worker Email" {...register("email")} />
           {!!formState.errors.email && (
             <small>{formState.errors.email?.message}</small>
           )}
