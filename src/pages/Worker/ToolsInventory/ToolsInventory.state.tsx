@@ -9,9 +9,7 @@ import {
   toolInventoryInitialState,
   ToolInventoryReducer,
 } from "./ToolsInventory.reducer";
-import {
-  getToolCribInventoryWorker,
-} from "../../../services/inventory.service";
+import { getToolCribInventoryWorker } from "../../../services/inventory.service";
 
 export const ToolInventoryContext = createContext<
   (ToolsInventoryState & ToolsInventoryMethods) | null
@@ -34,9 +32,36 @@ export const withToolInventory = <T extends {}>(
     };
 
     //filter
-    const handleFilterChange = (filter: string[], url: string) => {
-      dispatch({ type: "SET_FILTERS", data: filter });
+    const handleFilterChange = (filter: string[]) => {
+      if (filter.includes("isPerishable") && filter.includes("notPerishable")) {
+        const trueIdx = filter.findIndex((val) => val === "isPerishable");
+        const falseIdx = filter.findIndex((val) => val === "notPerishable");
 
+        if (trueIdx > falseIdx) filter.splice(falseIdx, 1);
+        else filter.splice(trueIdx, 1);
+      }
+      dispatch({ type: "SET_FILTERS", data: filter });
+    };
+
+    const handleUrlChange = (size: number, page: number) => {
+      const currentUrl = new URLSearchParams(state.urlFilter);
+      currentUrl.set("size", `${size}`);
+      currentUrl.set("page", `${page}`);
+      updateUrl(currentUrl.toString());
+    };
+
+    const updateSearch = (val: string) => {
+      dispatch({ type: "SET_SEARCH", data: val });
+    };
+
+    const updateMinPrice = (val: number) => {
+      dispatch({ type: "SET_MINPRICE", data: val });
+    };
+    const updateMaxPrice = (val: number) => {
+      dispatch({ type: "SET_MAXPRICE", data: val });
+    };
+
+    const updateUrl = (url: string) => {
       //pagination
       const currentUrl = new URLSearchParams(url);
       const [size, page] = [currentUrl.get("size"), currentUrl.get("page")];
@@ -45,51 +70,28 @@ export const withToolInventory = <T extends {}>(
       newUrl.set("size", `${size}`);
       newUrl.set("name", state.searchValue);
 
-      if (filter.includes("isPerishable")) {
-        newUrl.set("isPerishable", `${filter.includes("isPerishable")}`);
+      let isPerishable = "";
+      if (state.selectedFilters.includes("isPerishable")) {
+        isPerishable += `&isPerishable=true`;
       }
+      if (state.selectedFilters.includes("notPerishable")) {
+        isPerishable += `&isPerishable=false`;
+      }
+
       let category = "";
-      if (filter.includes("special")) {
+      if (state.selectedFilters.includes("special")) {
         category += `&category=SPECIAL`;
       }
-      if (filter.includes("normal")) {
+      if (state.selectedFilters.includes("normal")) {
         category += "&category=NORMAL";
       }
 
       newUrl.set("minPrice", `${state.minPrice}` || `${10}`);
       newUrl.set("maxPrice", `${state.maxPrice}` || `${10000}`);
-      updateUrl(newUrl.toString() + category);
-    };
 
-    const handleUrlChange = (size: number, page: number) => {
-      const currentUrl = new URLSearchParams(state.urlFilter);
-      currentUrl.set("size", `${size}`);
-      currentUrl.set("page", `${page}`);
-      handleFilterChange(state.selectedFilters, currentUrl.toString());
-    };
-
-    const updateSearch = (val: string) => {
-      dispatch({ type: "SET_SEARCH", data: val });
-      const currentUrl = new URLSearchParams(state.urlFilter);
-      currentUrl.set("search", val);
-      handleFilterChange(state.selectedFilters, currentUrl.toString());
-    };
-
-    const updateMinPrice = (val: number) => {
-      dispatch({ type: "SET_MINPRICE", data: val });
-      const currentUrl = new URLSearchParams(state.urlFilter);
-      currentUrl.set("search", `${val}`);
-      handleFilterChange(state.selectedFilters, currentUrl.toString());
-    };
-    const updateMaxPrice = (val: number) => {
-      dispatch({ type: "SET_MAXPRICE", data: val });
-      const currentUrl = new URLSearchParams(state.urlFilter);
-      currentUrl.set("search", `${val}`);
-      handleFilterChange(state.selectedFilters, currentUrl.toString());
-    };
-
-    const updateUrl = (newUrl: string) => {
-      dispatch({ type: "SET_URL_FILTER", data: newUrl });
+      const finalUrl = newUrl.toString() + category;
+      dispatch({ type: "SET_URL_FILTER", data: finalUrl });
+      getData(finalUrl);
     };
 
     const setCount = (count: number) => {
@@ -108,7 +110,7 @@ export const withToolInventory = <T extends {}>(
 
     const updateReqTable = (data: ReqTable[]) => {
       const res = data;
-      localStorage.setItem("reqTable",JSON.stringify(data))
+      localStorage.setItem("reqTable", JSON.stringify(data));
       dispatch({ type: "REQ_TABLE_DATA", data: res });
     };
 
@@ -123,6 +125,7 @@ export const withToolInventory = <T extends {}>(
       setSelected,
       updateReqTable,
 
+      updateUrl,
       handleFilterChange,
       handleUrlChange,
       updateSearch,

@@ -28,6 +28,7 @@ const Tools = ({}: ToolsProps) => {
     deleteModal,
 
     //filters,
+    updateUrl,
     searchValue,
     selectedFilters,
     count,
@@ -40,7 +41,7 @@ const Tools = ({}: ToolsProps) => {
   } = useContext(ToolsContext)!;
 
   const handleFilter = () => {
-    getData(urlFilter);
+    updateUrl(urlFilter);
   };
 
   const handleMinPrice = (e: ChangeEvent<HTMLInputElement>) => {

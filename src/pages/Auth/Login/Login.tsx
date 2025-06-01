@@ -17,32 +17,6 @@ const Login = ({}: LoginProps) => {
 
   const {checkLogin,handleLogin}=useContext(LoginContext)!;
 
-  // const checkLogin = async () => {
-  //   try {
-  //     const res = await getRole();
-  //     console.log(localStorage.getItem("token"),res.role);
-      
-  //     navigate(`/${res.role}`);
-  //   } catch (error) {}
-  // };
-
-  // const handleLogin = async (data: LoginForm) => {
-  //   try {
-  //     dispatch({ type: "ON_LOGIN" });
-  //     const res = await login(data);
-  //     localStorage.setItem("token", res.jwtToken);
-  //     dispatch({ type: "LOGIN_SUCCESSFUL" });
-
-  //     toast.success("Login Successful");
-  //     navigate(`/${res.role}`);
-  //   } catch (error: any) {
-  //     console.log(error);
-
-  //     toast.error("Login Failed");
-  //     dispatch({ type: "LOGIN_FAILED", error: error.message });
-  //   }
-  // };
-
   useEffect(() => {
     checkLogin();
   }, []);

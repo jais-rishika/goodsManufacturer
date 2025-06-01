@@ -24,7 +24,6 @@
   input {
     width: 4rem;
     background-color: transparent;
-    // border: 2px solid #1d4b40;
     color: #000;
     &::placeholder {
       color: #000;
@@ -32,9 +31,8 @@
   }
 }
 
-.SelectedFilter {
-  display: flex;
-  gap: 0.5rem;
+.workerName{
+  cursor: pointer;
 }
 
 .DateFilter {
@@ -45,5 +43,11 @@
 .Table {
   padding: 0.5rem;
 }
+
+.Modal {
+  display: grid;
+  gap: 0.5rem;
+}
+
 
 

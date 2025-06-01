@@ -13,14 +13,15 @@ import {
 } from "./ToolsInventory.state.tsx";
 import Pagination from "../../../components/Pagination/Pagination.tsx";
 import MultipleSelect from "../../../components/MultipleSelect/MultipleSelect.tsx";
+import image from "../../../../public/No_Image_Available.jpg"
 
-
-
-const ToolsInventory = ({}: ToolsInventoryProps) => {  
+const ToolsInventory = ({}: ToolsInventoryProps) => {
   const {
     ToolInventoryData,
     getData,
+
     //filters,
+    updateUrl,
     searchValue,
     selectedFilters,
     count,
@@ -28,32 +29,10 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
     handleUrlChange,
     handleFilterChange,
     updateSearch,
-    updateMaxPrice,
-    updateMinPrice,
   } = useContext(ToolInventoryContext)!;
 
   const handleFilter = () => {
-    getData(urlFilter);
-  };
-
-  const handleMinPrice = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = +e.target.value;
-    if (val < 1) {
-      alert("Min value can't be less than 1");
-      e.target.value = "";
-    } else {
-      updateMinPrice(val);
-    }
-  };
-
-  const handleMaxPrice = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = +e.target.value;
-    if (val < 1) {
-      alert("Max value can't be less than 1");
-      e.target.value = "";
-    } else {
-      updateMaxPrice(val);
-    }
+    updateUrl(urlFilter);
   };
 
   useEffect(() => {
@@ -69,7 +48,13 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
               <MultipleSelect
                 selectedFilters={selectedFilters}
                 handleFilter={handleFilterChange}
-                availFilters={["name", "special", "normal", "isPerishable","notPerishable"]}
+                availFilters={[
+                  "name",
+                  "special",
+                  "normal",
+                  "isPerishable",
+                  "notPerishable",
+                ]}
                 getData={getData}
                 url={urlFilter}
               />
@@ -81,22 +66,7 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
               defaultValue={searchValue}
               onChange={(e) => updateSearch(e.target.value)}
             />
-            <div className={styles.PriceFilter}>
-              <Input
-                placeholder="MinPrice"
-                type="number"
-                min={1}
-                onChange={handleMinPrice}
-                className={styles.Price}
-              />
-              <Input
-                placeholder="MaxPrice"
-                type="number"
-                min={1}
-                onChange={handleMaxPrice}
-                className={styles.Price}
-              />
-            </div>
+
             <Button primary onClick={handleFilter}>
               Filter
             </Button>
@@ -106,7 +76,7 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
       <div className={styles.ToolsCard}>
         {ToolInventoryData.length > 0 &&
           ToolInventoryData.map((data: ToolInventoryDetail) => (
-            <Card id={data.toolId} photo={data.toolImageUrl}>
+            <Card id={data.toolId} photo={data.toolImageUrl || image}>
               <p>
                 <span>Name:</span>
                 <span>{data.toolName}</span>
@@ -158,13 +128,13 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
               </div>
             </Card>
           ))}
-        <Pagination
-          count={count}
-          setUrl={handleUrlChange}
-          url={urlFilter}
-          getData={getData}
-        />
       </div>
+      <Pagination
+        count={count}
+        setUrl={handleUrlChange}
+        url={urlFilter}
+        getData={getData}
+      />
     </>
   );
 };

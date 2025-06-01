@@ -8,6 +8,9 @@ import Pagination from "../../../components/Pagination/Pagination.tsx";
 import Table from "../../../components/Table/Table.tsx";
 import { withWorkersRequestsContext, WorkersRequestsContext } from "./WorkerRequests.states.tsx";
 import type { WorkerRequestsProps, WorkerRequestsTableData } from "./WorkerRequests.types.ts";
+import { formatDate } from "./WorkerRequests.reducer.ts";
+import ReturnModal from "./Modals/ReturnModal.tsx";
+import WorkerModal from "./Modals/WorkerModal.tsx";
 
 const Requests = ({}: WorkerRequestsProps) => {
   //ref
@@ -17,8 +20,11 @@ const Requests = ({}: WorkerRequestsProps) => {
   const {
     getData,
     WorkerRequestsData,
+    returnModal,
+    workerDetailModal,
 
     //filters,
+    updateUrl,
     searchValue,
     selectedFilters,
     count,
@@ -44,7 +50,7 @@ const Requests = ({}: WorkerRequestsProps) => {
   ];
 
   const handleFilter = () => {
-    getData(urlFilter);
+    updateUrl(urlFilter);
   };
 
   const handleMinDate = (e: ChangeEvent<HTMLInputElement>) => {
@@ -87,7 +93,7 @@ const Requests = ({}: WorkerRequestsProps) => {
               <Input
                 placeholder="MinDate"
                 type="date"
-                min={minDate}
+                min={"2025-01-20"}
                 max={maxDate}
                 onChange={handleMinDate}
                 className={styles.Price}
@@ -96,7 +102,7 @@ const Requests = ({}: WorkerRequestsProps) => {
                 placeholder="MaxDate"
                 type="date"
                 min={minDate}
-                max={maxDate}
+                max={formatDate(new Date)}
                 onChange={handleMaxDate}
                 className={styles.Price}
               />
@@ -120,6 +126,8 @@ const Requests = ({}: WorkerRequestsProps) => {
         url={urlFilter}
         getData={getData}
       />
+      {returnModal && <ReturnModal/>}
+      {workerDetailModal && <WorkerModal/>}
     </>
   );
 };

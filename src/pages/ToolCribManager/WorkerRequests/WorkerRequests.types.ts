@@ -1,4 +1,12 @@
-export interface WorkerRequestsProps {} 
+import type { WorkersData } from "../../WorkspaceManager/Workers/Workers.types"
+
+export interface WorkerRequestsProps { }
+
+export interface worker {
+    workerEmail: string
+    workerImageUrl : string
+    workerName : string
+}
 
 export interface WorkerRequestsTableData {
     requestDate: string,
@@ -12,6 +20,7 @@ export interface WorkerRequestsTableData {
 }
 
 export interface WorkerRequestsDetail extends WorkerRequestsTableData {
+    workerId: string
     toolId: string
     requestItemId: string,
     fine: number,
@@ -20,9 +29,11 @@ export interface WorkerRequestsDetail extends WorkerRequestsTableData {
 }
 
 export interface WorkerRequestsState {
-    ReqDetailModal: boolean,
+    returnModal: boolean,
+    workerDetailModal: boolean,
     WorkerRequestsData: WorkerRequestsDetail[]
     selectedRequest: WorkerRequestsDetail | null
+    selectedWorker: worker | null
 
     selectedFilters: string[],
     searchValue: string,
@@ -33,10 +44,13 @@ export interface WorkerRequestsState {
 }
 
 export interface WorkersRequestMethods {
-    handleReqDetailModal: () => void,
-    setSelected: (data: WorkerRequestsDetail)=> void
+    handleReturnModal: () => void,
+    handleWorkerDetailModal: () => void,
+    selectWorker: (data: worker) => void
+    setSelected: (data: WorkerRequestsDetail) => void
     getData: (val: string) => void
 
+    updateUrl: (url: string) => void,
     handleFilterChange: (val: string[], url: string) => void
     handleUrlChange: (size: number, page: number) => void
     updateSearch: (val: string) => void
@@ -49,10 +63,15 @@ export type WorkersRequestAction = {
     type: "UPDATE_WORKERS_REQUESTS",
     data: WorkerRequestsDetail[]
 } | {
-    type: "SHOW_REQUEST_DETAILS"
+    type: "SHOW_RETURN_MODAL"
+} | {
+    type: "WORKER_DETAIL_MODAL"
 } | {
     type: "SELECT_REQUEST"
     data: WorkerRequestsDetail
+}| {
+    type: "SELECT_WORKER"
+    data: worker
 } | {
     type: "SET_FILTERS",
     data: string[]

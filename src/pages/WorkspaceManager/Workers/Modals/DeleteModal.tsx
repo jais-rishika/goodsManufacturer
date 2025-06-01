@@ -8,7 +8,7 @@ import { deleteWorkers } from "../../../../services/worker.service";
 import { WorkersContext } from "../Workers.state";
 
 const DeleteModal = ({}: ModalProps) => {
-  const { handleDeleteModal, getData, selected, urlFilter } = useContext(
+  const { hideDeleteModal, getData, selected, urlFilter } = useContext(
     WorkersContext
   )!;
 
@@ -20,12 +20,12 @@ const DeleteModal = ({}: ModalProps) => {
     } catch (error) {
       toast.error("Facilty Manager Deletion Failed");
     } finally {
-      handleDeleteModal();
+      hideDeleteModal();
     }
   };
 
   return (
-    <Modal setShowModal={handleDeleteModal}>
+    <Modal setShowModal={hideDeleteModal}>
       <div className={styles.DeleteContainer}>
         <h2>Delete Worker</h2>
         <h5>Are You sure you want to delete this Workers?</h5>

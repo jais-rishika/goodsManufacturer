@@ -38,12 +38,18 @@ export const withWorkersContext = <T extends {}>(
       dispatch({ type: "ADD_MODAL", status: !state.addModal });
     };
 
-    const handleEditModal = () => {
-      dispatch({ type: "EDIT_MODAL", status: !state.editModal });
+    const showEditModal = () => {
+      dispatch({ type: "EDIT_MODAL", status: true });
+    };
+    const hideEditModal = () => {
+      dispatch({ type: "EDIT_MODAL", status: false });
     };
 
-    const handleDeleteModal = () => {
-      dispatch({ type: "DELETE_MODAL", status: !state.deleteModal });
+    const showDeleteModal = () => {
+      dispatch({ type: "DELETE_MODAL", status:true });
+    };
+    const hideDeleteModal = () => {
+      dispatch({ type: "DELETE_MODAL", status: false });
     };
 
     const handleSelect = (data: WorkersData) => {
@@ -100,7 +106,7 @@ export const withWorkersContext = <T extends {}>(
             primary
             onClick={() => {
               handleSelect(data);
-              handleEditModal();
+              showEditModal();
             }}
           >
             <FaEdit />
@@ -110,7 +116,7 @@ export const withWorkersContext = <T extends {}>(
             danger
             onClick={() => {
               handleSelect(data);
-              handleDeleteModal();
+              showDeleteModal();
             }}
           >
             <FaTrash />
@@ -151,8 +157,8 @@ export const withWorkersContext = <T extends {}>(
 
     const handlers = {
       handleAddModal,
-      handleEditModal,
-      handleDeleteModal,
+      hideEditModal,
+      hideDeleteModal,
       handleSelect,
       getData,
 

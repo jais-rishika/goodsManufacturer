@@ -7,11 +7,7 @@ const Admin = ({}: AdminProps) => {
     { title: "Home", link: "/owner" },
     { title: "FacilityManager", link: "/owner/facility-manager" },
     { title: "Facility", link: "/owner/facility" },
-    { title: "WorkplaceManager", link: "/owner/workplace-manager" },
-    { title: "Workplace", link: "/owner/workplace" },
-    { title: "Workstation", link: "/owner/workstation" },
-    { title: "ToolCribManager", link: "/owner/tool-crib-anager" },
-    { title: "Workers", link: "/owner/workers" },
+    { title: "AllEmployees", link: "/owner/all-employee" },
     { title: "Tools", link: "/owner/tools" }
   ];
   return <Layout role={"ADMIN"} sideBarList={sideBarList}/>;

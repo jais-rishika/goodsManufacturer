@@ -1,1 +1,13 @@
 /* Styles for ToolCribManager */ 
+.Layout {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr;
+}
+.MainContainer {
+  min-height: 100%;
+  overflow-y: auto;
+
+  background-color: #fdebb0;
+}
+

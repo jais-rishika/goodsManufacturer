@@ -1,7 +1,7 @@
 import { useContext, useRef } from "react";
 import Input from "../Input/Input";
 import Modal from "../Modal/Modal";
-import { HeaderContext } from "./WorkPlace.state";
+import { HeaderContext } from "./WorkPlaceEmployeeHeader.state";
 import styles from "./WorkPlaceEmployeeHeader.module.scss"
 import Button from "../Button/Button";
 import { editworkerImage } from "../../services/auth.service";

@@ -15,49 +15,55 @@ import { useContext, useEffect } from "react";
 import SearchableComponents from "../../../../components/SearchableComponents/SearchableComponents.tsx";
 import { editWorkStation } from "../../../../services/workstation.service.ts";
 
-const EditModal = ({
-}: ModalProps) => {
+const EditModal = ({}: ModalProps) => {
   //context
-  const {handleEditModal,getData, selected, availFields, setAvailFields, urlFilter,selectedManager,updateManager}=useContext(WorkStationContext)!;
+  const {
+    hideEditModal,
+    getData,
+    selected,
+    availFields,
+    setAvailFields,
+    urlFilter,
+    selectedManager,
+    updateManager,
+  } = useContext(WorkStationContext)!;
   console.log(selected);
-  
+
   //useForm
   const { register, handleSubmit, formState } = useForm<WorkStationForm>({
     defaultValues: {
-      name: `${selected!.name}` ,
-      workerEmail: `${selected!.workerEmail}`
+      name: `${selected!.name}`,
+      workerEmail: `${selected!.workerEmail}`,
     },
     resolver: zodResolver(WorkStationFormSchema),
   });
 
   //formSubmit
   const EditWorkStation = async (data: WorkStationForm) => {
-    if(!selectedManager){
-      alert("ADD WorkStation Manager")
+    if (!selectedManager) {
+      alert("ADD WorkStation Manager");
     }
-    data["workerEmail"]=selectedManager!;
-    
+    data["workerEmail"] = selectedManager!;
+
     try {
-      const res = await editWorkStation({data}, selected!.id);
+      const res = await editWorkStation(data, selected!.id);
       getData(urlFilter);
       toast.success("WorkStation  Edited ");
     } catch (error) {
       toast.error("Sorry!! WorkStation  Could not be Edited");
     } finally {
-      handleEditModal();
+      hideEditModal();
     }
   };
 
   // useEffect
-  useEffect(()=>{
-    setAvailFields("")
-    updateManager(selected!.workerEmail)
-  },[])
+  useEffect(() => {
+    setAvailFields("");
+    updateManager(selected!.workerEmail);
+  }, []);
   return (
-    <Modal setShowModal={handleEditModal}>
-
+    <Modal setShowModal={hideEditModal}>
       <form onSubmit={handleSubmit(EditWorkStation)} className={styles.Form}>
-
         <h2>Edit WorkStation</h2>
 
         <Input placeholder="Enter WorkStation Name" {...register("name")} />
@@ -65,13 +71,18 @@ const EditModal = ({
           <small>{formState.errors.name.message}</small>
         )}
 
-        <SearchableComponents setFieldValue={updateManager} availFields={availFields} setAvailFields={setAvailFields} toSearch={"Email"} selectedField={selected!.workerEmail}/>
-         {!!formState.errors.workerEmail && (
+        <SearchableComponents
+          setFieldValue={updateManager}
+          availFields={availFields}
+          setAvailFields={setAvailFields}
+          toSearch={"Email"}
+          selectedField={selected!.workerEmail}
+        />
+        {!!formState.errors.workerEmail && (
           <small>{formState.errors.workerEmail?.message}</small>
         )}
 
         <Button type="submit">Edit</Button>
-
       </form>
     </Modal>
   );

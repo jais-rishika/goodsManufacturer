@@ -34,7 +34,7 @@ export const addToolCribManagers = async (payload: any) => {
 //edit
 export const editToolCribManagers = async (payload: any, id: string) => {
     try {
-        const res = await axiosInstance.patch(`/owner/facility-manager/${id}`, payload);
+        const res = await axiosInstance.patch(`/workplace-manager/tool-crib-manager/${id}`, payload);
         return res.data;
     } catch (error) {
         throw error;
@@ -44,7 +44,7 @@ export const editToolCribManagers = async (payload: any, id: string) => {
 //delete
 export const deleteToolCribManagers = async (id: string) => {
     try {
-        const res = await axiosInstance.delete(`owner/facility-manager/${id}`);
+        const res = await axiosInstance.delete(`/workplace-manager/tool-crib-manager/${id}`);
         return res.data;
     } catch (error) {
         throw error;

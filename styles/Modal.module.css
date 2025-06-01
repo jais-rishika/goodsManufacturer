@@ -1,0 +1,21 @@
+.Form {
+  text-align: center;
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem 1.75rem;
+}
+
+.DeleteContainer {
+  display: grid;
+  place-items: center;
+  gap: 1rem;
+}/*# sourceMappingURL=Modal.module.css.map */ */eMappingURL=Modal.module.css.map */
+  gap: 1rem;
+}
+
+.Select {
+  width: 8rem;
+}/*# sourceMappingURL=Modal.module.css.map */tion: absolute;
+  right: 1rem;
+  top: 1rem;
+}/*# sourceMappingURL=Modal.module.css.map */

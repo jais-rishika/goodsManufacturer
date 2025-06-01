@@ -8,9 +8,11 @@ export const formatDate = (d: Date) => {
 };
 
 export const initialWorkersRequestState: WorkerRequestsState = {
-  ReqDetailModal: false,
+  returnModal: false,
+  workerDetailModal: false,
   WorkerRequestsData: [],
   selectedRequest: null,
+  selectedWorker: null,
 
   selectedFilters: [],
   searchValue: "",
@@ -25,12 +27,16 @@ export const WorkersRequestReducer = (
   action: WorkersRequestAction
 ): WorkerRequestsState => {
   switch (action.type) {
-    case "SHOW_REQUEST_DETAILS":
-      return { ...prevState, ReqDetailModal: !prevState.ReqDetailModal };
+    case "SHOW_RETURN_MODAL":
+      return { ...prevState, returnModal: !prevState.returnModal };
+    case "WORKER_DETAIL_MODAL":
+      return { ...prevState, workerDetailModal: !prevState.workerDetailModal };
     case "UPDATE_WORKERS_REQUESTS":
       return { ...prevState, WorkerRequestsData: action.data };
     case "SELECT_REQUEST":
       return { ...prevState, selectedRequest: action.data };
+    case "SELECT_WORKER":
+      return {...prevState, selectedWorker: action.data}
 
     case "SET_COUNT":
       return { ...prevState, count: action.count };

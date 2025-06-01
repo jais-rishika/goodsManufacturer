@@ -1,0 +1,11 @@
+.SelectedFilter {
+  display: inline-block;
+  background-color: rgb(101, 189, 227);
+}
+.SelectedFilter small {
+  color: #000;
+}
+.SelectedFilter .Cross {
+  font-size: 0.6rem;
+  cursor: pointer;
+}/*# sourceMappingURL=SelectedFilter.module.css.map */

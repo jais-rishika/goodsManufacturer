@@ -1,16 +1,20 @@
 import { Outlet } from "react-router";
 import WorkPlaceEmployeeHeader from "../../components/WorkPlaceEmployeeHeader/WorkPlaceEmployeeHeader.tsx";
 import type { ToolCribManagerProps } from "./ToolCribManager.types.ts";
-
+import styles from "./ToolCribManager.module.scss";
 const ToolCribManager = ({}: ToolCribManagerProps) => {
   const links = [
     { title: "Inventory", link: "/" },
-    { title: "Workers Request", link: "toolCribManager/workers-request" },
+    { title: "Workers Request", link: "/tool-crib-manager/workers-request" },
   ];
   return (
-    <div>
-      <WorkPlaceEmployeeHeader links={links} />
-      <Outlet />
+    <div className={styles.Layout}>
+      <div>
+        <WorkPlaceEmployeeHeader links={links} />
+      </div>
+      <div className={styles.MainContainer}>
+        <Outlet />
+      </div>
     </div>
   );
 };

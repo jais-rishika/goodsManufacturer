@@ -1,10 +1,17 @@
 import type { LoginForm } from "../pages/Auth/Login/Login.types";
 import axiosInstance from "./axios.instance";
 
+export const roles = {
+    "owner": "owner",
+    "facilitymanager": "facility-manager",
+    "workplacemanager": "workplace-manager",
+    "toolcribmanager": "tool-crib-manager",
+    "worker": "worker"
+}
+
 export const login = async (data: LoginForm) => {
     try {
         const res = await axiosInstance.post('/auth/login', data);
-        console.log("res", res);
         return res.data;
     } catch (error) {
         throw error;
@@ -13,21 +20,27 @@ export const login = async (data: LoginForm) => {
 
 export const getRole = async () => {
     const token = localStorage.getItem("token");
-    if(!token) throw { message: 'SESSION EXPIRED, PLEASE LOGIN' }
+    if (!token) throw { message: 'SESSION EXPIRED, PLEASE LOGIN' }
     try {
         const res = await axiosInstance.get('/auth/role');
-        console.log("resrolw", res);
         return res.data;
     } catch (error) {
         throw error;
     }
 }
 
-export const editworkerImage= async(payload: FormData)=>{
+export const editworkerImage = async (payload: FormData) => {
     try {
         const res = await axiosInstance.patch(`/auth/upload-profile`, payload);
-        console.log(res);
-        
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const getuserDetail = async () => {
+    try {
+        const res = await axiosInstance.get('/auth/hierarchy')
         return res.data;
     } catch (error) {
         throw error;

@@ -74,15 +74,16 @@ export interface WorkStationState {
 
 export interface WorkStationMethods {
     handleAddModal: () => void,
-    handleEditModal: () => void,
-    handleDeleteModal: () => void,
+    hideEditModal: () => void,
+    hideDeleteModal: () => void,
     handleSelect: (data: WorkStationData) => void
     setAvailFields: (val: string) => void
     updateManager: (val: string) => void
 
     getData: (val: string) => void,
 
-    handleFilterChange: (val: string[], url: string) => void
+    updateUrl: ()=> void
+    handleFilterChange: (val: string[]) => void
     handleUrlChange: (size: number, page: number) => void
     updateSearch: (val: string) => void
     setCount: (count: number) => void

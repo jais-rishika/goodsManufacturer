@@ -51,6 +51,7 @@
   width: 8rem;
   display: none;
   justify-items: center;
+  color: black;
   background-color: #fff;
   border: thin solid;
 
@@ -61,6 +62,14 @@
 
   p {
     color: #1d4b40;
+  }
+
+  >div{
+    text-align: center;
+    font-size: 0.8rem;
+    display: grid;
+    gap: 0.25rem;
+    padding: 0.25rem;
   }
 }
 

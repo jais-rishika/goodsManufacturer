@@ -9,6 +9,7 @@ import type { Column } from "../../../components/Table/Table.types.ts";
 import ShowReqModal from "../ToolsInventory/Modal/ReqToolModal.tsx";
 import Pagination from "../../../components/Pagination/Pagination.tsx";
 import Table from "../../../components/Table/Table.tsx";
+import { formatDate } from "./Requests.reducer.tsx";
 
 const Requests = ({}: RequestsProps) => {
   //ref
@@ -25,6 +26,7 @@ const Requests = ({}: RequestsProps) => {
     selectedFilters,
     count,
     urlFilter,
+    updateUrl,
     handleUrlChange,
     handleFilterChange,
     updateSearch,
@@ -45,36 +47,33 @@ const Requests = ({}: RequestsProps) => {
   ];
 
   const handleFilter = () => {
-    getData(urlFilter);
+    updateUrl(urlFilter);
   };
 
   const handleMinDate = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     console.log(val);
-    //error handling
     updateMinDate(val);
   };
   const handleMaxDate = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
-    // errorHandling
     updateMaxDate(val);
   };
 
   //useEffect
   useEffect(() => {
-    const date = new Date();
     getData(urlFilter);
   }, []);
   return (
     <>
-      <div className={styles.Top}>
+      {/* <div className={styles.Top}>
         <div>
           <div className={styles.Filter}>
             <label>
               <MultipleSelect
                 selectedFilters={selectedFilters}
                 handleFilter={handleFilterChange}
-                availFilters={["name", "email"]}
+                availFilters={["rejected", "approves","pending"]}
                 getData={getData}
                 url={urlFilter}
               />
@@ -92,7 +91,7 @@ const Requests = ({}: RequestsProps) => {
               <Input
                 placeholder="MinDate"
                 type="date"
-                min={minDate}
+                min={"2025-01-20"}
                 max={maxDate}
                 onChange={handleMinDate}
                 className={styles.Price}
@@ -101,7 +100,7 @@ const Requests = ({}: RequestsProps) => {
                 placeholder="MaxDate"
                 type="date"
                 min={minDate}
-                max={maxDate}
+                max={formatDate(new Date)}
                 onChange={handleMaxDate}
                 className={styles.Price}
               />
@@ -112,7 +111,7 @@ const Requests = ({}: RequestsProps) => {
             </Button>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className={styles.Table}>
         <Table<RequestsTableData>
           tableData={RequestsData}

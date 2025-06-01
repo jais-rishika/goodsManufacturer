@@ -44,12 +44,6 @@ export type ToolsInventoryAction ={
 } | {
     type: "SET_SEARCH",
     data: string
-} | {
-    type: "SET_MINPRICE",
-    data: number
-} | {
-    type: "SET_MAXPRICE",
-    data: number
 }
 
 export interface ToolsInventoryState {
@@ -61,8 +55,6 @@ export interface ToolsInventoryState {
 
     selectedFilters: string[],
     searchValue: string,
-    minPrice: number,
-    maxPrice: number,
     count: number,
     urlFilter: string,
 }
@@ -73,10 +65,9 @@ export interface ToolsInventoryMethods {
 
     getData: (val: string) => void
 
-    handleFilterChange: (val: string[], url: string) => void
+    updateUrl:(url: string)=> void
+    handleFilterChange: (val: string[]) => void
     handleUrlChange: (size: number, page: number) => void
     updateSearch: (val: string) => void
-    updateMinPrice: (value: number) => void
-    updateMaxPrice: (value: number) => void
     setCount: (count: number) => void
 }

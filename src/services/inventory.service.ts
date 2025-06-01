@@ -2,6 +2,15 @@ import type { SendToolPayload } from "../pages/FacilityManager/ToolsInventory/Mo
 import axiosInstance from "./axios.instance"
 
 //get
+export const getAllToolCribs = async (filter: string) => {
+    try {
+        const res = await axiosInstance.get(`facility-manager/tool-cribs?${filter}`);
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export const getTools = async (filter: string) => {
     try {
         const res = await axiosInstance.get(`/owner/tool?${filter}`);
@@ -33,6 +42,15 @@ export const getToolCribInventory = async (filter: string) => {
 export const getToolCribManagerInventory = async (filter: string) => {
     try {
         const res = await axiosInstance.get(`/tool-crib-manager/inventory?${filter}`);
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const getWorkplaceInventory=async(filter: string,id: string)=>{
+    try {
+        const res = await axiosInstance.get(`/facility-manager/tool-cribs/${id}/inventory?${filter}`);
         return res.data;
     } catch (error) {
         throw error;

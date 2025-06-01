@@ -1,0 +1,23 @@
+.Modal{
+    max-height: 8rem;
+    min-height: 7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.ImgContainer{
+    width:6rem;
+    max-height: 5rem;
+    min-height: 6rem;
+    img{
+        width: 100%;
+    }
+}
+
+.Detail{
+    p{
+        font-weight: 600;
+    }
+}

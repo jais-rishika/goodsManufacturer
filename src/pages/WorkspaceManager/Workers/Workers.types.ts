@@ -74,8 +74,8 @@ export interface WorkersState {
 
 export interface WorkersMethods {
     handleAddModal: () => void
-    handleEditModal: () => void
-    handleDeleteModal: () => void
+    hideEditModal: () => void
+    hideDeleteModal: () => void
     handleSelect: (data: WorkersData) => void
     setFilter: (filter: string[])=> void
 

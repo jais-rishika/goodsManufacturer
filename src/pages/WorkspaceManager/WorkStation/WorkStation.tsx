@@ -10,8 +10,10 @@ import EditModal from "./Modals/EditModal.tsx";
 import styles from "./WorkStation.module.scss";
 import { useContext, useEffect, useRef, type ChangeEvent } from "react";
 import { withWorkStation, WorkStationContext } from "./WorkStation.state.tsx";
-import type { WorkStationProps, WorkStationTableData } from "./WorkStation.types.ts";
-
+import type {
+  WorkStationProps,
+  WorkStationTableData,
+} from "./WorkStation.types.ts";
 
 const WorkStation = ({}: WorkStationProps) => {
   //useContext
@@ -25,17 +27,18 @@ const WorkStation = ({}: WorkStationProps) => {
     selected,
 
     //filters,
+    updateUrl,
     searchValue,
     selectedFilters,
     count,
     urlFilter,
     handleUrlChange,
     handleFilterChange,
-    updateSearch
+    updateSearch,
   } = useContext(WorkStationContext)!;
 
   //ref
-  const searchRef=useRef<HTMLInputElement>(null)
+  const searchRef = useRef<HTMLInputElement>(null);
 
   //columnData
   const columns: Column<WorkStationTableData>[] = [
@@ -45,9 +48,9 @@ const WorkStation = ({}: WorkStationProps) => {
     { id: "action", label: "Actions" },
   ];
 
-  const handleFilter=()=>{
-    getData(urlFilter);
-  }
+  const handleFilter = () => {
+    updateUrl(urlFilter);
+  };
 
   //useEffect
   useEffect(() => {
@@ -63,14 +66,22 @@ const WorkStation = ({}: WorkStationProps) => {
               <MultipleSelect
                 selectedFilters={selectedFilters}
                 handleFilter={handleFilterChange}
-                availFilters={["name", "address"]}
+                availFilters={["workerName", "workerEmail"]}
                 getData={getData}
                 url={urlFilter}
               />
             </label>
 
-            <Input type="text" placeholder="search" ref={searchRef} defaultValue={searchValue} onChange={(e)=>updateSearch(e.target.value)}/>
-            <Button primary onClick={handleFilter} >Filter</Button>
+            <Input
+              type="text"
+              placeholder="search"
+              ref={searchRef}
+              defaultValue={searchValue}
+              onChange={(e) => updateSearch(e.target.value)}
+            />
+            <Button primary onClick={handleFilter}>
+              Filter
+            </Button>
           </div>
         </div>
 

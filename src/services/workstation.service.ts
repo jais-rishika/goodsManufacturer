@@ -12,7 +12,7 @@ export const getWorkStation=async(filter: string)=>{
 
 export const fetchWorkplaceWorkStations=async(filter: string)=>{
     try {
-        const res= await axiosInstance.get(`/workplace-manager/workstation`);
+        const res= await axiosInstance.get(`/workplace-manager/workstation?${filter}`);
         return res.data;
     } catch (error) {
         throw error;

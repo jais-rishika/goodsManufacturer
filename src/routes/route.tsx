@@ -45,19 +45,19 @@ export default createBrowserRouter([
         children: adminRoutes,
       },
       {
-        path: "facilityManager",
+        path: "facility-manager",
         Component: FacilityManager,
         children: facilityManagerRoutes,
       },
       {
-        path: "workplaceManager",
+        path: "workplace-manager",
         Component: WorkplaceManager,
         children: workPlaceManagerRoutes,
       },
       {
         // routes should not be camel cased, they should be kebab-cased
         // tool-crib-manager
-        path: "toolCribManager",
+        path: "tool-crib-manager",
         Component: ToolCribManager,
         children: toolCribManagerRoutes,
       },

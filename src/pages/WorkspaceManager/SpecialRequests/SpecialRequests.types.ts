@@ -1,18 +1,17 @@
-import type { ToolsShowDetail } from "../../Admin/Tools/Tools.types"
-
 export interface SpecialRequestsProps { }
 
 export interface SpRequestsTableData {
-    workStation: string,
-    workerEmail: string,
-    reqStatus: "PENDING"|"APPROVED"|"REJECTED",
-    showDetails: "show"
+    requestDate: string,
+    workerName: string,
+    toolName: string,
+    reqQuantity: number,
+    approvalStatus: "PENDING" | "APPROVED" | "REJECTED",
+    returnStatus: "PENDING" | "RETURNED"
 }
 
 export interface RequestDetail extends SpRequestsTableData {
-    id: string
-    ReqDate: Date;
-    toolDetails: ToolsShowDetail[]
+    toolId: string
+    requestItemId: string,
 }
 
 export interface RequestsState {
@@ -24,8 +23,8 @@ export interface RequestsState {
 
     selectedFilters: string[],
     searchValue: string,
-    minDate: Date,
-    maxDate: Date,
+    minDate: string,
+    maxDate: string,
     count: number,
     urlFilter: string,
 }
@@ -37,7 +36,8 @@ export interface RequestMethods {
 
     getData: (val: string) => void
 
-    handleFilterChange: (val: string[], url: string) => void
+    updateUrl: (url: string) => void
+    handleFilterChange: (val: string[]) => void
     handleUrlChange: (size: number, page: number) => void
     updateSearch: (val: string) => void
     updateMinDate: (value: string) => void
@@ -76,8 +76,8 @@ export type RequestAction = {
     data: string
 } | {
     type: "SET_MINDATE",
-    data: Date
+    data: string
 } | {
     type: "SET_MAXDATE",
-    data: Date
+    data: string
 }

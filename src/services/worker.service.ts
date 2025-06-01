@@ -2,6 +2,14 @@ import type { WorkersForm } from "../pages/WorkspaceManager/Workers/Modals/Modal
 import axiosInstance from "./axios.instance"
 
 //get
+export const getSingleWorkerDetails= async (id: string)=>{
+    try {
+        const res= await axiosInstance.get(`tool-crib-manager/worker/${id}`);
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}
 export const getWorkers = async (filter: string) => {
     try {
         const res = await axiosInstance.get(`/workplace-manager/worker?${filter}`);                

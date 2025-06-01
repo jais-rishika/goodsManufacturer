@@ -15,7 +15,7 @@ import { WorkersContext } from "../Workers.state.tsx";
 import { editWorkers } from "../../../../services/worker.service.ts";
 
 const EditModal = ({}: ModalProps) => {
-  const { handleEditModal, getData, selected, urlFilter } = useContext(
+  const { hideEditModal, getData, selected, urlFilter } = useContext(
     WorkersContext
   )!;
 
@@ -35,12 +35,12 @@ const EditModal = ({}: ModalProps) => {
     } catch (error) {
       toast.error("Sorry!! Worker Could not be Edited");
     } finally {
-      handleEditModal();
+      hideEditModal();
     }
   };
 
   return (
-    <Modal setShowModal={handleEditModal}>
+    <Modal setShowModal={hideEditModal}>
       <form onSubmit={handleSubmit(EditWorker)} className={styles.Form}>
         <h2>Edit Wormker</h2>
 

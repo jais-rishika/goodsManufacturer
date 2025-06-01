@@ -9,7 +9,7 @@ import { deleteWorkStation } from "../../../../services/workstation.service";
 
 const DeleteModal = ({ }: ModalProps) => {
   //context
-  const {handleDeleteModal, getData, selected}= useContext(WorkStationContext)!;
+  const {hideDeleteModal, getData, selected}= useContext(WorkStationContext)!;
 
   //delete Handler
   const handleDelete = async () => {
@@ -20,12 +20,12 @@ const DeleteModal = ({ }: ModalProps) => {
     } catch (error) {
       toast.error("WorkStation Deletion Failed");
     } finally {
-      handleDeleteModal();
+      hideDeleteModal();
     }
   };
   
   return (
-    <Modal setShowModal={handleDeleteModal}>
+    <Modal setShowModal={hideDeleteModal}>
 
       <div className={styles.DeleteContainer}>
 

@@ -7,8 +7,8 @@ const Worker = ({}: WorkerProps) => {
   const links = [
     { title: "Inventory", link: "/worker" },
     { title: "Requests", link: "/worker/requests" },
-    { title: "Penalties", link: "/worker/penalties" },
   ];
+
   return (
     <div className={styles.Layout}>
       <div>

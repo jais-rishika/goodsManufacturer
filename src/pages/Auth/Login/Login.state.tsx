@@ -1,7 +1,11 @@
-import {createContext, useReducer, type ComponentType } from "react";
-import type { LoginAction, LoginForm, LoginMethods, LoginState } from "./Login.types";
+import { createContext, useReducer, type ComponentType } from "react";
+import type {
+  LoginForm,
+  LoginMethods,
+  LoginState,
+} from "./Login.types";
 import { initialLoginState, LoginReducer } from "./Login.reducer";
-import { getRole, login } from "../../../services/auth.service";
+import { getRole, login, roles } from "../../../services/auth.service";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
@@ -18,7 +22,9 @@ export const withLoginContext = <T extends {}>(Component: ComponentType<T>) => {
     const checkLogin = async () => {
       try {
         const res = await getRole();
-        navigate(`/${res.role}`);
+        const role: keyof typeof roles = res.role;
+        console.log(role,roles[role]);
+        navigate(`/${roles[role]}`);
       } catch (error) {}
     };
 
@@ -30,7 +36,8 @@ export const withLoginContext = <T extends {}>(Component: ComponentType<T>) => {
 
         dispatch({ type: "LOGIN_SUCCESSFUL" });
         toast.success("Login Successful");
-        navigate(`/${res.role}`);
+        const role: keyof typeof roles = res.role;
+        navigate(`/${roles[role]}`);
 
       } catch (error: any) {
         dispatch({ type: "LOGIN_FAILED", error: error.message });
@@ -39,8 +46,8 @@ export const withLoginContext = <T extends {}>(Component: ComponentType<T>) => {
     };
 
     const handlers = {
-        checkLogin,
-        handleLogin
+      checkLogin,
+      handleLogin,
     };
     return (
       <LoginContext.Provider value={{ ...state, ...handlers }}>

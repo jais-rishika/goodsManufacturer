@@ -18,8 +18,8 @@ const Table = <T extends {}>({
         </tr>
       </thead>
       <tbody>
-        {tableData &&
-          tableData.map((row, idx) => {
+        {tableData.length>0 &&
+          (tableData.map((row, idx) => {
             return (
               <tr key={idx}>
                 {columnData.map((col, idx) => {
@@ -28,7 +28,7 @@ const Table = <T extends {}>({
                 })}
               </tr>
             );
-          })}
+          }))}
       </tbody>
       <tfoot>{children}</tfoot>
     </table>

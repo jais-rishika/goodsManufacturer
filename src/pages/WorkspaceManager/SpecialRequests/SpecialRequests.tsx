@@ -15,6 +15,7 @@ import type { Column } from "../../../components/Table/Table.types.ts";
 import ShowReqModal from "../../Worker/ToolsInventory/Modal/ReqToolModal.tsx";
 import Pagination from "../../../components/Pagination/Pagination.tsx";
 import Table from "../../../components/Table/Table.tsx";
+import { formatDate } from "./SpecialRequests.reducer.tsx";
 
 const SpecialRequests = ({}: SpecialRequestsProps) => {
   //ref
@@ -31,6 +32,9 @@ const SpecialRequests = ({}: SpecialRequestsProps) => {
     selectedFilters,
     count,
     urlFilter,
+    maxDate,
+    minDate,
+    updateUrl,
     handleUrlChange,
     handleFilterChange,
     updateSearch,
@@ -40,25 +44,24 @@ const SpecialRequests = ({}: SpecialRequestsProps) => {
 
   //columnData
   const columns: Column<SpRequestsTableData>[] = [
-    { id: "workStation", label: "WorkStation" },
-    { id: "workerEmail", label: "Worker Email" },
-    { id: "reqStatus", label: "Request Status" },
-    { id: "showDetails", label: "Show Request Details" },
+    { id: "requestDate", label: "Request Date" },
+    { id: "workerName", label: "Worker Name" },
+    { id: "toolName", label: "Tool Name" },
+    { id: "reqQuantity", label: "Quantity" },
+    { id: "approvalStatus", label: "Approved Status Details" },
+    { id: "returnStatus", label: "Return Status Details" },
   ];
 
   const handleFilter = () => {
-    getData(urlFilter);
+    updateUrl(urlFilter);
   };
 
   const handleMinDate = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
-    console.log(val);
-    //error handling
     updateMinDate(val);
   };
   const handleMaxDate = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
-    // errorHandling
     updateMaxDate(val);
   };
 
@@ -66,6 +69,7 @@ const SpecialRequests = ({}: SpecialRequestsProps) => {
   useEffect(() => {
     getData(urlFilter);
   }, []);
+
   return (
     <>
       <div className={styles.Top}>
@@ -93,13 +97,16 @@ const SpecialRequests = ({}: SpecialRequestsProps) => {
               <Input
                 placeholder="MinDate"
                 type="date"
+                min={"2025-01-20"}
+                max={maxDate}
                 onChange={handleMinDate}
                 className={styles.Price}
               />
               <Input
                 placeholder="MaxDate"
                 type="date"
-                min={`${new Date("28-05-2025")}`}
+                min={minDate}
+                max={formatDate(new Date())}
                 onChange={handleMaxDate}
                 className={styles.Price}
               />

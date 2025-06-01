@@ -9,10 +9,9 @@ import {
   ToolInventoryContext,
   withToolInventory,
 } from "./ToolsInventory.state.tsx";
-import image from "../../../../public/vite.svg";
+import image from "../../../../public/No_Image_Available.jpg";
 import Pagination from "../../../components/Pagination/Pagination.tsx";
 import MultipleSelect from "../../../components/MultipleSelect/MultipleSelect.tsx";
-import { hideLoader, showLoader } from "../../../components/Loader/Loader.tsx";
 import SendToolModal from "./Modal/SendToolModal.tsx";
 
 const ToolsInventory = ({}: ToolsInventoryProps) => {
@@ -26,6 +25,7 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
     getData,
     setSelected,
     //filters,
+    updateUrl,
     searchValue,
     selectedFilters,
     count,
@@ -38,7 +38,7 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
   } = useContext(ToolInventoryContext)!;
 
   const handleFilter = () => {
-    getData(urlFilter);
+    updateUrl(urlFilter);
   };
 
   const handleMinPrice = (e: ChangeEvent<HTMLInputElement>) => {
@@ -60,6 +60,7 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
       updateMaxPrice(val);
     }
   };
+  
   const handleSendToolModal=(data: ToolInventoryDetail)=>{
     setSelected(data)
     showSendToolModal()
@@ -78,7 +79,7 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
               <MultipleSelect
                 selectedFilters={selectedFilters}
                 handleFilter={handleFilterChange}
-                availFilters={["name", "special", "normal", "isPerishable"]}
+                availFilters={["name", "special", "normal", "isPerishable", "notPerishable"]}
                 getData={getData}
                 url={urlFilter}
               />
@@ -116,7 +117,7 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
       <div className={styles.ToolsCard}>
         {ToolInventoryData.length > 0 &&
           ToolInventoryData.map((data: ToolsDetail,idx) => (
-            <Card id={data.id} photo={image}>
+            <Card id={data.id} photo={data.toolImageUrl||image}>
               <p>
                 <span>Name:</span>
                 <span>{data.name}</span>
@@ -143,14 +144,13 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
                 <span>Perishable:</span>
                 <span>{data.isPerishable ? "YES" : "NO"}</span>
               </p>
-              <p>
+              {/* <p>
                 <span>Total:</span>
-                <span>{data.isPerishable ? "YES" : "NO"}</span>
-              </p>
-
-              {/* //remove later */}
-              <hr></hr>
-              <div>
+                <span>{12}</span>
+              </p> */}
+              
+              {/* <div>
+              <div className={styles.Line}></div>
                 <p>
                   <span>Allocated:</span>
                   <span>{data.isPerishable ? "YES" : "NO"}</span>
@@ -163,7 +163,7 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
                   <span>Broken:</span>
                   <span>{data.isPerishable ? "YES" : "NO"}</span>
                 </p>
-              </div>
+              </div> */}
               <Button primary onClick={()=>handleSendToolModal(ToolInventoryData[idx])}>
                 Send Tool
               </Button>

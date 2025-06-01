@@ -1,13 +1,28 @@
 import { createContext, useReducer, type ComponentType } from "react";
-import type { RequestDetail, RequestMethods, RequestsState } from "./SpecialRequests.types";
-import { initialRequestState, requestsReducer } from "./SpecialRequests.reducer";
-import { getSpecialRequests } from "../../../services/Requests.service";
+import type {
+  RequestDetail,
+  RequestMethods,
+  RequestsState,
+} from "./SpecialRequests.types";
+import {
+  initialRequestState,
+  requestsReducer,
+} from "./SpecialRequests.reducer";
+import {
+  acceptRejectSpReq,
+  getSpecialRequests,
+} from "../../../services/Requests.service";
+import Button from "../../../components/Button/Button";
+import type { WorkerRequestsDetail } from "../../ToolCribManager/WorkerRequests/WorkerRequests.types";
+import { toast } from "react-toastify";
 
-export const SpecialRequestsContext = createContext<(RequestsState & RequestMethods) | null>(
-  null
-);
+export const SpecialRequestsContext = createContext<
+  (RequestsState & RequestMethods) | null
+>(null);
 
-export const withSpecialReqContext = <T extends {}>(Component: ComponentType<T>) => {
+export const withSpecialReqContext = <T extends {}>(
+  Component: ComponentType<T>
+) => {
   return (props: T) => {
     const [state, dispatch] = useReducer(requestsReducer, initialRequestState);
 
@@ -16,10 +31,40 @@ export const withSpecialReqContext = <T extends {}>(Component: ComponentType<T>)
       dispatch({ type: "SHOW_REQUEST_DETAILS" });
     };
 
-    //filter
-    const handleFilterChange = (filter: string[], url: string) => {
-      dispatch({ type: "SET_FILTERS", data: filter });
+    const handleApproval = async (id: string, approve: boolean) => {
+      try {
+        const res = await acceptRejectSpReq(id, approve);
+        toast.success(`REQUEST ${approve ? "APPROVED" : "REJECTED"}`);
+        getData(state.urlFilter);
+      } catch (error) {
+        toast.error("Request was not Handled");
+      }
+    };
 
+    //filter
+    const handleFilterChange = (filter: string[]) => {
+      dispatch({ type: "SET_FILTERS", data: filter });
+    };
+
+    const handleUrlChange = (size: number, page: number) => {
+      const currentUrl = new URLSearchParams(state.urlFilter);
+      currentUrl.set("size", `${size}`);
+      currentUrl.set("page", `${page}`);
+      updateUrl(currentUrl.toString());
+    };
+
+    const updateSearch = (val: string) => {
+      dispatch({ type: "SET_SEARCH", data: val });
+    };
+
+    const updateMinDate = (val: string) => {
+      dispatch({ type: "SET_MINDATE", data: val });
+    };
+    const updateMaxDate = (val: string) => {
+      dispatch({ type: "SET_MAXDATE", data: val });
+    };
+
+    const updateUrl = (url: string) => {
       //pagination
       const currentUrl = new URLSearchParams(url);
       const [size, page] = [currentUrl.get("size"), currentUrl.get("page")];
@@ -27,44 +72,16 @@ export const withSpecialReqContext = <T extends {}>(Component: ComponentType<T>)
       newUrl.set("page", `${page}`);
       newUrl.set("size", `${size}`);
 
-    //   do this //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      let category;
+      let category = state.selectedFilters.reduce((a, b) => {
+        return `${a}&fields=${b}`;
+      }, "");
 
-      newUrl.set("minDate", `${state.minDate}` );
-      newUrl.set("maxDate", `${state.maxDate}` );
+      newUrl.set("startDateTime", new Date(state.minDate).toISOString());
+      newUrl.set("endDateTime", new Date(state.maxDate).toISOString());
 
-      updateUrl(newUrl.toString() + category);
-    };
-
-    const handleUrlChange = (size: number, page: number) => {
-      const currentUrl = new URLSearchParams(state.urlFilter);
-      currentUrl.set("size", `${size}`);
-      currentUrl.set("page", `${page}`);
-      handleFilterChange(state.selectedFilters, currentUrl.toString());
-    };
-
-    const updateSearch = (val: string) => {
-      dispatch({ type: "SET_SEARCH", data: val });
-      const currentUrl = new URLSearchParams(state.urlFilter);
-      currentUrl.set("search", val);
-      handleFilterChange(state.selectedFilters, currentUrl.toString());
-    };
-
-    const updateMinDate = (val: Date) => {
-      dispatch({ type: "SET_MINDATE", data: val });
-      const currentUrl = new URLSearchParams(state.urlFilter);
-      currentUrl.set("search", `${val}`);
-      handleFilterChange(state.selectedFilters, currentUrl.toString());
-    };
-    const updateMaxDate = (val: Date) => {
-      dispatch({ type: "SET_MAXDATE", data: val });
-      const currentUrl = new URLSearchParams(state.urlFilter);
-      currentUrl.set("search", `${val}`);
-      handleFilterChange(state.selectedFilters, currentUrl.toString());
-    };
-
-    const updateUrl = (newUrl: string) => {
-      dispatch({ type: "SET_URL_FILTER", data: newUrl });
+      const finalUrl = newUrl.toString() + category;
+      dispatch({ type: "SET_URL_FILTER", data: finalUrl });
+      getData(finalUrl);
     };
 
     const setCount = (count: number) => {
@@ -74,8 +91,35 @@ export const withSpecialReqContext = <T extends {}>(Component: ComponentType<T>)
     const getData = async (url: string) => {
       try {
         const res = await getSpecialRequests(url);
-        // dispatch({ type: "UPDATE_REQUESTS", data: res.content });
-        // setCount(res.page.totalElements);
+
+        const data = res.content.map((row: WorkerRequestsDetail) => {
+          return {
+            ...row,
+            requestDate: row.requestDate?.substring(0, 10),
+            approvalStatus:
+              row.approvalStatus === "PENDING" ? (
+                <>
+                  <Button
+                    primary
+                    onClick={() => handleApproval(row.requestItemId, true)}
+                  >
+                    APPROVE
+                  </Button>
+                  <Button
+                    primary
+                    onClick={() => handleApproval(row.requestItemId, false)}
+                  >
+                    REJECT
+                  </Button>
+                </>
+              ) : (
+                row.approvalStatus
+              ),
+          };
+        });
+
+        dispatch({ type: "UPDATE_REQUESTS", data: data });
+        setCount(res.page.totalElements);
       } catch (error) {}
     };
 
@@ -88,6 +132,7 @@ export const withSpecialReqContext = <T extends {}>(Component: ComponentType<T>)
       getData,
       setSelected,
 
+      updateUrl,
       handleFilterChange,
       handleUrlChange,
       updateSearch,

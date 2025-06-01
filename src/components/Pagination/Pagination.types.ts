@@ -2,8 +2,9 @@ export interface PaginationProps {
     count: number;
     setUrl: (size: number, page: number) => void;
     url: string;
-    getData: (val: string) => void
-    scrollRef?: null | HTMLDivElement
+    getData: (val: string,id?: string) => void
+    scrollRef?: null | HTMLDivElement,
+    paramId?: string
 }
 
 export type PaginationAction = {

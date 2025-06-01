@@ -40,6 +40,7 @@ export interface ToolMethods {
 
     getData: (val: string) => void
 
+    updateUrl: (url: string) => void,
     handleFilterChange: (val: string[], url: string) => void
     handleUrlChange: (size: number, page: number) => void
     updateSearch: (val: string) => void

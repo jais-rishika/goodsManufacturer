@@ -1,17 +1,36 @@
 // import styles from "./FacilityManager.module.scss";
+import { useEffect, useState } from "react";
 import Layout from "../../components/Layout/Layout.tsx";
+import { getuserDetail } from "../../services/auth.service.ts";
 import type { FacilityManagerProps } from "./FacilityManager.types.ts";
 
-const FacilityManager = ({}: FacilityManagerProps) => {    
+const FacilityManager = ({}: FacilityManagerProps) => {
   const sideBarList = [
-    { title: "Workplace", link: "/facilityManager" },
-    { title: "WorkplaceManager", link: "/facilityManager/workplace-manager" },
-    { title: "Workstation", link: "/facilityManager/worker-station" },
-    { title: "ToolCribs", link: "/facilityManager/tool-cribs-" },
-    { title: "Workers", link: "/facilityManager/workers" },
-    { title: "Inventory", link: "/facilityManager/inventory" },
+    { title: "Workplace", link: "/facility-manager" },
+    { title: "WorkplaceManager", link: "/facility-manager/workplace-manager" },
+    { title: "Workstation", link: "/facility-manager/worker-station" },
+    { title: "ToolCribs", link: "/facility-manager/tool-cribs" },
+    { title: "Workers", link: "/facility-manager/workers" },
+    { title: "Inventory", link: "/facility-manager/inventory" },
+    { title: "Logs", link: "/facility-manager/logs" },
   ];
-  return <Layout role={"Facility Manager"} sideBarList={sideBarList} />;
+
+  const [location, setLocation] = useState("");
+  const getData = async () => {
+    const user = await getuserDetail();
+    setLocation(user.facilityName);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return (
+    <Layout
+      role={`Facility Manager To ${location}`}
+      sideBarList={sideBarList}
+    />
+  );
 };
 
 export default FacilityManager;

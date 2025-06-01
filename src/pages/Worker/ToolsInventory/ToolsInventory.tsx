@@ -40,6 +40,7 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
     selectedFilters,
     count,
     urlFilter,
+    updateUrl,
     handleUrlChange,
     handleFilterChange,
     updateSearch,
@@ -48,7 +49,7 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
   } = useContext(ToolInventoryContext)!;
 
   const handleFilter = () => {
-    getData(urlFilter);
+    updateUrl(urlFilter);
   };
 
   const handleMinPrice = (e: ChangeEvent<HTMLInputElement>) => {
@@ -117,6 +118,7 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
     try {
       const res = await sendToolReq(obj);
       toast.success("Request Added");
+      localStorage.removeItem("reqTable")
       navigate("/worker/requests");
     } catch (error) {
       toast.error("Request Failed");
