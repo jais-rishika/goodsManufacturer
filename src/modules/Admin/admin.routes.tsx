@@ -1,14 +1,14 @@
 import { lazy } from "react";
-import AllEmployee from "../../pages/Admin/AllEmployee/AllEmployee";
+const AllEmployee= lazy(()=> import("../../pages/Admin/AllEmployee/AllEmployee"));
+const ReportPage= lazy(()=> import("../../pages/Admin/Reports/ReportPage/ReportPage"));
 
-const Reports = lazy(()=> import ( "../../pages/Admin/Reports/Reports"));
 const Tools = lazy(()=> import ( "../../pages/Admin/Tools/Tools"));
 
 const FacilityPage = lazy(()=> import ( "../../pages/Admin/Facility/FacilityPage/FacilityPage"));
 const FacilityManagerPage = lazy(()=> import ( "../../pages/Admin/FacilityManager/FacilityManagerPage/FacilityManagerPage"));
 
 export const adminRoutes = [
-  { index: true, element: <Reports /> },
+  { index: true, element: <ReportPage /> },
   { path: "facility-manager", element: <FacilityManagerPage /> },
   { path: "facility", element: <FacilityPage /> },
   { path: "tools", element: <Tools /> },

@@ -1,0 +1,21 @@
+/* Styles for ReportArea */ 
+.report{
+    width: 100%;
+    padding: 1rem 2rem;
+    border: 1px solid black;
+    h1{
+        margin: 0.5rem 0;
+    }
+}
+
+.container{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap:1rem;
+
+    div{
+        box-shadow: 2px 2px 2px 2px #1d4b40;
+        padding: 0.25rem 0.5rem;
+        border-radius: 16px;
+    }
+}

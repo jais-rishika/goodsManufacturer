@@ -1,12 +1,13 @@
 import { createBrowserRouter } from "react-router";
 import { lazy } from "react";
 import App from "../App";
-
+import {GUARDS} from "./route.guards"
 import { workerRoutes } from "../modules/Worker/Worker.routes";
 import { adminRoutes } from "../modules/Admin/admin.routes";
 import { facilityManagerRoutes } from "../modules/FacilityManager/FacilityManager.routes";
 import { workPlaceManagerRoutes } from "../modules/WorkplaceManager/WorkPlaceManager.routes";
 import { toolCribManagerRoutes } from "../modules/ToolCribManager/ToolCribManager.routes";
+import { canActivate } from "./canActivate";
 
 // AUTH
 const Login = lazy(() => import("../pages/Auth/Login/Login"));
@@ -40,30 +41,30 @@ export default createBrowserRouter([
       { index: true, element: <Login /> },
       {
         path: "owner",
-        Component: Admin,
+        Component: canActivate(Admin,[GUARDS.checkLogin,GUARDS.isOwner]),
         // children should be in Admin folder
         children: adminRoutes,
       },
       {
         path: "facility-manager",
-        Component: FacilityManager,
+        Component: canActivate(FacilityManager,[GUARDS.checkLogin,GUARDS.isFacilityManager]),
         children: facilityManagerRoutes,
       },
       {
         path: "workplace-manager",
-        Component: WorkplaceManager,
+        Component:canActivate(WorkplaceManager,[GUARDS.checkLogin,GUARDS.isWorkplaceManager]),
         children: workPlaceManagerRoutes,
       },
       {
         // routes should not be camel cased, they should be kebab-cased
         // tool-crib-manager
         path: "tool-crib-manager",
-        Component: ToolCribManager,
+        Component: canActivate(ToolCribManager,[GUARDS.checkLogin,GUARDS.isToolCribManager]),
         children: toolCribManagerRoutes,
       },
       {
         path: "worker",
-        Component: Worker,
+        Component: canActivate(Worker,[GUARDS.checkLogin,GUARDS.isWorker]),
         children: workerRoutes,
       },
     ],
