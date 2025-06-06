@@ -34,6 +34,7 @@ export const withSpecialReqContext = <T extends {}>(
     const handleApproval = async (id: string, approve: boolean) => {
       try {
         const res = await acceptRejectSpReq(id, approve);
+        if(!(res.status>=200 && res.status<300)){throw Error("ADD unsuccessfull")}
         toast.success(`REQUEST ${approve ? "APPROVED" : "REJECTED"}`);
         getData(state.urlFilter);
       } catch (error: any) {
