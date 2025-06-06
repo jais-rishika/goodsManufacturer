@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createHashRouter } from "react-router";
 import { lazy } from "react";
 import App from "../App";
 import { workerRoutes } from "../modules/Worker/Worker.routes";
@@ -33,7 +33,7 @@ const ToolCribManager = lazy(
 //worker
 const Worker = lazy(() => import("../modules/Worker/Worker"));
 
-export default createBrowserRouter([
+export default createHashRouter ([
   {
     path: "",
     element: <App />,
