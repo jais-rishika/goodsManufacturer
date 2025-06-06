@@ -40,10 +40,7 @@ const EditModal = ({}: ModalProps) => {
 
   //formSubmit
   const EditWorkStation = async (data: WorkStationForm) => {
-    if (!selectedManager) {
-      alert("ADD WorkStation Manager");
-    }
-    data["workerEmail"] = selectedManager!;
+    data["workerEmail"] = selectedManager! || selected!.workerEmail;
 
     try {
       const res = await editWorkStation(data, selected!.id);

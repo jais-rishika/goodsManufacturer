@@ -50,15 +50,15 @@ const Requests = ({}: RequestsProps) => {
     updateUrl(urlFilter);
   };
 
-  const handleMinDate = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    console.log(val);
-    updateMinDate(val);
-  };
-  const handleMaxDate = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    updateMaxDate(val);
-  };
+  // const handleMinDate = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const val = e.target.value;
+  //   console.log(val);
+  //   updateMinDate(val);
+  // };
+  // const handleMaxDate = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const val = e.target.value;
+  //   updateMaxDate(val);
+  // };
 
   //useEffect
   useEffect(() => {
@@ -66,14 +66,14 @@ const Requests = ({}: RequestsProps) => {
   }, []);
   return (
     <>
-      {/* <div className={styles.Top}>
+      <div className={styles.Top}>
         <div>
           <div className={styles.Filter}>
             <label>
               <MultipleSelect
                 selectedFilters={selectedFilters}
                 handleFilter={handleFilterChange}
-                availFilters={["rejected", "approves","pending"]}
+                availFilters={["toolName","rejected", "approved","pending"]}
                 getData={getData}
                 url={urlFilter}
               />
@@ -87,7 +87,7 @@ const Requests = ({}: RequestsProps) => {
               onChange={(e) => updateSearch(e.target.value)}
             />
 
-            <div className={styles.DateFilter}>
+            {/* <div className={styles.DateFilter}>
               <Input
                 placeholder="MinDate"
                 type="date"
@@ -104,14 +104,14 @@ const Requests = ({}: RequestsProps) => {
                 onChange={handleMaxDate}
                 className={styles.Price}
               />
-            </div>
+            </div> */}
 
             <Button primary onClick={handleFilter}>
               Filter
             </Button>
           </div>
         </div>
-      </div> */}
+      </div>
       <div className={styles.Table}>
         <Table<RequestsTableData>
           tableData={RequestsData}

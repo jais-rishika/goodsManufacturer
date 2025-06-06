@@ -32,14 +32,13 @@ const WorkPlaceEmployeeHeader = ({ links }: WorkPlaceEmployeeHeaderProps) => {
           <ul className={styles.Nav}>
             {links.map((link) => {
               return (
-                <li>
-                  <NavLink
-                    className={({ isActive }) => (isActive ? styles.Active : "")} end
-                    to={`${link.link}`}
-                  >
-                    {link.title}
-                  </NavLink>
-                </li>
+                <NavLink
+                  className={({ isActive }) => (isActive ? styles.Active : "")}
+                  to={`${link.link}`}
+                  end
+                >
+                  <li>{link.title}</li>
+                </NavLink>
               );
             })}
           </ul>

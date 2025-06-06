@@ -8,7 +8,7 @@ import { useContext } from "react";
 import { WorkPlaceContext } from "../WorkPlace.state";
 import { deleteWorkPlace } from "../../../../services/workplace.service";
 const DeleteModal = ({}: ModalProps) => {
-  const {getData,urlFilter,handleDeleteModal,selected}=useContext(WorkPlaceContext)!;
+  const {getData,urlFilter,hideDeleteModal,selected}=useContext(WorkPlaceContext)!;
   const handleDelete = async () => {
     try {
       const res = await deleteWorkPlace(selected.id!);
@@ -17,12 +17,12 @@ const DeleteModal = ({}: ModalProps) => {
     } catch (error) {
         toast.error("WorkPlace Manager Deletion Failed");
     }finally{
-        handleDeleteModal();
+        hideDeleteModal();
     }
   };
   
   return (
-    <Modal setShowModal={handleDeleteModal}>
+    <Modal setShowModal={hideDeleteModal}>
       <div className={styles.DeleteContainer}>
         <h2>Delete WorkPlace Manager</h2>
         <h5>Are You sure you want to delete this WorkPlace Manager?</h5>

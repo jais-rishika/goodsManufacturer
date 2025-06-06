@@ -26,12 +26,20 @@ export const withWorkPlaceManagerContext = <T extends {}>(
       dispatch({ type: "ADD_MODAL", status: !state.addModal });
     };
 
-    const handleEditModal = () => {      
-      dispatch({ type: "EDIT_MODAL", status: !state.editModal });
+    const showEditModal = () => {      
+      dispatch({ type: "EDIT_MODAL", status: true });
     };
 
-    const handleDeleteModal = () => {
-      dispatch({ type: "DELETE_MODAL", status: !state.deleteModal });
+    const showDeleteModal = () => {
+      dispatch({ type: "DELETE_MODAL", status: true });
+    };
+
+    const hideEditModal = () => {      
+      dispatch({ type: "EDIT_MODAL", status: false });
+    };
+
+    const hideDeleteModal = () => {
+      dispatch({ type: "DELETE_MODAL", status: false });
     };
 
     const handleSelect = (data: WorkPlaceManagerData) => {
@@ -39,9 +47,37 @@ export const withWorkPlaceManagerContext = <T extends {}>(
     };
 
     //filter
-    const handleFilterChange = (filter: string[], url: string) => {
+    const handleFilterChange = (filter: string[]) => {
       dispatch({ type: "SET_FILTERS", data: filter });
 
+      // //pagination
+      // const currentUrl = new URLSearchParams(url);
+      // const [size, page] = [currentUrl.get("size"), currentUrl.get("page")];
+      // const newUrl = new URLSearchParams();
+      // newUrl.set("page", `${page}`);
+      // newUrl.set("size", `${size}`);
+      // if (state.searchValue) newUrl.set("search", state.searchValue || "");
+      // const fields = filter.reduce((a, b) => {
+      //   return `${a}&fields=${b}`;
+      // }, "");
+      // const finalUrl=newUrl.toString() + fields;
+    };
+
+    const handleUrlChange = (size: number, page: number) => {
+      const currentUrl = new URLSearchParams(state.urlFilter);
+      currentUrl.set("size", `${size}`);
+      currentUrl.set("page", `${page}`);
+      updateUrl(currentUrl.toString());
+    };
+
+    const updateSearch = (val: string) => {
+      dispatch({ type: "SET_SEARCH", data: val });
+      // const currentUrl = new URLSearchParams(state.urlFilter);
+      // currentUrl.set("search", val);
+      // handleFilterChange(state.selectedFilters, currentUrl.toString());
+    };
+
+    const updateUrl = (url: string) => {
       //pagination
       const currentUrl = new URLSearchParams(url);
       const [size, page] = [currentUrl.get("size"), currentUrl.get("page")];
@@ -49,28 +85,12 @@ export const withWorkPlaceManagerContext = <T extends {}>(
       newUrl.set("page", `${page}`);
       newUrl.set("size", `${size}`);
       if (state.searchValue) newUrl.set("search", state.searchValue || "");
-      const fields = filter.reduce((a, b) => {
+      const fields = state.selectedFilters.reduce((a, b) => {
         return `${a}&fields=${b}`;
       }, "");
-      updateUrl(newUrl.toString() + fields);
-    };
-
-    const handleUrlChange = (size: number, page: number) => {
-      const currentUrl = new URLSearchParams(state.urlFilter);
-      currentUrl.set("size", `${size}`);
-      currentUrl.set("page", `${page}`);
-      handleFilterChange(state.selectedFilters, currentUrl.toString());
-    };
-
-    const updateSearch = (val: string) => {
-      dispatch({ type: "SET_SEARCH", data: val });
-      const currentUrl = new URLSearchParams(state.urlFilter);
-      currentUrl.set("search", val);
-      handleFilterChange(state.selectedFilters, currentUrl.toString());
-    };
-
-    const updateUrl = (newUrl: string) => {
-      dispatch({ type: "SET_URL_FILTER", data: newUrl });
+      const finalUrl=newUrl.toString() + fields;
+      dispatch({ type: "SET_URL_FILTER", data: finalUrl });
+      getData(finalUrl)
     };
 
     const setCount = (count: number) => {
@@ -84,7 +104,7 @@ export const withWorkPlaceManagerContext = <T extends {}>(
             primary
             onClick={() => {
               handleSelect(data);
-              handleEditModal();
+              showEditModal();
             }}
           >
             <FaEdit />
@@ -94,7 +114,7 @@ export const withWorkPlaceManagerContext = <T extends {}>(
             danger
             onClick={() => {
               handleSelect(data);
-              handleDeleteModal();
+              showDeleteModal();
             }}
           >
             <FaTrash />
@@ -130,11 +150,12 @@ export const withWorkPlaceManagerContext = <T extends {}>(
 
     const handlers = {
       handleAddModal,
-      handleEditModal,
-      handleDeleteModal,
+      hideEditModal,
+      hideDeleteModal,
       handleSelect,
       getData,
 
+      updateUrl,
       handleFilterChange,
       handleUrlChange,
       updateSearch,

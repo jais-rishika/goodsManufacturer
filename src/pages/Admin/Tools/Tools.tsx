@@ -11,6 +11,8 @@ import EditModal from "./Modals/EditModal.tsx";
 import DeleteModal from "./Modals/DeleteModal.tsx";
 import MultipleSelect from "../../../components/MultipleSelect/MultipleSelect.tsx";
 import Pagination from "../../../components/Pagination/Pagination.tsx";
+import image from "../../../../public/No_Image_Available.jpg"
+
 
 const Tools = ({}: ToolsProps) => {
   //ref
@@ -122,7 +124,7 @@ const Tools = ({}: ToolsProps) => {
         {toolsData.length > 0 &&
           toolsData.map((data: ToolsDetail) => {
             return (
-              <Card id={data.id} photo={data.toolImageUrl}>
+              <Card id={data.id} photo={data.toolImageUrl || image}>
                 <p>
                   <span>Name:</span>
                   <span>{data.name}</span>

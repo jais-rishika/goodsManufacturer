@@ -104,8 +104,7 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
                 <span>{data.totalQuantity}</span>
               </p>
 
-              {/* //remove later */}
-              <hr></hr>
+              <div className={styles.Line}></div>
               <div>
                 <p>
                   <span>Allocated:</span>

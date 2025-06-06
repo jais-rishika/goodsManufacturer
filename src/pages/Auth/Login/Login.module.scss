@@ -5,6 +5,12 @@
 
   grid-template-columns: 5fr 3fr;
 }
+.LoginLeftSide{
+  background-image: url("../../../assets/loginImg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 .LoginRightSide {
   display: grid;
   place-content: center;

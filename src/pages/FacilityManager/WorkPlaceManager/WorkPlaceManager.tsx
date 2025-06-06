@@ -36,6 +36,7 @@ const WorkPlaceManager = ({}: WorkPlaceManagerProps) => {
     selectedFilters,
     count,
     urlFilter,
+    updateUrl,
     handleUrlChange,
     handleFilterChange,
     updateSearch,
@@ -51,12 +52,11 @@ const WorkPlaceManager = ({}: WorkPlaceManagerProps) => {
   ];
 
   const handleFilter = () => {
-    getData(urlFilter);
+    updateUrl(urlFilter);
   };
 
   //useEffect
   useEffect(() => {
-    console.log("getting Data");
     getData(urlFilter);
   }, []);
 

@@ -1,45 +1,31 @@
-import { getRole } from "../services/auth.service";
+import { useContext } from "react";
+import { MainContext } from "../App";
 
-const checkLogin = async () => {
-    try {
-        const res = await getRole();
-        return true;
-    } catch (error) {
-        return false;
-    }
+export const checkLogin = () => {
+    return !!localStorage.getItem("token")
 }
 
-export const isOwner = async () => {
-    const res = await getRole();
+export const isOwner = () => {
+    const {role}= useContext(MainContext)!
+    return role === "owner"
+};
 
-    return res.role === "owner";
-}
+export const isFacilityManager = () =>{
+    const {role}= useContext(MainContext)!
+    return role === "facilitymanager";
+} 
 
-export const isFacilityManager = async () => {
-    const res = await getRole();
-    return res.role === "facilitymanager";
-}
+export const isWorkplaceManager = () =>{
+    const {role}= useContext(MainContext)!
+    return role === "workplacemanager";
+} 
 
-export const isWorkplaceManager = async () => {
-    const res = await getRole();
-    return res.role === "workplacemanager";
-}
+export const isToolCribManager = () =>{
+    const {role}= useContext(MainContext)!
+    return role === "toolCribmanager";
+} 
 
-export const isToolCribManager = async () => {
-    const res = await getRole();
-    return res.role === "toolCribmanager";
-}
-
-export const isWorker = async () => {
-    const res = await getRole();
-    return res.role === "worker";
-}
-
-export const GUARDS = {
-    checkLogin,
-    isOwner,
-    isFacilityManager,
-    isWorkplaceManager,
-    isToolCribManager,
-    isWorker
-}
+export const isWorker = () =>{
+    const {role}= useContext(MainContext)!
+    return role === "worker";
+} 

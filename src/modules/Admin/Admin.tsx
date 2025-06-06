@@ -1,10 +1,10 @@
-// import styles from "./Admin.module.scss";
 import type { AdminProps } from "./Admin.types.ts";
 import Layout from "../../components/Layout/Layout.tsx";
 
 const Admin = ({}: AdminProps) => {
+  console.log("Admin")
   const sideBarList = [
-    { title: "Home", link: "/owner" },
+    { title: "Reports", link: "/owner" },
     { title: "FacilityManager", link: "/owner/facility-manager" },
     { title: "Facility", link: "/owner/facility" },
     { title: "AllEmployees", link: "/owner/all-employee" },

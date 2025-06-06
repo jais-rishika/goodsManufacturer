@@ -66,7 +66,7 @@ const WorkStation = ({}: WorkStationProps) => {
               <MultipleSelect
                 selectedFilters={selectedFilters}
                 handleFilter={handleFilterChange}
-                availFilters={["workerName", "workerEmail"]}
+                availFilters={["workerName", "workerEmail", "name"]}
                 getData={getData}
                 url={urlFilter}
               />

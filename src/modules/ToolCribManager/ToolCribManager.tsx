@@ -4,7 +4,7 @@ import type { ToolCribManagerProps } from "./ToolCribManager.types.ts";
 import styles from "./ToolCribManager.module.scss";
 const ToolCribManager = ({}: ToolCribManagerProps) => {
   const links = [
-    { title: "Inventory", link: "/" },
+    { title: "Inventory", link: "/tool-crib-manager" },
     { title: "Workers Request", link: "/tool-crib-manager/workers-request" },
   ];
   return (

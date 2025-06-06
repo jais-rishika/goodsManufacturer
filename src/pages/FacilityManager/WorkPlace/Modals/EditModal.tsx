@@ -20,7 +20,8 @@ const EditModal = ({
   
 }: ModalProps) => {
   //useContext
-    const {availFields,setAvailFields,handleEditModal,getData,urlFilter,selectedManager,updateManager,selected}=useContext(WorkPlaceContext)!
+    const {availFields,setAvailFields,hideEditModal,getData,urlFilter,selectedManager,updateManager,selected}=useContext(WorkPlaceContext)!
+    console.log(selected);
     
   const { register, handleSubmit, formState } 
   = useForm<WorkPlaceForm>({
@@ -32,10 +33,7 @@ const EditModal = ({
   });
 
   const EditFacility = async (data: WorkPlaceForm) => {
-    if (!selectedManager) {
-      alert("ADD Facility Manager");
-    }
-    data["workplaceManagerEmail"] = selectedManager!;
+    data["workplaceManagerEmail"] = selectedManager! ||  selected?.workplaceManagerEmail;
     try {
       const res = await editWorkPlace(data, selected.id!);
       getData(urlFilter);
@@ -43,12 +41,12 @@ const EditModal = ({
     } catch (error) {
       toast.error("Sorry!! Facility Manager Could not be Edited");
     } finally {
-      handleEditModal();
+      hideEditModal();
     }
   };
 
   return (
-    <Modal setShowModal={handleEditModal}>
+    <Modal setShowModal={hideEditModal}>
       <form onSubmit={handleSubmit(EditFacility)} className={styles.Form}>
         <h2>Edit Facility Manager</h2>
         <Input placeholder="Enter Facility Name" {...register("name")} />
@@ -61,7 +59,7 @@ const EditModal = ({
           availFields={availFields!}
           setAvailFields={setAvailFields!}
           toSearch={"Email"}
-          selectedField={selectedManager}
+          selectedField={selected?.workplaceManagerEmail}
         />
         {!!formState.errors.workplaceManagerEmail && (
           <small>{formState.errors.workplaceManagerEmail?.message}</small>

@@ -36,8 +36,8 @@ export const withSpecialReqContext = <T extends {}>(
         const res = await acceptRejectSpReq(id, approve);
         toast.success(`REQUEST ${approve ? "APPROVED" : "REJECTED"}`);
         getData(state.urlFilter);
-      } catch (error) {
-        toast.error("Request was not Handled");
+      } catch (error: any) {
+        toast.error(error?.message || "Request was not Handled");
       }
     };
 

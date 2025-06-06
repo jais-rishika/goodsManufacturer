@@ -7,7 +7,6 @@ export interface RequestsTableData {
     returnDate: string,
     approvalStatus: "PENDING" | "APPROVED" | "REJECTED",
     returnStatus: "PENDING" | "RETURNED"
-
 }
 
 export interface RequestDetail extends RequestsTableData {

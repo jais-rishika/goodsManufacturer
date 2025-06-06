@@ -32,10 +32,7 @@ const EditModal = ({
 
   //formSubmit
   const EditFacility = async (data: FacilityForm) => {
-    if(!selectedManager){
-      alert("ADD Facility Manager")
-    }
-    data["facilityManagerEmail"]=selectedManager!;
+    data["facilityManagerEmail"]=selectedManager! || selected?.facilityManagerEmail;
     
     try {
       const res = await editFacility({...data}, selected!.id);
@@ -72,7 +69,7 @@ const EditModal = ({
           <small>{formState.errors.address?.message}</small>
         )}
 
-        <SearchableComponents setFieldValue={updateManager} availFields={availFields} setAvailFields={setAvailFields} toSearch={"Email"}/>
+        <SearchableComponents setFieldValue={updateManager} availFields={availFields} setAvailFields={setAvailFields} toSearch={"Email"} selectedField={selected!.facilityManagerEmail}/>
          {!!formState.errors.facilityManagerEmail && (
           <small>{formState.errors.facilityManagerEmail?.message}</small>
         )}

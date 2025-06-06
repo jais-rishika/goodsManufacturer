@@ -15,7 +15,7 @@ import { useContext } from "react";
 import { editWorkPlaceManager } from "../../../../services/workplaceManager.service.ts";
 
 const EditModal = ({}: ModalProps) => {
-  const { handleEditModal, getData,handleSelect, selected, urlFilter } = useContext(
+  const { hideEditModal, getData,handleSelect, selected, urlFilter } = useContext(
     WorkPlaceManagerContext
   )!;
 
@@ -35,12 +35,12 @@ const EditModal = ({}: ModalProps) => {
     } catch (error) {
       toast.error("Sorry!! Facility Manager Could not be Edited");
     } finally {
-      handleEditModal();
+      hideEditModal();
     }
   };
 
   return (
-    <Modal setShowModal={handleEditModal}>
+    <Modal setShowModal={hideEditModal}>
       <form onSubmit={handleSubmit(EditFacility)} className={styles.Form}>
         <h2>Edit WorkPlace Manager</h2>
         <Input

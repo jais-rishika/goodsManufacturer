@@ -75,8 +75,8 @@ export interface WorkPlaceState {
 
 export interface WorkPlaceMethods {
     handleAddModal: () => void,
-    handleEditModal: () => void,
-    handleDeleteModal: () => void,
+    hideEditModal: () => void,
+    hideDeleteModal: () => void,
     handleSelect: (data: WorkPlaceData) => void
     setAvailFields: (val: string) => void
     updateManager: (val: string) => void

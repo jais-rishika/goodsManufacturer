@@ -32,8 +32,12 @@
     font-weight: 700;
   }
 }
-.Active {
+
+.Active{
+  background-color: cadetblue;
   text-decoration: underline;
+  padding: 0.25rem;
+  border-radius: 4px;
 }
 
 .Profile {

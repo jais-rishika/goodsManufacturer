@@ -42,15 +42,7 @@ export const withToolCribManagerContext = <T extends {}>(
 
     const showDeleteModal=()=> dispatch({ type: "DELETE_MODAL", status: true });
     const hideDeleteModal=()=> dispatch({ type: "DELETE_MODAL", status: false });
-
-    // const handleEditModal = () => {
-    //   dispatch({ type: "EDIT_MODAL", status: !state.editModal });
-    // };
-
-    // const handleDeleteModal = () => {
-    //   dispatch({ type: "DELETE_MODAL", status: !state.deleteModal });
-    // };
-
+    
     const handleSelect = (data: ToolCribManagerTableData) => {
       dispatch({ type: "SELECT", selected: data });
     };

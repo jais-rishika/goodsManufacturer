@@ -20,6 +20,7 @@ import { sendToolReq } from "../../../services/Requests.service.ts";
 import { useNavigate } from "react-router";
 import ReqToolModal from "./Modal/ReqToolModal.tsx";
 import { toast } from "react-toastify";
+import image from "../../../../public/No_Image_Available.jpg"
 
 const ToolsInventory = ({}: ToolsInventoryProps) => {
   const navigate = useNavigate();
@@ -172,7 +173,7 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
           <div className={styles.ToolsCard}>
             {ToolInventoryData.length > 0 &&
               ToolInventoryData.map((data: ToolInventoryDetail) => (
-                <Card id={data.toolId} photo={data.toolImageUrl}>
+                <Card id={data.toolId} photo={data.toolImageUrl  || image}>
                   <p>
                     <span>Name:</span>
                     <span>{data.toolName}</span>
@@ -200,8 +201,7 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
                     <span>{data.totalQuantity}</span>
                   </p>
 
-                  {/* //remove later */}
-                  <hr></hr>
+                  <div className={styles.Line}></div>
                   <div>
                     <p>
                       <span>Allocated:</span>

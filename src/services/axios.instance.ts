@@ -2,7 +2,7 @@ import axios from "axios";
 import { hideLoader, showLoader } from "../components/Loader/Loader";
 
 const axiosInstance = axios.create({
-    baseURL: " https://df82-115-160-223-174.ngrok-free.app",
+    baseURL: "https://8fe4-115-160-223-174.ngrok-free.app",
 })
 
 // intercept the request and do common things
@@ -22,7 +22,4 @@ axiosInstance.interceptors.response.use((res) => {
         throw Promise.reject(error);
     }
 )
-
-
-
 export default axiosInstance;

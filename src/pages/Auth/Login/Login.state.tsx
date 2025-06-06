@@ -24,7 +24,7 @@ export const withLoginContext = <T extends {}>(Component: ComponentType<T>) => {
         const res = await getRole();
         const role: keyof typeof roles = res.role;
         console.log(role,roles[role]);
-        navigate(`/${roles[role]}`);
+        return navigate(`/${roles[role]}`);
       } catch (error) {}
     };
 

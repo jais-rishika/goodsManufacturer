@@ -22,7 +22,13 @@ export const withReqContext = <T extends {}>(Component: ComponentType<T>) => {
 
     //filter
     const handleFilterChange = (filter: string[]) => {
-      dispatch({ type: "SET_FILTERS", data: filter });
+      const isToolNamePresent= filter.includes("toolName");
+      const reqStatus = filter.filter((val) => val != "toolName");
+      if (reqStatus.length > 1) {
+        reqStatus.splice(0, 1);
+      }
+      if(isToolNamePresent) reqStatus.push("toolName")
+      dispatch({ type: "SET_FILTERS", data: reqStatus });
     };
 
     const handleUrlChange = (size: number, page: number) => {
@@ -51,14 +57,21 @@ export const withReqContext = <T extends {}>(Component: ComponentType<T>) => {
       newUrl.set("page", `${page}`);
       newUrl.set("size", `${size}`);
 
-      let category = state.selectedFilters.reduce((a, b) => {
-        return `${a}&fields=${b}`;
-      }, "");
+      if (state.selectedFilters.includes("toolName")) {
+        newUrl.set("toolName", `${state.searchValue}`);
+      }
 
-      newUrl.set("startDateTime", new Date(state.minDate).toISOString());
-      newUrl.set("endDateTime", new Date(state.maxDate).toISOString());
+      if (state.selectedFilters.includes("pending"))
+        newUrl.set("approvalStatus", "PENDING");
+      if (state.selectedFilters.includes("rejected"))
+        newUrl.set("approvalStatus", "REJECTED");
+      if (state.selectedFilters.includes("approved"))
+        newUrl.set("approvalStatus", "APPROVED");
 
-      const finalUrl = newUrl.toString() + category;
+      // newUrl.set("startDateTime", new Date(state.minDate).toISOString());
+      // newUrl.set("endDateTime", new Date(state.maxDate).toISOString());
+
+      const finalUrl = newUrl.toString();
       dispatch({ type: "SET_URL_FILTER", data: finalUrl });
       getData(finalUrl);
     };

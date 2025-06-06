@@ -23,12 +23,20 @@ export const withWorkPlace = <T extends {}>(Component: ComponentType<T>) => {
       dispatch({ type: "ADD_MODAL", status: !state.addModal });
     };
 
-    const handleEditModal = () => {      
-      dispatch({ type: "EDIT_MODAL", status: !state.editModal });
+    const showEditModal = () => {      
+      dispatch({ type: "EDIT_MODAL", status: true });
     };
 
-    const handleDeleteModal = () => {
-      dispatch({ type: "DELETE_MODAL", status: !state.deleteModal });
+    const showDeleteModal = () => {
+      dispatch({ type: "DELETE_MODAL", status: true });
+    };
+
+    const hideEditModal = () => {      
+      dispatch({ type: "EDIT_MODAL", status: false });
+    };
+
+    const hideDeleteModal = () => {
+      dispatch({ type: "DELETE_MODAL", status: false });
     };
 
     const handleSelect = (data: WorkPlaceData) => {
@@ -95,7 +103,7 @@ export const withWorkPlace = <T extends {}>(Component: ComponentType<T>) => {
             primary
             onClick={() => {
               handleSelect(data);
-              handleEditModal();
+              showEditModal();
             }}
           >
             <FaEdit />
@@ -105,7 +113,7 @@ export const withWorkPlace = <T extends {}>(Component: ComponentType<T>) => {
             danger
             onClick={() => {
               handleSelect(data);
-              handleDeleteModal();
+              showDeleteModal();
             }}
           >
             <FaTrash />
@@ -143,8 +151,8 @@ export const withWorkPlace = <T extends {}>(Component: ComponentType<T>) => {
 
     const handlers = {
       handleAddModal,
-      handleEditModal,
-      handleDeleteModal,
+      hideEditModal,
+      hideDeleteModal,
       handleSelect,
       getData,
       

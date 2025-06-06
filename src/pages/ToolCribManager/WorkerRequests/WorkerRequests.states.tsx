@@ -117,8 +117,8 @@ export const withWorkersRequestsContext = <T extends {}>(
         const res = await acceptRejecNormalReq(id, approve);
         toast.success(`REQUEST ${approve ? "APPROVED" : "REJECTED"}`);
         getData(state.urlFilter);
-      } catch (error) {
-        toast.error("Request was not Handled");
+      } catch (error: any) {
+        toast.error(error?.message || "Request was not Handled");
       }
     };
 
@@ -135,7 +135,7 @@ export const withWorkersRequestsContext = <T extends {}>(
               : "No Return Date",
             requestDate: row.requestDate?.substring(0, 10),
             approvalStatus:
-              row.toolCategory === "SPECIAL" ? (
+              row.toolCategory === "SPECIAL" && row.approvalStatus === "PENDING" ? (
                 "Waiting for Approval(Special Tool)"
               ) : row.approvalStatus === "PENDING" ? (
                 <>
@@ -155,6 +155,7 @@ export const withWorkersRequestsContext = <T extends {}>(
               ) : (
                 row.approvalStatus
               ),
+              
             returnStatus: row.isPerishable ? (
               "Return Not Required"
             ) : row.returnStatus === "PENDING" ? (

@@ -29,6 +29,14 @@ export const withToolInventory = <T extends {}>(
 
     //filter
     const handleFilterChange = (filter: string[]) => {
+      if (filter.includes("isPerishable") && filter.includes("notPerishable")) {
+        const trueIdx = filter.findIndex((val) => val === "isPerishable");
+        const falseIdx = filter.findIndex((val) => val === "notPerishable");
+
+        if (trueIdx > falseIdx) filter.splice(falseIdx, 1);
+        else filter.splice(trueIdx, 1);
+      }
+      
       dispatch({ type: "SET_FILTERS", data: filter });
     };
 
@@ -59,12 +67,12 @@ export const withToolInventory = <T extends {}>(
       newUrl.set("size", `${size}`);
       newUrl.set("name", state.searchValue);
 
-      let isPerishable='';
+      let isPerishable = "";
       if (state.selectedFilters.includes("isPerishable")) {
-        isPerishable+= `&isPerishable=true`
+        isPerishable += `&isPerishable=true`;
       }
       if (state.selectedFilters.includes("notPerishable")) {
-        isPerishable+= `&isPerishable=false`
+        isPerishable += `&isPerishable=false`;
       }
 
       let category = "";
@@ -78,9 +86,9 @@ export const withToolInventory = <T extends {}>(
       newUrl.set("minPrice", `${state.minPrice}` || `${0}`);
       newUrl.set("maxPrice", `${state.maxPrice}` || `${10000000}`);
 
-      const finalUrl=newUrl.toString()+category+isPerishable
+      const finalUrl = newUrl.toString() + category + isPerishable;
       dispatch({ type: "SET_URL_FILTER", data: finalUrl });
-      getData(finalUrl)
+      getData(finalUrl);
     };
 
     const setCount = (count: number) => {
@@ -92,9 +100,8 @@ export const withToolInventory = <T extends {}>(
         const res = await getToolCribInventory(url);
 
         dispatch({ type: "UPDATE_TOOLS", data: res.content });
-        setCount(res.page.totalElements)
         setCount(res.page.totalElements);
-
+        setCount(res.page.totalElements);
       } catch (error) {}
     };
 
@@ -105,7 +112,7 @@ export const withToolInventory = <T extends {}>(
     const handlers = {
       getData,
       setSelected,
-      
+
       updateUrl,
       handleFilterChange,
       handleUrlChange,

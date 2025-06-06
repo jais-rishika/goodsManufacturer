@@ -56,7 +56,7 @@ export interface WorkPlaceManagerState {
     addModal: boolean,
     editModal: boolean,
     deleteModal: boolean,
-    selected: WorkPlaceManagerData,
+    selected: WorkPlaceManagerData | null,
     workPlaceManagerTableData: WorkPlaceManagerTableData[],
 
     selectedFilters: string[],
@@ -67,13 +67,14 @@ export interface WorkPlaceManagerState {
 
 export interface WorkPlaceManagerMethods {
     handleAddModal: () => void
-    handleEditModal: () => void
-    handleDeleteModal: () => void
+    hideEditModal: () => void
+    hideDeleteModal: () => void
     handleSelect: (data: WorkPlaceManagerData) => void
     
     getData: (val: string) => void
 
-    handleFilterChange: (val: string[], url: string) => void
+    updateUrl:(url: string) => void
+    handleFilterChange: (val: string[]) => void
     handleUrlChange: (size: number, page: number) => void
     updateSearch: (val: string) => void
     setCount: (count: number) => void

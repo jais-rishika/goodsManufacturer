@@ -9,7 +9,7 @@ import { useContext } from "react";
 import { deleteWorkPlaceManager } from "../../../../services/workplaceManager.service";
 
 const DeleteModal = ({}: ModalProps) => {
-  const { handleDeleteModal, getData, selected, urlFilter } = useContext(
+  const { hideDeleteModal, getData, selected, urlFilter } = useContext(
     WorkPlaceManagerContext
   )!;
 
@@ -21,12 +21,12 @@ const DeleteModal = ({}: ModalProps) => {
     } catch (error) {
       toast.error("WorkPlace Manager Deletion Failed");
     } finally {
-      handleDeleteModal();
+      hideDeleteModal();
     }
   };
 
   return (
-    <Modal setShowModal={handleDeleteModal}>
+    <Modal setShowModal={hideDeleteModal}>
       <div className={styles.DeleteContainer}>
         <h2>Delete WorkPlace Manager</h2>
         <h5>Are You sure you want to delete this WorkPlace Manager?</h5>

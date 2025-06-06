@@ -8,9 +8,7 @@ const FacilityManager = ({}: FacilityManagerProps) => {
   const sideBarList = [
     { title: "Workplace", link: "/facility-manager" },
     { title: "WorkplaceManager", link: "/facility-manager/workplace-manager" },
-    { title: "Workstation", link: "/facility-manager/worker-station" },
     { title: "ToolCribs", link: "/facility-manager/tool-cribs" },
-    { title: "Workers", link: "/facility-manager/workers" },
     { title: "Inventory", link: "/facility-manager/inventory" },
     { title: "Logs", link: "/facility-manager/logs" },
   ];

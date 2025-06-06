@@ -21,7 +21,7 @@ const ReportPage = () => {
   return (
     <div className={styles.reports}>
       <ReportArea
-        heading="Top 3 Tools"
+        heading="Top 3 Tools in Demand"
         getData={getTopDemand}
         data={topDemand}
       ></ReportArea>
