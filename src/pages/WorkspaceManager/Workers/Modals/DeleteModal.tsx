@@ -15,6 +15,7 @@ const DeleteModal = ({}: ModalProps) => {
   const handleDelete = async () => {
     try {
       const res = await deleteWorkers(selected!.id);
+      if(!(res.status>=200 && res.status<300)){throw Error("DELETE unsuccessfull")}
       getData(urlFilter);
       toast.success("Facilty Manager Deleted Successfully");
     } catch (error) {

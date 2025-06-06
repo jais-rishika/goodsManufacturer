@@ -24,6 +24,7 @@ const AddModal = ({}: ModalProps) => {
   const handleAddToolCribManager = async (data: ToolCribManagerForm) => {
     try {
       const res = await addToolCribManagers(data);
+      if(!(res.status>=200 && res.status<300)){throw Error("ADD unsuccessfull")}
       getData(urlFilter);
       toast.success("Tool Crib Manager Added ")
     } catch (error) {

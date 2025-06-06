@@ -36,6 +36,7 @@ const AddModal = ({
     data["workerEmail"]=selectedManager!;
     try {
       const res = await addWorkStation(data);
+      if(!(res.status>=200 && res.status<300)){throw Error("ADD unsuccessfull")}
       handleAddModal();
       getData(urlFilter);
       toast.success("WorkStation Added ");

@@ -15,7 +15,7 @@ import { useContext } from "react";
 import { FacilityManagerContext } from "../FacilityManagerPage/FacilityManager.state.tsx";
 
 const EditModal = ({}: ModalProps) => {
-  const { hideDeleteModal, getData, selected, urlFilter, hideEditModal } = useContext(
+  const {getData, selected, urlFilter, hideEditModal } = useContext(
     FacilityManagerContext
   )!;
 
@@ -29,7 +29,7 @@ const EditModal = ({}: ModalProps) => {
 
   const EditFacility = async (data: FacilityManagerForm) => {
     try {
-      const res = await editFacilityManager(data, selected!.id);
+      await editFacilityManager(data, selected!.id);
       getData(urlFilter);
       toast.success("Facility Manager Edited ");
     } catch (error) {

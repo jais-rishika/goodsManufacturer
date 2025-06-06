@@ -15,6 +15,7 @@ const DeleteModal = ({ }: ModalProps) => {
   const handleDelete = async () => {
     try {
       const res = await deleteWorkStation(selected!.id);
+      if(!(res.status>=200 && res.status<300)){throw Error("DELETE unsuccessfull")}
       getData();
       toast.success("WorkStation Deleted Successfully");
     } catch (error) {

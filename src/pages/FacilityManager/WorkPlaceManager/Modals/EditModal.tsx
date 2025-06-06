@@ -30,6 +30,7 @@ const EditModal = ({}: ModalProps) => {
   const EditFacility = async (data: FacilityManagerForm) => {
     try {
       const res = await editWorkPlaceManager(data, selected?.id!);
+      if(!(res.status>=200 && res.status<300)){throw Error("Fetch unsuccessfull")}
       getData(urlFilter);
       toast.success("Facility Manager Edited ");
     } catch (error) {

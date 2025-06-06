@@ -2,7 +2,7 @@ import { FaCaretDown } from "react-icons/fa";
 import styles from "./MultipleSelect.module.scss";
 import type { MultipleSelectProps } from "./MultipleSelect.types.ts";
 import Button from "../Button/Button.tsx";
-import { useContext, useEffect, type ChangeEvent } from "react";
+import { useContext,type ChangeEvent } from "react";
 import {
   MultipleSelectContext,
   withMultipleSelectContext,

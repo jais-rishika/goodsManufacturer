@@ -25,6 +25,7 @@ const ReturnModal = () => {
         actualReturnDate: new Date(),
       };
       const res = await returnTool(payload);
+      if(!(res.status>=200 && res.status<300)){throw Error("RETURN FAILED")}
       toast.success("Tools Returned");
     } catch (error) {
       toast.error("Tools Return Failed");

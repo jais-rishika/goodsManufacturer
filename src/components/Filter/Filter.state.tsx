@@ -23,7 +23,6 @@ export const withFilterContext=<T extends {}>(Component: ComponentType<T>) => {
       newUrl.set("size", `${size}`);
 
     //   do this //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      let category;
 
       newUrl.set("minDate", `${state.minDate}` );
       newUrl.set("maxDate", `${state.maxDate}` );
@@ -73,7 +72,7 @@ export const withFilterContext=<T extends {}>(Component: ComponentType<T>) => {
 
     const handlers: FilterMethods = {
           handleFilterChange,
-        //   handleUrlChange,
+          handleUrlChange,
           updateSearch,
           updateMinDate,
           updateMaxDate,

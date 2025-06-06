@@ -30,6 +30,7 @@ const EditModal = ({}: ModalProps) => {
   const EditWorker = async (data: WorkersForm) => {
     try {
       const res = await editWorkers(data, selected!.id);
+      if(!(res.status>=200 && res.status<300)){throw Error("EDIT unsuccessfull")}
       getData(urlFilter);
       toast.success("Worker Edited ");
     } catch (error) {

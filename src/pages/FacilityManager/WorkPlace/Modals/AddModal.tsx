@@ -40,10 +40,10 @@ const AddModal = ({}: ModalProps) => {
       alert("ADD WorkPlace Manager")
     }
     data["workplaceManagerEmail"]=selectedManager!;
-    console.log(data);
     
     try {
-      const res = await addWorkPlace(data);
+      const res=await addWorkPlace(data);
+      if(!(res.status>=200 && res.status<300)){throw Error("Fetch unsuccessfull")}
       handleAddModal();
       getData(urlFilter);
       toast.success("Facility Manager Added ");

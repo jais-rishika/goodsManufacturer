@@ -29,7 +29,7 @@ export interface FilterState{
 
 export interface FilterMethods {
   handleFilterChange: (val: string[], url: string) => void;
-//   handleUrlChange: (size: number, page: number) => void;
+  handleUrlChange: (size: number, page: number) => void;
   updateSearch: (val: string) => void;
   updateMinDate: (value: string) => void;
   updateMaxDate: (value: string) => void;

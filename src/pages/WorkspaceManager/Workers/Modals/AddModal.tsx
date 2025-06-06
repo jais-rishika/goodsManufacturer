@@ -24,6 +24,7 @@ const AddModal = ({}: ModalProps) => {
   const handleAddWorkers = async (data: WorkersForm) => {
     try {
       const res = await addWorkers(data);
+      if(!(res.status>=200 && res.status<300)){throw Error("ADD unsuccessfull")}
       getData(urlFilter);
       toast.success("Facility Manager Added ")
     } catch (error) {

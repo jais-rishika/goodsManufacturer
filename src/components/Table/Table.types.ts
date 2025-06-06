@@ -1,4 +1,4 @@
-import type { ReactNode, TableHTMLAttributes } from "react";
+import type { TableHTMLAttributes } from "react";
 export interface Column<T> {
     id: keyof T;
     label: string;

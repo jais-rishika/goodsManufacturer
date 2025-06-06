@@ -19,7 +19,7 @@ const UploadImageModal = () => {
         const formData=new FormData();
         formData.append("file",img!)
         
-        const res= await editworkerImage(formData);
+        await editworkerImage(formData);
         toast.success("Profile Image Uploaded")
     } catch (error) {
         toast.error("Profile Image Upload Failed")

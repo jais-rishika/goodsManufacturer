@@ -49,7 +49,7 @@ const EditModal = ({}: ModalProps) => {
     }
     
     try {
-      const res = await editTools(formData, selectedTool!.id);
+      await editTools(formData, selectedTool!.id);
       getData(urlFilter);
       toast.success("Tool  Edited ");
     } catch (error) {

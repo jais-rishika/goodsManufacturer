@@ -30,6 +30,7 @@ const EditModal = ({}: ModalProps) => {
   const EditFacility = async (data: ToolCribManagerForm) => {
     try {
       const res = await editToolCribManagers(data, selected!.id);
+      if(!(res.status>=200 && res.status<300)){throw Error("EDIT unsuccessfull")}
       getData(urlFilter);
       toast.success("Tool Crib Manager Edited ");
     } catch (error) {

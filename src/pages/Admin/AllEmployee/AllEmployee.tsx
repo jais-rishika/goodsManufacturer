@@ -10,9 +10,6 @@ import MultipleSelect from "../../../components/MultipleSelect/MultipleSelect.ts
 import Pagination from "../../../components/Pagination/Pagination.tsx";
 import Table from "../../../components/Table/Table.tsx";
 import type { Column } from "../../../components/Table/Table.types.ts";
-import AddModal from "../Tools/Modals/AddModal.tsx";
-import DeleteModal from "../Tools/Modals/DeleteModal.tsx";
-import EditModal from "../Tools/Modals/EditModal.tsx";
 import type { AllEmployeeProps, AllEmployeeTableData } from "./AllEmployee.types.ts";
 
 

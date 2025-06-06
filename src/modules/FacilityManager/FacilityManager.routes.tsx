@@ -2,8 +2,6 @@ import { lazy } from "react";
 import WorkPlace from "../../pages/FacilityManager/WorkPlace/WorkPlace";
 import ToolCribs from "../../pages/FacilityManager/ToolCribs/ToolCribs";
 import WorkplaceInventory from "../../pages/FacilityManager/WorkplaceInventory/WorkplaceInventory";
-import Logs from "../../pages/FacilityManager/Logs/Logs";
-// import WorkplaceInventory from "../../pages/FacilityManager/WorkplaceInventory/WorkplaceInventory";
 const ToolsInventory = lazy(
   () => import("../../pages/FacilityManager/ToolsInventory/ToolsInventory")
 );
@@ -26,5 +24,5 @@ export const facilityManagerRoutes = [
   { path: "tool-cribs/:id", element: <WorkplaceInventory /> },
   { path: "worker-station", element: <WorkStation /> },
   { path: "inventory", element: <ToolsInventory /> },
-  { path: "logs", element: <Logs /> }
+  // { path: "logs", element: <Logs /> }
 ];

@@ -44,7 +44,7 @@ const AddModal = ({}: ModalProps) => {
     }
 
     try {
-      const res = await addTools(formData);
+      await addTools(formData);
       getData(urlFilter);
       toast.success("Tool Added ");
     } catch (error) {

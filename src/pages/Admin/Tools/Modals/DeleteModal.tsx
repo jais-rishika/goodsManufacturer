@@ -14,7 +14,7 @@ const DeleteModal = ({ }: ModalProps) => {
   //delete Handler
   const handleDelete = async () => {
     try {
-      const res = await deleteFacility(selectedTool!.id);
+      await deleteFacility(selectedTool!.id);
       getData(urlFilter);
       toast.success("Facilty Manager Deleted Successfully");
     } catch (error) {

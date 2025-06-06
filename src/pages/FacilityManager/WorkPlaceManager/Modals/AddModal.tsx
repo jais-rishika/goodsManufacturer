@@ -9,7 +9,6 @@ import {
   type ModalProps,
   type FacilityManagerForm,
 } from "./Modal.types.ts";
-import { addFacilityManager } from "../../../../services/FacilityManager.service.ts";
 import { toast } from "react-toastify";
 import { useContext } from "react";
 import { WorkPlaceManagerContext } from "../WorkPlaceManager.state.tsx";
@@ -26,6 +25,7 @@ const AddModal = ({}: ModalProps) => {
   const handleAddFacilityManager = async (data: FacilityManagerForm) => {
     try {
       const res = await addWorkPlaceManager(data);
+      if(!(res.status>=200 && res.status<300)){throw Error("Fetch unsuccessfull")}
       handleAddModal();
       getData(urlFilter);
       toast.success("Facility Manager Added ")

@@ -44,6 +44,7 @@ const EditModal = ({}: ModalProps) => {
 
     try {
       const res = await editWorkStation(data, selected!.id);
+      if(!(res.status>=200 && res.status<300)){throw Error("EDIT unsuccessfull")}
       getData(urlFilter);
       toast.success("WorkStation  Edited ");
     } catch (error) {

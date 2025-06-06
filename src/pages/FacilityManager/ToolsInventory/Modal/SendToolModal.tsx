@@ -41,7 +41,8 @@ const SendToolModal = () => {
     const payload: SendToolPayload={"workplaceId": workplace.id, "toolId": selectedTool!.id, "quantity": data.quantity}
     
     try {
-      const res = await sendTool(payload);
+      const res=await sendTool(payload);
+      if(!(res.status>=200 && res.status<300)){throw Error("SEND unsuccessfull")}
       getData(urlFilter);
       toast.success("Tool Send Success ");
     } catch (error) {

@@ -35,7 +35,7 @@ const AddModal = ({
     }
     data["facilityManagerEmail"]=selectedManager!;
     try {
-      const res = await addFacility(data);
+      await addFacility(data);
       handleAddModal();
       getData(urlFilter);
       toast.success("Facility Added ");

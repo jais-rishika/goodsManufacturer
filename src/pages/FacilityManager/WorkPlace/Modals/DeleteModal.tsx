@@ -11,7 +11,8 @@ const DeleteModal = ({}: ModalProps) => {
   const {getData,urlFilter,hideDeleteModal,selected}=useContext(WorkPlaceContext)!;
   const handleDelete = async () => {
     try {
-      const res = await deleteWorkPlace(selected.id!);
+      const res=await deleteWorkPlace(selected.id!);
+      if(!(res.status>=200 && res.status<300)){throw Error("Fetch unsuccessfull")}
       getData(urlFilter);
       toast.success("WorkPlace Manager Deleted Successfully");
     } catch (error) {

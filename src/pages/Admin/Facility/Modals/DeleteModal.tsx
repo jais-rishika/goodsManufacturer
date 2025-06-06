@@ -9,13 +9,13 @@ import { FacilityContext } from "../FacilityPage/FacilityPage.state";
 
 const DeleteModal = ({ }: ModalProps) => {
   //context
-  const {handleDeleteModal, getData, selected}= useContext(FacilityContext)!;
+  const {handleDeleteModal, getData, selected, urlFilter}= useContext(FacilityContext)!;
 
   //delete Handler
   const handleDelete = async () => {
     try {
-      const res = await deleteFacility(selected!.id);
-      getData();
+      await deleteFacility(selected!.id);
+      getData(urlFilter);
       toast.success("Facilty Manager Deleted Successfully");
     } catch (error) {
       toast.error("Facilty Manager Deletion Failed");

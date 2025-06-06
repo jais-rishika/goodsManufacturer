@@ -23,7 +23,7 @@ const AddModal = ({}: ModalProps) => {
 
   const handleAddFacilityManager = async (data: FacilityManagerForm) => {
     try {
-      const res = await addFacilityManager(data);
+      await addFacilityManager(data);
       handleAddModal();
       getData(urlFilter);
       toast.success("Facility Manager Added ")

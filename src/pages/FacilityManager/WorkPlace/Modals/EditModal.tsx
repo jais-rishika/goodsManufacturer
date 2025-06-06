@@ -35,7 +35,7 @@ const EditModal = ({
   const EditFacility = async (data: WorkPlaceForm) => {
     data["workplaceManagerEmail"] = selectedManager! ||  selected?.workplaceManagerEmail;
     try {
-      const res = await editWorkPlace(data, selected.id!);
+      await editWorkPlace(data, selected.id!);
       getData(urlFilter);
       toast.success("Facility Manager Edited ");
     } catch (error) {
