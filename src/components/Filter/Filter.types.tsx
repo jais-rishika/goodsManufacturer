@@ -23,7 +23,8 @@ export interface FilterState{
     minDate: string,
     maxDate: string,
     minPrice: number,
-    maxPrice: number
+    maxPrice: number,
+    urlFilter: string,
 }
 
 export interface FilterMethods {

@@ -1,4 +1,4 @@
-import React, { type ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 import styles from "./Filter.module.scss";
 import Button from "../Button/Button";
 import Input from "../Input/Input";
@@ -9,7 +9,6 @@ import { withFilterContext } from "./Filter.state";
 const Filter = ({
   selectedFilters,
   handleFilterChange,
-  availFilters,
   urlFilter,
   searchValue,
   minDate,

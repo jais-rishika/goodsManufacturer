@@ -1,7 +1,7 @@
 import type { CardProps } from "./Card.types";
 import style from "./Card.module.scss";
 
-const Card = ({ id, photo, children}: CardProps) => {
+const Card = ({photo, children}: CardProps) => {
   return (
     <div className={style.card}>
       <div className={style.ImgContainer}>

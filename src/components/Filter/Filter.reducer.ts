@@ -13,7 +13,8 @@ export const initialFilterState: FilterState = {
   minDate: "2025-01-20",
   maxDate: `${formatDate(new Date())}`,
   minPrice: 10,
-  maxPrice: 100000
+  maxPrice: 100000,
+  urlFilter:'page=1&size=5'
 };
 
 export const filterReducer = (

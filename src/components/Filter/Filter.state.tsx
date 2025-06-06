@@ -28,7 +28,7 @@ export const withFilterContext=<T extends {}>(Component: ComponentType<T>) => {
       newUrl.set("minDate", `${state.minDate}` );
       newUrl.set("maxDate", `${state.maxDate}` );
 
-      updateUrl(newUrl.toString() + category);
+      // updateUrl(newUrl.toString() + category);
     };
 
     const handleUrlChange = (size: number, page: number) => {
@@ -53,6 +53,19 @@ export const withFilterContext=<T extends {}>(Component: ComponentType<T>) => {
     };
     const updateMaxDate = (val: string) => {
       dispatch({ type: "SET_MAXDATE", data: val });
+      const currentUrl = new URLSearchParams(state.urlFilter);
+      currentUrl.set("search", `${val}`);
+      handleFilterChange(state.selectedFilters, currentUrl.toString());
+    };
+
+        const updateMinPrice = (val: number) => {
+      dispatch({ type: "SET_MINPRICE", data: val });
+      const currentUrl = new URLSearchParams(state.urlFilter);
+      currentUrl.set("search", `${val}`);
+      handleFilterChange(state.selectedFilters, currentUrl.toString());
+    };
+    const updateMaxPrice = (val: number) => {
+      dispatch({ type: "SET_MAXPRICE", data: val });
       const currentUrl = new URLSearchParams(state.urlFilter);
       currentUrl.set("search", `${val}`);
       handleFilterChange(state.selectedFilters, currentUrl.toString());
