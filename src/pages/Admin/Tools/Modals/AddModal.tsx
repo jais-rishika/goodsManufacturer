@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Modal from "../../../../components/Modal/Modal.tsx";
 import { ToolsSchema, type ModalProps, type ToolForm } from "./Modal.types.ts";
 import { toast } from "react-toastify";
-import { useContext, useRef } from "react";
+import { useContext } from "react";
 import { ToolsContext } from "../Tools.state.tsx";
 import {
   addTools,

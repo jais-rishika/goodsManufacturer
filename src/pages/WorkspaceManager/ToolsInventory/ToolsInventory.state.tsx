@@ -1,6 +1,5 @@
 import { createContext, useReducer, type ComponentType } from "react";
 import type {
-  ReqTable,
   ToolInventoryDetail,
   ToolsInventoryMethods,
   ToolsInventoryState,
@@ -11,7 +10,6 @@ import {
 } from "./ToolsInventory.reducer";
 import {
   getToolCribInventory,
-  getToolCribManagerInventory,
 } from "../../../services/inventory.service";
 
 export const ToolInventoryContext = createContext<

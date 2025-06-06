@@ -1,7 +1,6 @@
 import styles from "./Modal.module.scss";
 import { useForm } from "react-hook-form";
 import Button from "../../../../components/Button/Button.tsx";
-import Input from "../../../../components/Input/Input.tsx";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Modal from "../../../../components/Modal/Modal.tsx";
 import {
@@ -22,7 +21,7 @@ const AddModal = ({
   const {availFields,setAvailFields,handleAddModal,getData,urlFilter,selectedManager,updateManager}=useContext(WorkStationContext)!
 
   //useForm
-  const { register, handleSubmit, formState } = useForm<WorkStationForm>({
+  const { handleSubmit, formState } = useForm<WorkStationForm>({
     resolver: zodResolver(WorkStationFormSchema),
   });
 

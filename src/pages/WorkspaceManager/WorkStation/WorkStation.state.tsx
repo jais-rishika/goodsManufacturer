@@ -14,7 +14,6 @@ import Button from "../../../components/Button/Button";
 import { getWorkPlaceWorkers } from "../../../services/worker.service";
 import {
   fetchWorkplaceWorkStations,
-  getWorkStation,
 } from "../../../services/workstation.service";
 
 export const WorkStationContext = createContext<

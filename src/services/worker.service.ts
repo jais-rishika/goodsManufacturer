@@ -21,7 +21,7 @@ export const getWorkers = async (filter: string) => {
 
 //searvh Val
 
-export const getWorkPlaceWorkers = async (val: string) => {
+export const getWorkPlaceWorkers = async () => {
     try {
         const res = await axiosInstance.get(`/workplace-manager/worker/available`); 
                

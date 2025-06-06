@@ -7,8 +7,6 @@ import type {
   AllEmployeeData,
 } from "./AllEmployee.types";
 
-import { FaEdit, FaTrash } from "react-icons/fa";
-import Button from "../../../components/Button/Button";
 import {
   AllEmployeeReducer,
   AllEmployeeInitialState,

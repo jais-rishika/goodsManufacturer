@@ -3,7 +3,7 @@ import type { WorkPlaceData, WorkPlaceMethods, WorkPlaceState, WorkPlaceTableDat
 import { workplaceInitialState, workplaceReducer } from "./WorkPlace.reducer";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Button from "../../../components/Button/Button";
-import { fetchManagerWorkplaces, getWorkPlace } from "../../../services/workplace.service";
+import { getWorkPlace } from "../../../services/workplace.service";
 import { getAvailWorkSpaceManager } from "../../../services/workplaceManager.service";
 
 

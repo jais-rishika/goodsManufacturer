@@ -1,13 +1,12 @@
 import styles from "./Modal.module.scss";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useContext, useEffect, type ReactNode } from "react";
+import { useContext} from "react";
 import { useForm } from "react-hook-form";
 import Button from "../../../../components/Button/Button";
 import Input from "../../../../components/Input/Input";
 import Modal from "../../../../components/Modal/Modal";
 import { ToolInventoryContext } from "../ToolsInventory.state";
 import { ReqToolFormSchema, type ReqToolForm } from "./Modal.types";
-import { FaEdit, FaTrash } from "react-icons/fa";
 import type { ReqTable } from "../ToolsInventory.types";
 import { toast } from "react-toastify";
 

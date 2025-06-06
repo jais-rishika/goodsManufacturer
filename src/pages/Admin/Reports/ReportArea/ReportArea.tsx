@@ -1,4 +1,3 @@
-import { useState, type ChangeEvent } from "react";
 import styles from "./ReportArea.module.scss";
 import type { ReportAreaProps } from "./ReportArea.types.ts";
 

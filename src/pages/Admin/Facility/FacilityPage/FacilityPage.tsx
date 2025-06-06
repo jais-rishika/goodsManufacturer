@@ -1,5 +1,5 @@
 import styles from "./FacilityPage.module.scss";
-import { useContext, useEffect, useRef, type ChangeEvent } from "react";
+import { useContext, useEffect, useRef } from "react";
 import Button from "../../../../components/Button/Button.tsx";
 import Input from "../../../../components/Input/Input.tsx";
 import Table from "../../../../components/Table/Table.tsx";

@@ -8,7 +8,6 @@ import {
 } from "../../../services/inventory.service";
 import type { WorkplaceInventoryDetail, WorkplaceInventoryMethods, WorkplaceInventoryState } from "./WorkplaceInventory.types";
 import { useParams } from "react-router";
-import SelectedFilter from "../../../components/SelectedFilter/SelectedFilter";
 
 export const WorkplaceInventoryContext = createContext<
   (WorkplaceInventoryState & WorkplaceInventoryMethods) | null

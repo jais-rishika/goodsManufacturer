@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, type ChangeEvent } from "react";
+import { useContext, useEffect, useRef } from "react";
 import Button from "../../../components/Button/Button.tsx";
 import Input from "../../../components/Input/Input.tsx";
 import MultipleSelect from "../../../components/MultipleSelect/MultipleSelect.tsx";
@@ -9,7 +9,6 @@ import type { Column } from "../../../components/Table/Table.types.ts";
 import ShowReqModal from "../ToolsInventory/Modal/ReqToolModal.tsx";
 import Pagination from "../../../components/Pagination/Pagination.tsx";
 import Table from "../../../components/Table/Table.tsx";
-import { formatDate } from "./Requests.reducer.tsx";
 
 const Requests = ({}: RequestsProps) => {
   //ref
@@ -30,10 +29,6 @@ const Requests = ({}: RequestsProps) => {
     handleUrlChange,
     handleFilterChange,
     updateSearch,
-    updateMaxDate,
-    updateMinDate,
-    maxDate,
-    minDate,
   } = useContext(RequestsContext)!;
 
   //columnData
@@ -49,16 +44,6 @@ const Requests = ({}: RequestsProps) => {
   const handleFilter = () => {
     updateUrl(urlFilter);
   };
-
-  // const handleMinDate = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const val = e.target.value;
-  //   console.log(val);
-  //   updateMinDate(val);
-  // };
-  // const handleMaxDate = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const val = e.target.value;
-  //   updateMaxDate(val);
-  // };
 
   //useEffect
   useEffect(() => {
@@ -86,25 +71,6 @@ const Requests = ({}: RequestsProps) => {
               defaultValue={searchValue}
               onChange={(e) => updateSearch(e.target.value)}
             />
-
-            {/* <div className={styles.DateFilter}>
-              <Input
-                placeholder="MinDate"
-                type="date"
-                min={"2025-01-20"}
-                max={maxDate}
-                onChange={handleMinDate}
-                className={styles.Price}
-              />
-              <Input
-                placeholder="MaxDate"
-                type="date"
-                min={minDate}
-                max={formatDate(new Date)}
-                onChange={handleMaxDate}
-                className={styles.Price}
-              />
-            </div> */}
 
             <Button primary onClick={handleFilter}>
               Filter

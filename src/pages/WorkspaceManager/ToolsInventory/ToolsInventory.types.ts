@@ -1,5 +1,3 @@
-import type { ToolsDetail } from "../../Admin/Tools/Tools.types";
-
 export interface ToolsInventoryProps { }
 
 export interface ReqTable {

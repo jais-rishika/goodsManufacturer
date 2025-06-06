@@ -1,6 +1,5 @@
 import { createContext, useReducer, type ComponentType } from "react";
 import type {
-  ReqTable,
   ToolInventoryDetail,
   ToolsInventoryMethods,
   ToolsInventoryState,

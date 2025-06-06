@@ -15,7 +15,7 @@ import { useContext } from "react";
 import { editWorkPlaceManager } from "../../../../services/workplaceManager.service.ts";
 
 const EditModal = ({}: ModalProps) => {
-  const { hideEditModal, getData,handleSelect, selected, urlFilter } = useContext(
+  const { hideEditModal, getData, selected, urlFilter } = useContext(
     WorkPlaceManagerContext
   )!;
 

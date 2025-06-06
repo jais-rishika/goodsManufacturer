@@ -12,8 +12,6 @@ export const toolInventoryInitialState: ToolsInventoryState = {
 
   selectedFilters: [],
   searchValue: "",
-  minPrice: 10,
-  maxPrice: 10000,
   count: 0,
   urlFilter: "page=0&size=5",
 };
@@ -34,10 +32,6 @@ export const ToolInventoryReducer = (
       return { ...prevState, selectedFilters: action.data };
     case "SET_SEARCH":
       return { ...prevState, searchValue: action.data };
-    case "SET_MINPRICE":
-      return { ...prevState, minPrice: action.data };
-    case "SET_MAXPRICE":
-      return { ...prevState, maxPrice: action.data };
     case "SET_URL_FILTER":
       return { ...prevState, urlFilter: action.data };
 

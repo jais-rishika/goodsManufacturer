@@ -14,8 +14,6 @@ const ToolCribs = ({}: ToolCribsProps) => {
   const {
     getData,
     ToolCribsTableData,
-    selected,
-
     //filters,
     updateUrl,
     searchValue,

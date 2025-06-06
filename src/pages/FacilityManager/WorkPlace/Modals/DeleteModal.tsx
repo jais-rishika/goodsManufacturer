@@ -1,7 +1,6 @@
 import { toast } from "react-toastify";
 import Button from "../../../../components/Button/Button";
 import Modal from "../../../../components/Modal/Modal";
-import { deleteFacilityManager } from "../../../../services/FacilityManager.service";
 import type { ModalProps } from "./Modal.types";
 import styles from "./Modal.module.scss"
 import { useContext } from "react";

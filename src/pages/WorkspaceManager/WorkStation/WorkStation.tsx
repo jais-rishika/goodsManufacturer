@@ -8,7 +8,7 @@ import AddModal from "./Modals/AddModal.tsx";
 import DeleteModal from "./Modals/DeleteModal.tsx";
 import EditModal from "./Modals/EditModal.tsx";
 import styles from "./WorkStation.module.scss";
-import { useContext, useEffect, useRef, type ChangeEvent } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { withWorkStation, WorkStationContext } from "./WorkStation.state.tsx";
 import type {
   WorkStationProps,

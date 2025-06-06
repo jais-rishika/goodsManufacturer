@@ -1,5 +1,3 @@
-import type { WorkersData } from "../../WorkspaceManager/Workers/Workers.types"
-
 export interface WorkerRequestsProps { }
 
 export interface worker {

@@ -25,7 +25,7 @@ export const withToolContext = <T extends {}>(Component: ComponentType<T>) => {
     };
 
     //filter
-    const handleFilterChange = (filter: string[], url: string) => {
+    const handleFilterChange = (filter: string[]) => {
       if (filter.includes("isPerishable") && filter.includes("notPerishable")) {
         const trueIdx = filter.findIndex((val) => val === "isPerishable");
         const falseIdx = filter.findIndex((val) => val === "notPerishable");

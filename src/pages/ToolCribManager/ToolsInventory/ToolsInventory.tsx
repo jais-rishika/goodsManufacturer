@@ -1,4 +1,4 @@
-import { useContext, useEffect, type ChangeEvent } from "react";
+import { useContext, useEffect } from "react";
 import Button from "../../../components/Button/Button.tsx";
 import Card from "../../../components/Card/Card.tsx";
 import Input from "../../../components/Input/Input.tsx";

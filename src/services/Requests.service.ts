@@ -1,4 +1,4 @@
-import type { req, ReqTable } from "../pages/Worker/ToolsInventory/ToolsInventory.types";
+import type { req } from "../pages/Worker/ToolsInventory/ToolsInventory.types";
 import axiosInstance from "./axios.instance"
 
 //worker

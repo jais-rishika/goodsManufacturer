@@ -118,6 +118,7 @@ const ToolsInventory = ({}: ToolsInventoryProps) => {
 
     try {
       const res = await sendToolReq(obj);
+      if(!(res.status>=200 && res.status<300)){throw Error("Fetch unsuccessfull")}
       toast.success("Request Added");
       localStorage.removeItem("reqTable")
       navigate("/worker/requests");
