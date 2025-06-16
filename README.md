@@ -1,6 +1,6 @@
 # Goods Manufacturer Tools Management
 
-**##Problem Statement**
+**Problem Statement**
 Goods manufacturing companies often face significant challenges in managing their tools, employees, and facilities across large-scale operations. Manual or fragmented systems lead to inefficiencies such as:
 - Difficulty in tracking tool and equipment usage.
 - Poor visibility into employee and facility data.
