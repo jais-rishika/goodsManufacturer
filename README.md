@@ -1,5 +1,14 @@
 # Goods Manufacturer Tools Management
 
+**##Problem Statement**
+Goods manufacturing companies often face significant challenges in managing their tools, employees, and facilities across large-scale operations. Manual or fragmented systems lead to inefficiencies such as:
+- Difficulty in tracking tool and equipment usage.
+- Poor visibility into employee and facility data.
+- Redundant or slow API communications causing performance bottlenecks.
+- Inconsistent state management in client applications, leading to bugs and poor maintainability.
+
+These issues result in lost productivity, data inconsistencies, and increased operational costs. The Goods Manufacturer Tools Management system addresses these challenges by offering a centralized, efficient, and user-friendly application to streamline inventory control, employee oversight, and facility management—while maintaining a performant and maintainable codebase.
+
 ## Project Overview  
 An application designed to help goods manufacturing companies efficiently manage their tools, employees, and facilities. The app improves operational workflows by providing streamlined inventory tracking, employee management, and facility oversight.
 
