@@ -1,7 +1,7 @@
 import { type ComponentType } from "react";
+type Predicate = () => boolean;
 
-export const canActivate = <T extends {}>(Component: ComponentType<T>): ComponentType<T> => {
-
+export const canActivate = <T extends {}>(Component: ComponentType<T>, gaurds: Predicate[], to: string = "/") => {    
     return (props: T) => {
         
     //     const [activateState,setActivateState]= useState<boolean | null>(null);
