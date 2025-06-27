@@ -1,6 +1,4 @@
-import { useEffect, useState, type ComponentType } from "react";
-import { Navigate } from "react-router";
-
+import { type ComponentType } from "react";
 type Predicate = () => boolean;
 
 export const canActivate = <T extends {}>(Component: ComponentType<T>, gaurds: Predicate[], to: string = "/") => {

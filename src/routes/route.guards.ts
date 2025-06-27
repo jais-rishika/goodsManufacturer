@@ -1,6 +1,3 @@
-import { useContext } from "react";
-import { MainContext } from "../App";
-
 export const checkLogin = () => {
     return !!localStorage.getItem("token")
 }
