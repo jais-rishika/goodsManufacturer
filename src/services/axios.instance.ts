@@ -2,7 +2,7 @@ import axios from "axios";
 import { hideLoader, showLoader } from "../components/Loader/Loader";
 
 const axiosInstance = axios.create({
-    baseURL: "https://8fe4-115-160-223-174.ngrok-free.app",
+    baseURL: "https://toolmanagementsystem.onrender.com",
 })
 
 // intercept the request and do common things

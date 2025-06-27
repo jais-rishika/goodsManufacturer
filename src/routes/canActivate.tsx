@@ -7,17 +7,18 @@ export const canActivate = <T extends {}>(Component: ComponentType<T>, gaurds: P
 
     return (props: T) => {
         
-        const [activateState,setActivateState]= useState<boolean | null>(null);
-        const checkGaurds=async(gaurds: Predicate[])=>{
-            const ans= gaurds.map(guard => guard())
-            setActivateState(ans.every((val)=> val))
-        }
+    //     const [activateState,setActivateState]= useState<boolean | null>(null);
+    //     const checkGaurds=async(gaurds: Predicate[])=>{
+    //         const ans= gaurds.map(guard => guard())
+    //         setActivateState(ans.every((val)=> val))
+    //     }
 
-        useEffect(()=>{
-            checkGaurds(gaurds)
-        },[])
+    //     useEffect(()=>{
+    //         checkGaurds(gaurds)
+    //     },[])
 
-        if (!activateState) return <Navigate to={to} />
-        return <Component {...props} />
+    //     if (!activateState) return <Navigate to={to} />
+    //     return <Component {...props} />
+    return <Component {...props}/>
     }
 }
