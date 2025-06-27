@@ -1,7 +1,6 @@
 import { type ComponentType } from "react";
-type Predicate = () => boolean;
 
-export const canActivate = <T extends {}>(Component: ComponentType<T>, gaurds: Predicate[], to: string = "/") => {
+export const canActivate = <T extends {}>(Component: ComponentType<T>): ComponentType<T> => {
 
     return (props: T) => {
         
